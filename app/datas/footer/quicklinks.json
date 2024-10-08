@@ -1,0 +1,27 @@
+[
+    {
+        "id":1,
+        "name": "About Us",
+        "link": "#"
+    },
+    {
+        "id":2,
+        "name": "Contact Us",
+        "link": "#"
+    },
+    {
+        "id":3,
+        "name": "Products",
+        "link": "#"
+    },
+    {
+        "id":4,
+        "name": "Cart",
+        "link": "#"
+    },
+    {
+        "id":5,
+        "name": "Wishlist",
+        "link": "#"
+    }
+]

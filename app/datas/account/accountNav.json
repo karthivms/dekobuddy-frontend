@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "name":"Profile",
+        "link":"/account"
+    },
+    {
+        "id": 2,
+        "name":"Orders",
+        "link":"/account/orders"
+    },
+    {
+        "id": 3,
+        "name":"Addresses",
+        "link":"/account/addresses"
+    },
+    {
+        "id": 4,
+        "name":"Cart",
+        "link":"/cart"
+    },
+    {
+        "id": 5,
+        "name":"Wishlist",
+        "link":"/wishlist"
+    }
+]

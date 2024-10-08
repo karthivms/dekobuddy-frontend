@@ -1,0 +1,20 @@
+[
+    {
+        "id":1,
+        "name": "Bunker Mitra",
+        "link": "/bunker-mitra",
+        "img_url":"/images/bunker-mitra.jpg"
+    },
+    {
+        "id":2,
+        "name": "Best Seller / Trending Now",
+        "link": "/best-seller",
+        "img_url":"/images/best-seller.jpg"
+    },
+    {
+        "id":3,
+        "name": "What's New",
+        "link": "/whats-new",
+        "img_url":"/images/whats-new.jpg"
+    }
+]

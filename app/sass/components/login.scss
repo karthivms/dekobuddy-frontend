@@ -1,0 +1,82 @@
+@import '../variables';
+
+.login-tab li {
+    width: 50%;
+
+    button {
+        width: 100%;
+        background-color: $secondary-color;
+        border-radius: 0 !important;
+        border: none !important;
+        color: black !important;
+        font-weight: 500 !important;
+    }
+
+    button.active {
+        background-color: $primary-color !important;
+        color: white !important;
+    }
+}
+
+
+.login-form {
+
+    display: grid;
+
+    .form-group {
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 7px 5px;
+            border: 1px solid $border-color;
+
+            &:focus-visible {
+                outline: $tertiary-color auto 1px !important;
+            }
+        }
+
+        .password-input {
+            position: relative;
+
+            div {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                cursor: pointer;
+                transform: translateY(-50%);
+            }
+        }
+
+    }
+}
+
+@media screen and (max-width:768px) {
+    .login_page {
+        padding: 0 !important;
+        overflow-x: hidden;
+
+        .row>div {
+            padding: 0 30px !important;
+        }
+
+        .login_div {
+            order: 1;
+
+            .or_block{
+                margin: 30px 0 !important;
+            }
+        }
+
+        .signup_div {
+            order: 2;
+            margin-top: 40px !important;
+
+        }
+
+    }
+}

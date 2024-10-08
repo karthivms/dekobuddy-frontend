@@ -1,0 +1,27 @@
+[
+    {
+        "id":1,
+        "name": "Terms and Conditions",
+        "link": "#"
+    },
+    {
+        "id":2,
+        "name": "Privacy Policy",
+        "link": "#"
+    },
+    {
+        "id":3,
+        "name": "Cookies",
+        "link": "#"
+    },
+    {
+        "id":4,
+        "name": "Exchange and Refund Policy",
+        "link": "#"
+    },
+    {
+        "id":5,
+        "name": "Track Order",
+        "link": "#"
+    }
+]

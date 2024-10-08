@@ -1,0 +1,27 @@
+.newsletter-form {
+        position: relative;
+
+        input{
+            text-indent: 10px; 
+
+            &::placeholder{
+                color:black;
+                font-size: 14px;
+            }
+
+            &:focus{
+                outline: none;
+            }
+        }
+
+    button {
+        position: absolute;
+        right:0;
+    }
+}
+
+@media screen and (max-width:768px){
+    .quick_links{
+        padding: 0 12px !important;
+    }
+}

@@ -1,0 +1,13 @@
+
+{
+    "id": 3,
+    "name": "Material",
+    "values": [
+        "Polyester",
+        "Cotton",
+        "Acrylic",
+        "Silk",
+        "Chenille",
+        "Velvet"
+    ]
+}

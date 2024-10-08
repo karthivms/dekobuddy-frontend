@@ -1,0 +1,50 @@
+@import '../variables';
+
+
+    @media screen and (max-width:600px) {
+        .cart-table-div{ overflow-x: auto;}
+
+        .cart_price_details{
+            margin: 0 15px;
+        }
+    }
+
+
+.cart-table {
+
+    @media screen and (max-width:600px) {
+       
+        td:nth-child(2) {
+            min-width: 200px;
+        }    }
+
+    th,
+    td {
+        padding: 15px;
+        vertical-align: middle;
+
+    }
+
+    .quanity-handler {
+        margin-top: 0 !important;
+
+    }
+
+}
+
+.subtotal {
+    border-bottom: 1px solid #6246325e;
+}
+
+.checkout_btn {
+    &:hover {
+        color: $primary-color !important;
+        border-color: $primary-color !important;
+    }
+}
+
+.delete-cart {
+    &:hover {
+        color: $primary-color;
+    }
+}

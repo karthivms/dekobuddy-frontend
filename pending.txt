@@ -1,0 +1,8 @@
+1. change button classnames
+
+2. button onclick notifications
+
+3. go to cart button for products
+
+4. sass import
+

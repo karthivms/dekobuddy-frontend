@@ -1,0 +1,17 @@
+[
+    {
+        "id":1,
+        "name": "account",
+        "link": "/"
+    },
+    {
+        "id":2,
+        "name": "wishlist",
+        "link": "/wishlist"
+    },
+    {
+        "id":3,
+        "name": "cart",
+        "link": "/cart"
+    }
+]

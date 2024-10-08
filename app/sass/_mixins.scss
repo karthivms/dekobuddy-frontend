@@ -1,0 +1,35 @@
+// Basic button mixin
+@mixin btn {
+  cursor: pointer;
+  background-color: $transparent;
+  border: 1px solid $primary-color;
+  font-weight: 700;
+}
+
+// Add button colors based on themes
+@mixin btn-variant($color, $bg-color) {
+  background-color: $bg-color;
+  color: $color;
+  transition: all 0.5s ease;
+
+  &:hover {
+    background-color: $primary-color;
+  }
+}
+
+
+@mixin link-1 {
+  transition: all 0.5s ease;
+
+  &:hover {
+    color: $primary-color !important;
+  }
+}
+
+@mixin link-2 {
+  transition: all 0.5s ease;
+
+  &:hover {
+    color: $secondary-color !important;
+  }
+}

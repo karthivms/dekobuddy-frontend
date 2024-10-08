@@ -1,0 +1,245 @@
+$color: (
+  "theme1":$primary-color,
+  "theme2":$secondary-color,
+  "theme3":$tertiary-color,
+  "body2":$body-color,
+  "border":$border-color,
+  "border2":$border-color2,
+  "border3":$border-color3,
+  "review":$gold,
+  "transparent":$transparent,
+  "white":$white,
+  "grey":$grey,
+  "grey2":$grey2,
+  "grey3":$grey3 ,
+  "black":$black
+);
+
+@each $key, $val in $color {
+  .text-#{$key} {
+    color: $val;
+  }
+
+  .bg-#{$key} {
+    background-color: $val;
+  }
+
+
+  // Reuse border styles with DRY approach
+  @each $style in (solid, dashed) {
+    .border-#{$key}-#{$style} {
+      border: 1px #{$style} $val !important;
+    }
+  }
+
+  // Border bottom with various sizes
+  @for $i from 1 through 3 {
+    .bb-#{$key}-#{$i} {
+      border-bottom: #{$i}px solid $val !important;
+    }
+  }
+
+  @for $i from 1 through 3 {
+    .bt-#{$key}-#{$i} {
+      border-top: #{$i}px solid $val !important;
+    }
+  }
+}
+
+
+$font-sizes: (
+  info:10px,
+  small: 12px,
+  primary: 14px,
+  secondary: 16px,
+  large: 18px,
+  h3: 20px,
+  h2: 24px,
+  h1: 32px,
+  hero: 40px,
+  big:60px,
+  medium:28px,
+  normal:22px
+);
+
+@each $key, $val in $font-sizes {
+  .font-#{$key} {
+    font-size: $val;
+  }
+
+  @media screen and (max-width:600px) {
+    .font-sm-#{$key} {
+      font-size: $val !important;
+    }
+  }
+
+}
+
+
+$line-heights: (
+  small: 0.9,
+  tight: 1.2,
+  normal: 1.5,
+  relaxed: 1.75,
+  loose: 2
+);
+
+@each $key, $val in $line-heights {
+  .line-#{$key} {
+    line-height: $val;
+  }
+}
+
+
+$fw: (
+  "7":900,
+  "6":800,
+  "5":700,
+  "4":600,
+  "3":500,
+  "2":400,
+  "1":300
+);
+
+@each $key, $val in $fw {
+  .fw-#{$key} {
+    font-weight: $val;
+  }
+}
+
+$width: 1%;
+$height: 1px;
+$width-px: 1px;
+
+@for $i from 1 through 100 {
+  .wc-#{$i} {
+    width: $i * $width;
+  }
+
+  .min-wc-#{$i} {
+    min-width: $i * $width;
+  }
+
+  .max-wc-#{$i} {
+    max-width: $i * $width;
+  }
+
+
+
+  @media screen and (max-width: 600px) {
+    .w-sm-#{$i} {
+      width: $i * $width !important;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .w-md-#{$i} {
+      width: $i * $width !important;
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    .w-lg-#{$i} {
+      width: $i * $width !important;
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    .w-xl-#{$i} {
+      width: $i * $width !important;
+    }
+  }
+}
+
+@for $i from 1 through 1000 {
+  .h-#{$i} {
+    height: $i * $height;
+
+  }
+
+  @media screen and (max-width:600px) {
+    .h-sm-#{$i} {
+      height: $i * $height !important;
+    }
+  }
+
+  .min-h-#{$i} {
+    min-height: $i * $height;
+  }
+
+  .max-h-#{$i} {
+    max-height: $i * $height;
+  }
+}
+
+@for $i from 1 through 1000 {
+  .wp-#{$i} {
+    width: $i * $width-px;
+  }
+
+  .min-wp-#{$i} {
+    min-width: $i * $width-px;
+  }
+
+  .max-wp-#{$i} {
+    max-width: $i * $width-px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .wp-sm-#{$i} {
+      width: $i * $width-px !important;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .wp-md-#{$i} {
+      width: $i * $width-px !important;
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    .wp-lg-#{$i} {
+      width: $i * $width-px !important;
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    .wp-xl-#{$i} {
+      width: $i * $width-px !important;
+    }
+  }
+}
+
+
+
+
+$radius: 1px;
+
+@for $i from 1 through 100 {
+  .br-#{$i} {
+    border-radius: $i * $radius;
+  }
+}
+
+
+$gap: 1px;
+
+@for $i from 1 through 100 {
+  .col-#{$i} {
+    grid-template-columns: repeat($i, 1fr);
+  }
+
+  .gap-#{$i} {
+    column-gap: $i * $gap;
+  }
+
+  @media screen and (max-width:600px) {
+    .gap-sm-#{$i} {
+      column-gap: $i * $gap !important;
+    }
+  }
+
+  .row-gap-#{$i} {
+    row-gap: $i * $gap;
+  }
+}

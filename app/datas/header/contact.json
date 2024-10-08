@@ -1,0 +1,10 @@
+[
+    {
+        "type": "phone",
+        "data": "+91 9876543210"
+    },
+    {
+        "type": "email",
+        "data": "info@gmail.com"
+    }
+]

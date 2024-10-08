@@ -1,0 +1,205 @@
+@import "./../variables";
+
+.banner {
+    background-image: url("/images/Banner.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 90vh;
+    animation: zoomBackground 20s ease-in-out infinite;
+
+    @media screen and (max-width:768px) {
+        height: 350px;
+        animation: none;
+    }
+
+    @media screen and (max-width:600px) {
+        height: 250px;
+    }
+
+    h1 {
+        opacity: 0;
+        animation: slide 0.6s ease-out 1;
+        animation-delay: 2s;
+        animation-fill-mode: forwards;
+    }
+
+    div {
+        opacity: 0;
+        animation: slide-down 0.6s ease-out 1;
+        animation-delay: 2s;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes slide {
+        0% {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slide-down {
+        0% {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+
+}
+
+
+
+
+
+
+@keyframes zoomBackground {
+    0% {
+        background-size: 100%;
+    }
+
+    50% {
+        background-size: 103%;
+    }
+
+    100% {
+        background-size: 100%;
+    }
+}
+
+.nav-grid {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all 0.5s ease;
+    position: relative;
+
+    @media screen and (max-width:768px) {
+        height: 300px !important;
+        margin: 5px 10px !important;
+        box-shadow: 0 -90px 56px -20px inset rgba($primary-color, 0.7);
+
+        h3 {
+            opacity: 1 !important;
+        }
+    }
+
+    @media screen and (max-width:600px){
+        height: 200px !important;
+
+    }
+
+    &:hover {
+        box-shadow: 0 -90px 56px -20px inset rgba($primary-color, 0.7);
+
+        h3 {
+            opacity: 1;
+        }
+    }
+
+    h3 {
+        opacity: 0;
+        transition: all 0.1s ease;
+        position: static;
+
+        a {
+            position: static;
+
+            &::before {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+            }
+        }
+    }
+
+}
+
+// .video-player{
+//     width:100%;
+//     height: 380px;
+// }
+
+.client-details {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+
+.testimonial-slider {
+    .swiper-slide>div {
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+
+    .quote {
+        content: url('/images/quote-1.png');
+    }
+
+    @media screen and  (max-width:768px){
+        .swiper-slide-active {
+            z-index: 999;
+
+            &>div {
+                background-color: $primary-color !important;
+                transform: translateY(-30px);
+                transition: all 0.5s ease;
+            }
+
+            .quote {
+                content: url('/images/quote-2.png');
+            }
+
+            .client-details {
+                bottom: -50px;
+            }
+
+            svg,
+            p {
+                color: white;
+            }
+
+        }
+    }
+
+    @media screen and (min-width:768px) {
+        .swiper-slide-next {
+            z-index: 999;
+
+            &>div {
+                background-color: $primary-color !important;
+                transform: translateY(-30px);
+                transition: all 0.5s ease;
+            }
+
+            .quote {
+                content: url('/images/quote-2.png');
+            }
+
+            .client-details {
+                bottom: -50px;
+            }
+
+            svg,
+            p {
+                color: white;
+            }
+
+        }
+
+    }
+
+}

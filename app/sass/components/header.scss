@@ -1,0 +1,165 @@
+@import '../variables';
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+
+.search-form {
+    position: relative;
+
+    @media screen and (max-width:768px) {
+        padding: 0 10px !important;
+        border-bottom: 1px solid $border-color3;
+    }
+
+    input {
+        text-indent: 8px;
+
+        @media screen and (max-width:768px) {
+            width: 100%;
+            padding: 20px 0;
+            margin-bottom: 20px !important;
+        }
+
+        &::placeholder {
+            color: white;
+        }
+
+        &:focus {
+
+            outline: none;
+        }
+    }
+
+    svg {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+
+        @media screen and (max-width:768px) {
+            top: calc(50% - 8px);
+            right: 20px;
+        }
+    }
+}
+
+
+
+
+.no-of-items {
+    position: relative;
+
+    sup {
+        position: absolute;
+        top: -1px;
+        width: 15px;
+        height: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        right: -12px;
+    }
+}
+
+// Responsive header
+
+.offcanvas {
+    background-color: $body-color;
+
+    @media screen and (max-width:768px) {
+        width: 85% !important;
+
+        .offcanvas-body {
+            padding: 0;
+        }
+
+        ul {
+            display: block !important;
+            margin-left: 0 !important;
+
+            li{
+                position: relative;
+                padding: 15px !important;
+                border-bottom: 1px solid $border-color3 ;
+            }
+
+            &:nth-child(2){
+                a::after{
+                    content: "";
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                }
+                
+            }
+
+            &:last-child {
+                li {
+
+                    a{
+                        position: static;
+                    }
+
+                    a::after {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        top: 0;
+                        left: 0;
+                        padding-left: 40px;
+                        padding-top: 23px;
+                        font-size: 15px;
+                        font-weight: 500;
+                    }
+
+                    &:first-child {
+                        a::after {
+                            content: "Account";
+                        }
+                    }
+
+                    &:nth-child(2) {
+                        a::after {
+                            content: "Wishlist";
+                        }
+                    }
+
+                    &:last-child {
+                        a::after {
+                            content: "Cart";
+                        }
+                    }
+                }
+            }
+
+                a {
+                    padding: 0 !important;
+                    font-size: 15px;
+                    font-weight: 500;
+
+                    sup {
+                        display: none;
+                    }
+                }
+            
+        }
+    }
+
+}
+
+button.navbar-toggler {
+    border:none;
+    box-shadow:none !important;
+    outline:none !important;
+
+    span{
+        background-image: url('/images/menu.svg');
+    }
+}

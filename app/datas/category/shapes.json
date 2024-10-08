@@ -1,0 +1,12 @@
+{
+    "id": 4,
+    "name": "Shape",
+    "values": [
+        "Abstract",
+        "Circle",
+        "Hexagon",
+        "Oval",
+        "Rectangle",
+        "Square"
+    ]
+}

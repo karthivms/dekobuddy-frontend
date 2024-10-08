@@ -1,0 +1,70 @@
+@import '@/app/sass/variables';
+
+.shipmentTracking {
+    width: 80%;
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+    position: relative;
+
+    .activestatus {
+        div {
+            background-color: #624632 !important;
+        }
+    }
+
+    .statusBar {
+        div {
+            width: 30px;
+            height: 30px;
+            margin: auto;
+            position: relative;
+            z-index: 2;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 10px 5px -20px inset, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
+
+            svg{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+    }
+
+
+    .progress-line {
+        position: absolute;
+        left: 50%;
+        top: 15%;
+        transform: translateX(-50%);
+        z-index: 1;
+        box-shadow: rgba(50, 50, 93, 0.15) 0px 10px 5px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -28px inset;
+
+        div{
+            position:absolute;
+            content:"";
+            top:0;
+            height:100%;
+            background-color:$primary-color;
+            z-index:999;
+        }
+    }
+}
+
+.cancelpopup > div{
+    width: 30%;
+}
+
+@media screen and (max-width:768px){
+    .shipmentTracking{
+        width: 100% !important;
+    }
+
+    .cancel_order_btn{
+        margin-top: 20px;
+        margin-left:initial !important ;
+    }
+}
