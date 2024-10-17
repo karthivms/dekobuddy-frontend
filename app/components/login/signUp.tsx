@@ -36,10 +36,8 @@ export default function SignUp() {
     }
 
     const handleCheckboxChange = () => {
-        console.log("previous",terms)
 
         setTerms((prev) => !prev);
-        console.log("next",terms)
         };
 
     const validateForm = (field: string) => {
@@ -80,7 +78,6 @@ export default function SignUp() {
         }
 
         if (field === "terms") {
-            console.log("validation",terms)
 
             if (terms === false) {
                 errors.acceptterms = "You must accept the terms and conditions.";
@@ -123,8 +120,7 @@ export default function SignUp() {
         }
     }
 
-    console.log(terms)
-    return (
+   return (
         <div className='w-100'>
             <h2 className="text-center font-h2 fw-4 text-theme1 mb-4">Register / Sign Up</h2>
             <form className='login-form' onSubmit={handleSubmit}>

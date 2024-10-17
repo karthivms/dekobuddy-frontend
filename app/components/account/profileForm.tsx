@@ -3,9 +3,7 @@
 import { useState } from "react";
 import EyeOff from "../icons/eyeOff";
 import EyeOn from "../icons/eyeOn";
-import Link from "next/link";
-import Image from "next/image";
-import google from "@/public/images/google.png"
+
 
 
 interface ErrorObject {

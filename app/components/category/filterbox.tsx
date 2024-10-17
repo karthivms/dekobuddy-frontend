@@ -1,17 +1,14 @@
 
 import Attributes from "./attributes";
 import Selected from "./selectedAttributes";
-import patterns from "@/app/datas/category/patterns.json";
-import types from "@/app/datas/category/types.json";
-import colors from "@/app/datas/category/colors.json";
-import materials from "@/app/datas/category/materials.json";
-import shapes from "@/app/datas/category/shapes.json";
+
 import size from "@/app/datas/category/carpetsize.json";
 import ClearAll from "./clearAllbtn";
 import MobileFilter from "./MobileFIlter";
+import { CategoryItem } from "@/app/types/types";
+import CategoryListing from "./categoryListing";
 
-
-export default function Filter() {
+export default function Filter({ categories }: { categories: CategoryItem[] }) {
 
     return (
         <>
@@ -23,12 +20,13 @@ export default function Filter() {
                 </div>
                 <Selected />
                 <div className="attributes-section">
-                    <Attributes attribute={patterns} />
-                    <Attributes attribute={types} />
+                    <CategoryListing category={categories}/>
+                    <Attributes attribute={size} />
+                    {/* <Attributes attribute={types} />
                     <Attributes attribute={colors} />
                     <Attributes attribute={materials} />
                     <Attributes attribute={shapes} />
-                    <Attributes attribute={size} />
+                    <Attributes attribute={size} /> */}
                 </div>
             </div>
         </>

@@ -2,10 +2,11 @@
 import menu from "@/app/datas/header/menu.json";
 import Link from 'next/link';
 import usermenu from "@/app/datas/header/usermenu.json";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import CartIcon from "../icons/carticon";
 import Wishlisticon from "../icons/wishlisticon";
 import AccountIcon from "../icons/accounticon";
+
 
 
 interface MenuItem {
@@ -28,21 +29,30 @@ interface MenuProps {
     cart: Array<Product>;
     wishlist: Array<Product>;
     hideOffcanvas: () => void;
+    username:string
 }
 
-const Menu: React.FC<MenuProps> = ({ cart, wishlist, hideOffcanvas }) => {
-    const getIcon = useMemo(() => (name: string) => {
+const Menu: React.FC<MenuProps> = ({ cart, wishlist, username, hideOffcanvas }) => {
+
+ 
+
+    const getIcon =  (name: string) => {
         switch (name) {
             case "cart":
                 return <CartIcon />
-
             case "wishlist":
                 return <Wishlisticon />
             case "account":
-                return <AccountIcon />
+
+                if (username) {
+                    return <AccountIcon />
+                }
+                else {
+                    return 'login / register'
+                }
         }
 
-    }, []);
+    };
 
 
     const getItems = (name: string) => {
@@ -61,9 +71,6 @@ const Menu: React.FC<MenuProps> = ({ cart, wishlist, hideOffcanvas }) => {
         links.forEach((link) => {
             link.addEventListener('click', hideOffcanvas);
         });
-
-
-
     })
 
 
@@ -86,9 +93,10 @@ const Menu: React.FC<MenuProps> = ({ cart, wishlist, hideOffcanvas }) => {
                     const itemcount = getItems(item.name);
                     return (
                         <li key={`usermenu_${item.id}`}>
-                            <Link href={item.link} className="link1 no-of-items">
+                            <Link href={username || item.name !== 'account' ? item.link : "/login"} className="link1 font-primary fw-4 no-of-items">
 
                                 {getIcon(item.name)}
+                                {username && item.name === 'account' && (<span className="ms-1 d-inline-block text-capitalize">{username}</span>)}
                                 {itemcount !== 0 && item.name !== "account" && (
                                     <sup className="bg-theme1 text-white font-small">
                                         {getItems(item.name)}

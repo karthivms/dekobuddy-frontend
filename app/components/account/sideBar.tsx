@@ -3,7 +3,6 @@
 
 import Nav from "@/app/datas/account/accountNav.json"
 import Link from "next/link"
-import { useMemo } from "react";
 import CartIcon from "../icons/carticon";
 import Wishlisticon from "../icons/wishlisticon";
 import AccountIcon from "../icons/accounticon";
@@ -18,7 +17,7 @@ export const SideBar = () => {
 
     console.log(pathname)
 
-    const getIcon = useMemo(() => (name: string) => {
+    const getIcon =  (name: string) => {
         switch (name) {
             case "Cart":
                 return <CartIcon />
@@ -32,7 +31,7 @@ export const SideBar = () => {
                 return <AccountIcon />
         }
 
-    }, []);
+    };
 
     return (
         <>

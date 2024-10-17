@@ -6,6 +6,9 @@ import { useState } from "react";
 import EyeOn from "../icons/eyeOn";
 import EyeOff from "../icons/eyeOff";
 import Link from "next/link";
+import { LoginUser } from "@/app/api/login";
+import { useFormStatus } from "react-dom";
+
 
 
 interface ErrorObject {
@@ -14,6 +17,8 @@ interface ErrorObject {
 
 export default function Login() {
     const [show, setShow] = useState(false);
+    const [responseError, setResponseError] = useState("");
+    const { pending } = useFormStatus()
 
     const [formData, setFormData] = useState({
         username: '',
@@ -24,6 +29,7 @@ export default function Login() {
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setResponseError("")
         const { name, value } = e.target;
 
         const trimmedValue = value.replace(" ", "");
@@ -32,7 +38,6 @@ export default function Login() {
             ...formData,
             [name]: trimmedValue
         })
-        
     }
 
     const validateForm = (field: string) => {
@@ -48,37 +53,44 @@ export default function Login() {
             }
         }
 
-        if (field === 'password'){
-        if (!formData.password) {
-            errors.password = "password is required";
-        } else {
-            errors.password = "";
-        }}
+        if (field === 'password') {
+            if (!formData.password) {
+                errors.password = "password is required";
+            } else {
+                errors.password = "";
+            }
+        }
 
         setError((prevError) => ({ ...prevError, ...errors }));
     }
 
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+    const handleSubmit = async () => {
+
         validateForm("username");
         validateForm("password");
 
         if (error.username === "" && error.password === "") {
+
             setError({})
-            alert("form submitted")
+
+            const response = await LoginUser(formData);
+            setResponseError(response)
+
             setFormData({
                 username: "",
                 password: ""
             })
         }
+
+
     }
 
 
     return (
         <div className='w-100'>
             <h2 className="text-center font-h2 fw-4 text-theme1 mb-4">Login</h2>
-            <form className='login-form' onSubmit={handleSubmit}>
+            <form className='login-form' action={handleSubmit}>
                 <div className='form-group'>
                     <label>Username / Email</label>
                     <input
@@ -122,8 +134,8 @@ export default function Login() {
                     </span>
                     <Link href={'/'} className='text-theme1 fw-3'>Forgot Password?</Link>
                 </div>
-                <button className='btn3 fw-3 text-uppercase w-100 py-2' type="submit">Log In</button>
-
+                {responseError && <div className="text-danger text-center mb-4 font-primary fw-3">{responseError}</div>}
+                <button className='btn3 fw-3 text-uppercase w-100 py-2' type="submit">{pending ? ("loading") : ("Log In")}</button>
             </form>
             <div className='d-flex align-items-center justify-content-center gap-30 my-5 or_block'>
                 <hr className="wc-40 d-inline-block" />

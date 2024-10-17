@@ -1,30 +1,18 @@
 import { Col, Row } from "react-bootstrap";
 import Image from "next/image";
 import Star from "../icons/star";
-import ActionButtons from "./actionButtons";
 import Link from "next/link";
 import Addtowishlist from "./addtowishlist";
 import { useCallback } from "react";
 import CartIcon2 from "../icons/carticon2";
-
-
-
-interface Product {
-    id: number;
-    name: string;
-    img_url: string;
-    props: string;
-    no_of_reviews: number;
-    price: number;
-    discount: number;
-}
+import {Product} from '@/app/types/types'
 
 
 export default function ProductGrid({ products, grid }: { products: Product[], grid: number }) {
 
-    const getDiscount = useCallback((price: number, dis: number) => {
-        const discount = Math.floor(dis / 100 * price);
-        return price - discount;
+    const getDiscount = useCallback((reg_price: number, sale_price: number) => {
+        const discount = Math.floor(reg_price / sale_price * 100);
+        return discount;
     }, []);
 
     const createSlug = useCallback((input: string) => {
@@ -40,7 +28,8 @@ export default function ProductGrid({ products, grid }: { products: Product[], g
                         <div className="bg-white br-8 p-3">
                             <div className="product_grid">
                                 <div className="pro_btn_holder">
-                                    <Image alt="product-image" width={271} height={224} className="w-100 h-auto br-5" src={item.img_url} loading="lazy" />
+                                    <Image alt="product-image" width={384} height={384} className="w-100 d-none zoomimage h-auto br-10" src={item.images[1].image} loading="lazy" />
+                                    <Image alt="product-image" width={384} height={384} className="w-100 initialimage h-auto br-10" src={item.images[2].image} loading="lazy" />
                                     <Addtowishlist />
                                     <button
                                         className="border-transparent-solid font-primary text-white py-1  wc-100 justify-content-center fw-3 d-flex align-items-center gap-6 cart_btn">
@@ -48,7 +37,7 @@ export default function ProductGrid({ products, grid }: { products: Product[], g
                                     </button>
                                 </div>
                                 <h6 className="m-0 mt-3 font-primary"><Link href={`/product/${item.id}/${createSlug(item.name)}`}>{item.name}</Link></h6>
-                                <p className="m-0 font-primary text-grey">{item.props}</p>
+                                {/* <p className="m-0 font-primary text-grey">{item.props}</p> */}
                                 <div className="d-flex align-items-center">
                                     <div className="d-flex gap-1">
                                         {[...Array(5)].map((_, index) => (
@@ -60,9 +49,18 @@ export default function ProductGrid({ products, grid }: { products: Product[], g
                                     <span className="d-inline-block text-grey font-primary mt-1 ms-2">{item.no_of_reviews} Reviews</span>
                                 </div>
                                 <div className="font-primary fw-3 d-flex gap-10 text-black align-items-center">
-                                    <span>₹{getDiscount(item.price, item.discount)}</span>
-                                    <s>₹{item.price}</s>
-                                    <span className="font-small bg-theme2 px-1 br-5">{item.discount}%</span>
+                                    {item.sale_price ? (<>
+                                        <span>₹{item.sale_price}</span>
+                                        <s>₹{item.regular_price}</s>
+                                        <span className="font-small bg-theme2 px-1 br-5">
+                                            {getDiscount(item.regular_price, item.sale_price)}%
+                                        </span>
+                                    </>) : (
+                                        <span>
+                                            ₹{item.regular_price}
+                                        </span>
+                                    )}
+
                                 </div>
                             </div>
 

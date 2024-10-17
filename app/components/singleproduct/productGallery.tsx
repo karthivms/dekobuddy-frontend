@@ -2,27 +2,17 @@
 
 import Image from 'next/image';
 import React, { useRef, useState, MouseEvent } from 'react';
-import galimages from "@/app/datas/singleproduct/gallery.json";
-
-interface Product {
-    id: number;
-    product_Image1: string;
-}
+import { productimage } from '@/app/types/types';
 
 
-const ProductGallery = () => {
+const ProductGallery = ({ images }: { images: productimage[] }) => {
 
-    const product = {
-        id: 1,
-        product_Image1: "/images/gallery_img_1.jpg"
-    }
 
 
     const [zoomPos, setZoomPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
     const [showZoom, setShowZoom] = useState(false);
-    const [activeImage, setActiveImage] = useState<Product>(product);
+    const [activeImage, setActiveImage] = useState<productimage>(images[0]);
     const imageRef = useRef<HTMLImageElement>(null);
-    const images = [product, ...galimages];
 
     const handleMouseMove = (e: MouseEvent) => {
         if (!imageRef.current) return;
@@ -47,19 +37,19 @@ const ProductGallery = () => {
         }
     };
 
-    const handleActiveImg = (image: Product) => setActiveImage(image);
+    const handleActiveImg = (image: productimage) => setActiveImage(image);
 
     return (
         <div className='d-block d-lg-flex gap-40 align-items-center'>
             <div className='product-gallery wc-13 d-flex justify-content-around d-lg-block w-sm-100'>
-                {images.map((image: Product) => (
+                {images.map((image: productimage) => (
                     <div
                         key={`gallery_img_${image.id}`}
                         className={`${activeImage.id === image.id ? 'border-theme1-solid active' : "border-transparent-solid"} br-10 w-sm-18 mb-4`}
                         onMouseOver={() => handleActiveImg(image)}
                     >
                         <Image
-                            src={image.product_Image1}
+                            src={image.image}
                             alt={"gallery_image"}
                             width={80}
                             height={80}
@@ -73,10 +63,10 @@ const ProductGallery = () => {
                 onMouseMove={handleMouseMove}
                 onMouseEnter={() => setShowZoom(true)}
                 onMouseLeave={() => setShowZoom(false)}
-               >
+            >
                 <div className='product-image-block'>
                     <Image
-                        src={activeImage.product_Image1}
+                        src={activeImage.image}
                         alt={"gallery_image"}
                         width={552}
                         height={558}
@@ -93,7 +83,7 @@ const ProductGallery = () => {
                     <div
                         id="zoom-result"
                         className="zoomResult"
-                        style={{ display: showZoom ? 'block' : 'none', backgroundImage: `url(${activeImage.product_Image1})` }}
+                        style={{ display: showZoom ? 'block' : 'none', backgroundImage: `url(${activeImage.image})` }}
                     />
                 </div>
             </div>

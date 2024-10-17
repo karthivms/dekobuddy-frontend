@@ -3,7 +3,6 @@
 
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { Container } from 'react-bootstrap';
 import OrderSummary from './orderSummary';
 import products from "@/app/datas/category/products.json";
 

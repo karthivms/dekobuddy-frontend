@@ -11,7 +11,7 @@ import Search from '../icons/search';
 import { useEffect, useState } from 'react';
 
 
-export default function Menubar() {
+export default function Menubar({username}:{username:string}) {
     const cart = useSelector((state: RootState) => state.cart.cartItems);
     const wishlist = useSelector((state: RootState) => state.wishlist.wishlistItems);
 
@@ -65,7 +65,7 @@ export default function Menubar() {
                                             placeholder='Search for Products...'
                                             className="bg-theme1 border-transparent-solid br-3 wp-220 h-30 text-white font-primary pe-4" />
                                     </form>
-                                    <Menu cart={cart} wishlist={wishlist} hideOffcanvas={hideOffcanvas} />
+                                    <Menu cart={cart} username={username} wishlist={wishlist} hideOffcanvas={hideOffcanvas} />
                                 </Nav>
 
                             </Offcanvas.Body>

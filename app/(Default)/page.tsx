@@ -7,20 +7,35 @@ import Whychooseus from "@/app/components/home/whychooseus";
 import ScrollWrapper from "@/app/components/scrollanimation";
 const Testimonials = dynamic(() => import('@/app/components/home/testimonials'), { ssr: false });
 import '../sass/components/home.scss';
+import { apiRequest } from "../api/apiConfig";
 
 
+const fetchCategory = async () => {
+  try {
+    const response = await apiRequest('GET', '/api/parentcategory/');
+    return response;
 
-export default function Home() {
+  } catch (error) {
+    console.log(error);
+    throw error
+  }
+}
+
+
+export default async function Home() {
+
+  const data = await fetchCategory();
+
   return (
     <>
       <Banner />
 
       {/* <ScrollWrapper direction={20}> */}
-        <PromotionMenu />
+      <PromotionMenu />
       {/* </ScrollWrapper> */}
 
       <Videoplayer url={"/images/video1.jpg"} />
-      <CategoryMenu />
+      <CategoryMenu category={data} />
       <Videoplayer url={"/images/video2.jpg"} />
 
       <ScrollWrapper direction={20}>

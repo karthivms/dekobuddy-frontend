@@ -1,8 +1,11 @@
 import ScrollWrapper from "../scrollanimation";
 import NavigationMenu from "./navigationMenu";
-import category from "@/app/datas/home/categorymenu.json"
+import { CategoryItem } from "@/app/types/types";
 
-export default function CategoryMenu(){
+
+
+
+export default function CategoryMenu({category}:{category:CategoryItem[]}){
     const height = "280px"
     return(
         <div className="mt-4 pt-3"> 

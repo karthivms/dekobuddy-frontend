@@ -1,5 +1,5 @@
 import { SideBar } from "@/app/components/account/sideBar";
-import { Col, Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import "@/app/sass/components/account.scss"
 
 export default function RootLayout({
