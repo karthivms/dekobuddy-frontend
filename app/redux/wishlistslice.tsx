@@ -1,17 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
-import products from "@/app/datas/category/products.json";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { apiRequest } from '../api/apiConfig';
+import {Product} from '@/app/types/types'
 
-const data = products.slice(0, 6);
 
-interface Product {
-    id: number;
-    name: string;
-    img_url: string;
-    props: string;
-    no_of_reviews: number;
-    price: number;
-    discount: number;
-}
 
 type state = {
     wishlistItems: Product[];
@@ -19,15 +10,46 @@ type state = {
     actionTab: boolean;
     status: "loading" | "success" | "failure";
     error: string | undefined;
-  }
+}
 
-const initialState : state = {
-    wishlistItems: data,
+const initialState: state = {
+    wishlistItems: [],
     selectedItems: [],
     actionTab: false,
     status: "loading",
     error: undefined
 }
+
+export const fetchWishlistItems = createAsyncThunk<Product[], string, { rejectValue: string }>(
+    'wishlist/fetchWishlistItems',
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await apiRequest('GET', `http://localhost:3000/api/wishlist/6`);
+            console.log(response)
+            return response.data;
+        } catch (error) {
+            console.log(error)
+            return rejectWithValue('Failed to fetch wishlist items');
+            
+        }
+    }
+);
+
+
+export const removeWishlistItems = createAsyncThunk<Product[], string, { rejectValue: string }>(
+    'wishlist/fetchWishlistItems',
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await apiRequest('GET', `http://localhost:3000/api/wishlist/6`);
+            console.log(response)
+            return response.data;
+        } catch (error) {
+            console.log(error)
+            return rejectWithValue('Failed to fetch wishlist items');
+            
+        }
+    }
+);
 
 const wishlistSlice = createSlice({
     name: "wishlist",
@@ -54,13 +76,28 @@ const wishlistSlice = createSlice({
             state.wishlistItems = filteredItems;
             state.selectedItems = [];
         },
-        selectAllItems: (state : state) => {
-            const allitems = state.wishlistItems.map((item:Product) => item.id)
+        selectAllItems: (state: state) => {
+            const allitems = state.wishlistItems.map((item: Product) => item.id)
             state.selectedItems = allitems;
         },
-        deSelectAllItems: (state : state) => {
+        deSelectAllItems: (state: state) => {
             state.selectedItems = [];
         },
+    },
+
+    extraReducers: (builder) => {
+        builder.addCase(fetchWishlistItems.pending, (state) => {
+            state.status = 'loading';
+        });
+
+        builder.addCase(fetchWishlistItems.fulfilled, (state, action) => {
+            state.status = 'success';
+            state.wishlistItems = action.payload;
+        });
+
+        builder.addCase(fetchWishlistItems.rejected, (state) => {
+            state.status = 'failure';
+        });
     }
 })
 

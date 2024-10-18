@@ -14,6 +14,7 @@ export default function ActionTab() {
 
     return (
         <>
+          <h1 className="mt-3 font-h1  text-theme1 fw-4 pb-2">Wishlist</h1>
             {show && (<div className="bg-theme2 p-3 br-5 d-flex gap-20">
                 <button className="btn1 font-small d-flex align-items-center gap-1 px-2" onClick={() => dispatch(removeSelectedItems())}>
                     <CloseIcon />

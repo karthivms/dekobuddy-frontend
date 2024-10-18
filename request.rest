@@ -1,0 +1,27 @@
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/register/
+Authorization: Basic ZGVrbzoxMjM0
+Content-Type: application/json
+
+{
+    "username":"test2",
+    "email":"test2@gmail.com",
+    "password":"Test@1234",
+    "confirm_passwod":"Test@1234"
+}
+
+
+###
+
+GET http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/wishlist/6
+
+
+###
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/remove_cart_item//
+Authorization: Basic ZGVrbzoxMjM0
+Content-Type: application/json
+
+{
+    "id":1,
+    "user_id": "6"
+}
+

@@ -1,4 +1,11 @@
-export const getUser = (token: string) => {
+'use server'
+
+import { cookies } from "next/headers";
+
+export const getUser = () => {
+
+  const token = cookies().get("_acdkb")?.value;
+
     if (!token) return null;
   
     try {

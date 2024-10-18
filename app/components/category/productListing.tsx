@@ -30,7 +30,7 @@ export default function ProductGrid({ products, grid }: { products: Product[], g
                                 <div className="pro_btn_holder">
                                     <Image alt="product-image" width={384} height={384} className="w-100 d-none zoomimage h-auto br-10" src={item.images[1].image} loading="lazy" />
                                     <Image alt="product-image" width={384} height={384} className="w-100 initialimage h-auto br-10" src={item.images[2].image} loading="lazy" />
-                                    <Addtowishlist />
+                                    <Addtowishlist id={item.id}/>
                                     <button
                                         className="border-transparent-solid font-primary text-white py-1  wc-100 justify-content-center fw-3 d-flex align-items-center gap-6 cart_btn">
                                         <CartIcon2 /> Add to Cart

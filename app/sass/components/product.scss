@@ -180,22 +180,13 @@
         @media screen and (max-width:768px) {
             opacity: 1 !important;
             transform: translateX(0px);
-
         }
 
         .activeheart {
             display: none;
         }
 
-        &:hover {
-            .heart {
-                display: none;
-            }
-
-            .activeheart {
-                display: block;
-            }
-        }
+        
     }
 
     .cart_btn {
