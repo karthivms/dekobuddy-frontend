@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiRequest } from '../api/apiConfig';
-import {Product} from '@/app/types/types'
+import { Product } from '@/app/types/types'
 
 
 
@@ -23,15 +23,18 @@ const initialState: state = {
 export const fetchWishlistItems = createAsyncThunk<Product[], string, { rejectValue: string }>(
     'wishlist/fetchWishlistItems',
     async (id, { rejectWithValue }) => {
-        try {
-            const response = await apiRequest('GET', `http://localhost:3000/api/wishlist/6`);
-            console.log(response)
-            return response.data;
-        } catch (error) {
-            console.log(error)
-            return rejectWithValue('Failed to fetch wishlist items');
-            
+        if (id) {
+            try {
+                const response = await apiRequest('GET', `http://localhost:3000/api/wishlist/${id}`);
+                console.log(response)
+                return response.data;
+            } catch (error) {
+                console.log(error)
+                return rejectWithValue('Failed to fetch wishlist items');
+
+            }
         }
+        return [];
     }
 );
 
@@ -46,7 +49,7 @@ export const removeWishlistItems = createAsyncThunk<Product[], string, { rejectV
         } catch (error) {
             console.log(error)
             return rejectWithValue('Failed to fetch wishlist items');
-            
+
         }
     }
 );

@@ -1,7 +1,10 @@
 'use client'
 
 
-export default function QuanityHandler({count, setCount }:{count:number, setCount :  React.Dispatch<React.SetStateAction<number>>}) {
+import { useState } from "react"
+
+export default function QuanityHandler() {
+    const [count, setCount] = useState(1);
 
     const handleIncrementQuantity = () => {
         if (count < 5) {
@@ -14,8 +17,6 @@ export default function QuanityHandler({count, setCount }:{count:number, setCoun
             setCount(count - 1);
         }
     }
-
-   
     return (
         <div className="mt-4 d-flex align-items-center text-theme1 fw-4 gap-1 quanity-handler">
             <button

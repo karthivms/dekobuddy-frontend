@@ -8,11 +8,13 @@ import { getUser } from "../utilis/auth";
 export default async function Header() {
 
     let username: string = "";
+    let userid : string = ""
     
         const userData = await getUser()
 
         if(userData){
-            username = userData.username
+            username = userData.username;
+            userid = userData.user_id;
         }
      
  
@@ -20,7 +22,7 @@ export default async function Header() {
     return (
         <header>
            <Topbar/>
-           <Menubar username={username }/>
+           <Menubar username={username } userid={userid}/>
         </header>
     )
 }

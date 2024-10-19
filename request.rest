@@ -12,16 +12,14 @@ Content-Type: application/json
 
 ###
 
-GET http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/wishlist/6
+GET http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/products
 
 
 ###
-POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/remove_cart_item//
-Authorization: Basic ZGVrbzoxMjM0
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/remove_cart_item/1746/
 Content-Type: application/json
 
 {
-    "id":1,
-    "user_id": "6"
+    "user_id": "15"
 }
 

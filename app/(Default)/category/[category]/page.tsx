@@ -28,23 +28,24 @@ export async function generateStaticParams() {
 
 
  async function getProducts(category: string) {
-    const url = `/api/productfilterlistview/?categories__slug=${category}`;
+    const url = `/api/products/?category=${category}&limit=20`;
     const response = await apiRequest('GET', url);
     return response.results;
 }
 
 export default async function page({ params }: { params: Params }) {
     const { category } = params;
-    const productsData = await getProducts(category);
+    const productsData =  getProducts(category);
 
 
-    const categoriesData = await getCategories();
+    const categoriesData =  getCategories();
 
     const [products, categories] = await Promise.all([productsData, categoriesData]);
 
     if (products.length === 0) {
         return redirect("/404")
     }
+
     return (
         <>
             <Container fluid className="banner2">

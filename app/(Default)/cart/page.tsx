@@ -3,12 +3,21 @@
 import { Container } from "react-bootstrap"
 import CartTable from "@/app/components/cart/cartTable"
 import "@/app/sass/components/cart.scss"
+import { getUser } from "@/app/utilis/auth";
 
-export default function page() {
+export default async function page() {
+
+    let userid: string = "";
+
+    const userData = await getUser();
+
+    if (userData) {
+        userid = userData.user_id;
+    }
+
     return (
         <Container className="py-4">
-            <h1 className="mt-3 font-h1 font-sm-h2 text-theme1 fw-4 pb-2">Cart</h1>
-            <CartTable/>
+            <CartTable userid={userid}/>
         </Container>
     )
 }

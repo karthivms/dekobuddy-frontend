@@ -11,7 +11,7 @@ const ProductGallery = ({ images }: { images: productimage[] }) => {
 
     const [zoomPos, setZoomPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
     const [showZoom, setShowZoom] = useState(false);
-    const [activeImage, setActiveImage] = useState<productimage>(images[0]);
+    const [activeImage, setActiveImage] = useState<productimage>(images[2]);
     const imageRef = useRef<HTMLImageElement>(null);
 
     const handleMouseMove = (e: MouseEvent) => {

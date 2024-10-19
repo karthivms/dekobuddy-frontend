@@ -7,6 +7,7 @@ import SimilarProducts from "@/app/components/singleproduct/similarproducts";
 import "@/app/sass/components/product.scss";
 import GallerySlider from "@/app/components/singleproduct/gallerySlider";
 import { apiRequest } from "@/app/api/apiConfig";
+import { getUser } from "@/app/utilis/auth";
 
 
 interface params {
@@ -16,12 +17,12 @@ interface params {
 
 
 const getProduct = async (id: number) => {
-    const response = await apiRequest('GET', `/api/productfilterlistview/?id=${id}`);
+    const response = await apiRequest('GET', `/api/products/?id=${id}`);
     return response.results[0];
 }
 
 async function getSimilarProducts(category: string) {
-    const url = `/api/productfilterlistview/?categories__slug=${category}`;
+    const url = `/api/products/?category=${category}&limit=5`;
 
     const response = await apiRequest('GET', url);
 
@@ -34,9 +35,15 @@ export default async function page({ params }: { params: params }) {
 
     const { id } = params;
     
-    const data = await getProduct(id);
+    const data =  await getProduct(id);
 
-    const simproducts = await getSimilarProducts(data.categories[0].slug)
+    const [simproducts, userData] = await Promise.all([getSimilarProducts(data.categories[0].slug), getUser()])
+
+    let userid: string = "";
+
+    if (userData) {
+        userid = userData.user_id;
+    }
 
     return (
         <>
@@ -49,7 +56,7 @@ export default async function page({ params }: { params: params }) {
                         <GallerySlider />
                     </Col>
                     <Col>
-                        <ProductData data={data} />
+                        <ProductData data={data} userid={userid}/>
                     </Col>
                 </Row>
             </Container>

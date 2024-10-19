@@ -11,10 +11,12 @@ import formatPriceIndian from "@/app/utilis/formatPrice";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
-export default function ProductData({ data }: { data: Product }) {
+export default function ProductData({ data, userid }: { data: Product, userid: string }) {
     const router = useRouter();
     const params = useSearchParams();
     const [actVariation, setActVariation] = useState<variations>(data.variations[0]);
+    const [count, setCount] = useState(1);
+console.log(userid)
 
     useEffect(() => {
         const currentVariation = params.get('variation');
@@ -37,6 +39,15 @@ export default function ProductData({ data }: { data: Product }) {
         }
         return 0;
     }, []);
+
+
+    const cartdata = {
+        data: {
+            quantity: count,
+            user_id:  Number (userid)
+        },
+        productid:data.id
+    }
 
     return (
         <div className="ps-5 product_details">
@@ -71,18 +82,18 @@ export default function ProductData({ data }: { data: Product }) {
                         <span>₹{formatPriceIndian(data.sale_price)}</span>
                         <s>₹{formatPriceIndian(data.regular_price)}</s>
                         <span className="font-small bg-theme2 px-1 br-5">
-                            {getDiscount(data.regular_price, data.sale_price)}%
+                            {getDiscount(Number(data.regular_price), data.sale_price)}%
                         </span>
                     </>
                 ) : (<>
-                    {data.variations.length > 0? ( <span>{formatPriceIndian(actVariation.regular_price)}</span>
-                    ):( <span>{formatPriceIndian(data.regular_price)}</span>)}
-                   </>
+                    {data.variations.length > 0 ? (<span>{formatPriceIndian(actVariation.regular_price)}</span>
+                    ) : (<span>{formatPriceIndian(data.regular_price)}</span>)}
+                </>
                 )}
             </div>
 
-            <QuanityHandler />
-            <ActionButtons />
+            <QuanityHandler count={count} setCount={setCount} />
+            <ActionButtons cartdata={cartdata}/>
             <Options title={data.name} />
         </div>
     );

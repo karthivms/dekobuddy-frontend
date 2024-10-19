@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import CartIcon from "../icons/carticon";
 import Wishlisticon from "../icons/wishlisticon";
 import AccountIcon from "../icons/accounticon";
+import { Product } from "@/app/types/types";
 
 
 
@@ -15,7 +16,7 @@ interface MenuItem {
     link: string;
 }
 
-interface Product {
+interface Product2 {
     id: number;
     name: string;
     img_url: string;
@@ -26,7 +27,7 @@ interface Product {
 }
 
 interface MenuProps {
-    cart: Array<Product>;
+    cart: Array<Product2>;
     wishlist: Array<Product>;
     hideOffcanvas: () => void;
     username:string

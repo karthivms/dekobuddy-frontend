@@ -5,15 +5,17 @@ import Menu from './menu';
 import Link from 'next/link';
 import Image from 'next/image';
 import logo from "@/public/images/logo.svg";
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/app/redux/store';
 import Search from '../icons/search';
 import { useEffect, useState } from 'react';
+import { fetchWishlistItems } from '@/app/redux/wishlistslice';
 
 
-export default function Menubar({username}:{username:string}) {
+export default function Menubar({username, userid}:{username:string, userid:string}) {
     const cart = useSelector((state: RootState) => state.cart.cartItems);
     const wishlist = useSelector((state: RootState) => state.wishlist.wishlistItems);
+    const dispatch:AppDispatch = useDispatch();
 
     const [show, setShow] = useState(false);
 
@@ -22,9 +24,12 @@ export default function Menubar({username}:{username:string}) {
     }
 
 
+  useEffect(() => {
+    dispatch(fetchWishlistItems(userid))
+  }, [dispatch, userid])
+
+
     useEffect(() => {
-
-
 
         const handleClickOutside = (event: MouseEvent) => {
             const offcanvasElement = document.querySelector('.offcanvas');

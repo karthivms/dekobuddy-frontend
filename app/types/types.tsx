@@ -23,11 +23,23 @@ export interface User {
     categories:CategoryItem[]
     short_description:string;
     variations:variations[]
-    props: string;
     sale_price: number
     no_of_reviews: number;
-    regular_price: number;
-    discount: number;
+    regular_price: string;
+}
+
+export interface cartdata {
+    data: {
+        quantity: number,
+        user_id: number
+    }
+    productid: number
+}
+
+
+export interface cartItem{
+    id:number,
+    products:Product
 }
 
 
