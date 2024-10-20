@@ -10,6 +10,7 @@ import { AppDispatch, RootState } from '@/app/redux/store';
 import Search from '../icons/search';
 import { useEffect, useState } from 'react';
 import { fetchWishlistItems } from '@/app/redux/wishlistslice';
+import { fetchCartItems } from '@/app/redux/cartSlice';
 
 
 export default function Menubar({username, userid}:{username:string, userid:string}) {
@@ -26,6 +27,7 @@ export default function Menubar({username, userid}:{username:string, userid:stri
 
   useEffect(() => {
     dispatch(fetchWishlistItems(userid))
+    dispatch(fetchCartItems(userid))
   }, [dispatch, userid])
 
 
@@ -70,7 +72,7 @@ export default function Menubar({username, userid}:{username:string, userid:stri
                                             placeholder='Search for Products...'
                                             className="bg-theme1 border-transparent-solid br-3 wp-220 h-30 text-white font-primary pe-4" />
                                     </form>
-                                    <Menu cart={cart} username={username} wishlist={wishlist} hideOffcanvas={hideOffcanvas} />
+                                    <Menu cart={cart.length} username={username} wishlist={wishlist.length} hideOffcanvas={hideOffcanvas} />
                                 </Nav>
 
                             </Offcanvas.Body>

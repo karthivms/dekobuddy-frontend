@@ -6,7 +6,7 @@ import { RootState } from '@/app/redux/store';
 
 export default function Selected() {
 
-    const attributes = useSelector((state: RootState) => state.attribute)
+    const attributes = useSelector((state: RootState) => state.product.attributes)
     return (
         <>
             {

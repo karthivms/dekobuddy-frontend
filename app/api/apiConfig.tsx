@@ -25,7 +25,7 @@ export const apiRequest = async < D = unknown, P = unknown>(
 
 ) => {
     try {
-        const response = await instance({ method, url, data, params })
+        const response = await instance({ method, url, ...(data ? { data } : {}),  ...(params ? { params } : {})})
         return response.data;
     } catch (error) {
         if (axios.isAxiosError(error)) {

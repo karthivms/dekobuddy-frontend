@@ -33,12 +33,6 @@ export default function CategoryListing({ category }: { category: CategoryItem[]
                     {category.map((item: CategoryItem, index) => (
                         <div key={`${item.name}_${index}`} className="mt-1 ps-3">
                             <Link href={item.slug}>
-                                <input
-                                    type="checkbox"
-                                    id={`${item.name}_value_${index}`}
-                                    className="me-1 bg-transparent"
-                                    name={item.name}
-                                />
                                 <label className="ms-1 font-primary text-black " htmlFor={`${item.name}_value_${index}`}>{item.name}</label><br />
                             </Link>
                         </div>

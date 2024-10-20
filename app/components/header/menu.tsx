@@ -16,19 +16,10 @@ interface MenuItem {
     link: string;
 }
 
-interface Product2 {
-    id: number;
-    name: string;
-    img_url: string;
-    props: string;
-    no_of_reviews: number;
-    price: number;
-    discount: number;
-}
 
 interface MenuProps {
-    cart: Array<Product2>;
-    wishlist: Array<Product>;
+    cart: number;
+    wishlist: number;
     hideOffcanvas: () => void;
     username:string
 }
@@ -59,9 +50,9 @@ const Menu: React.FC<MenuProps> = ({ cart, wishlist, username, hideOffcanvas }) 
     const getItems = (name: string) => {
         switch (name) {
             case "cart":
-                return cart?.length || 0;
+                return cart || 0;
             case "wishlist":
-                return wishlist?.length || 0;
+                return wishlist || 0;
             case "account":
                 return 0
         }

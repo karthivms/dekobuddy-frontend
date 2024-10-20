@@ -10,7 +10,7 @@ import { AppDispatch, RootState } from "@/app/redux/store";
 import { fetchWishlistItems, handleSelectedItem, removeItem, showTab } from "@/app/redux/wishlistslice";
 import CartIcon2 from "../icons/carticon2";
 import ActionTab from "./actionTab";
-import ProductSkeleton from "../productCard skeleton";
+import ProductSkeleton from "../productCardSkeleton";
 
 
 
@@ -83,7 +83,7 @@ export default function Wishlist({ userid }: { userid: string }) {
                                             </button>
                                         </div>
                                         <h6 className="m-0 mt-3 font-primary"><Link href={`/product/${item.id}/${createSlug(item.product_name)}`}>{item.product_name}</Link></h6>
-                                        <p className="m-0 font-primary text-grey">{item.props}</p>
+                                        {/* <p className="m-0 font-primary text-grey">{item.props}</p> */}
                                         <div className="font-primary fw-3 mt-2 d-flex gap-10 text-black align-items-center">
 
                                             {item.sale_price ? (<>

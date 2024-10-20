@@ -9,7 +9,7 @@ export const store = configureStore({
     reducer: {
         cart: cartReducer,
         wishlist : wishlistReducer,
-        attribute : filterReducer,
+        product : filterReducer,
         checkout : checkoutReducer,
     }
 })

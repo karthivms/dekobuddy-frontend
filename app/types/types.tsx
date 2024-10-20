@@ -29,17 +29,17 @@ export interface User {
 }
 
 export interface cartdata {
-    data: {
-        quantity: number,
-        user_id: number
-    }
-    productid: number
+    id:number,
+    products:Product,
+    quantity:number,
+    user_id: number
 }
 
 
 export interface cartItem{
     id:number,
-    products:Product
+    products:Product,
+    quantity:number
 }
 
 

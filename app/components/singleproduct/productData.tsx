@@ -11,12 +11,12 @@ import formatPriceIndian from "@/app/utilis/formatPrice";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
+
 export default function ProductData({ data, userid }: { data: Product, userid: string }) {
     const router = useRouter();
     const params = useSearchParams();
     const [actVariation, setActVariation] = useState<variations>(data.variations[0]);
     const [count, setCount] = useState(1);
-console.log(userid)
 
     useEffect(() => {
         const currentVariation = params.get('variation');
@@ -41,12 +41,9 @@ console.log(userid)
     }, []);
 
 
-    const cartdata = {
-        data: {
-            quantity: count,
-            user_id:  Number (userid)
-        },
-        productid:data.id
+    const cartAPiinfo = {
+        quantity: count,
+        user_id: Number(userid)
     }
 
     return (
@@ -93,7 +90,7 @@ console.log(userid)
             </div>
 
             <QuanityHandler count={count} setCount={setCount} />
-            <ActionButtons cartdata={cartdata}/>
+            <ActionButtons Apiinfo={cartAPiinfo} productdata={data} />
             <Options title={data.name} />
         </div>
     );

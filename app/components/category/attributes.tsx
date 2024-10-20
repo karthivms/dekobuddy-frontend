@@ -22,7 +22,7 @@ const ArrowIcon = ({ open }: { open: boolean }) => (
 export default function Attributes({ attribute }: { attribute: Attribute }) {
     const [open, setOpen] = useState(true);
     const dispatch = useDispatch();
-    const selectedAttributes = useSelector((state: RootState) => state.attribute)
+    const selectedAttributes = useSelector((state: RootState) => state.product.attributes)
 
     const handleCheckboxChange = (item: string, ischecked: boolean) => {
         if (ischecked) {

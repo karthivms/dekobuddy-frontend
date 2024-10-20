@@ -1,5 +1,6 @@
-$skeleton-bg: #D3D3D3;
-$skeleton-shimmer: linear-gradient(90deg, $skeleton-bg, #f6f6f6, $skeleton-bg);
+@import '@/app/sass/variables.scss';
+
+$skeleton-shimmer: linear-gradient(90deg, $primary-color, #f6f6f6, $primary-color);
 $skeleton-animation-duration: 4.5s;
 
 @keyframes shimmer {
@@ -13,7 +14,7 @@ $skeleton-animation-duration: 4.5s;
 }
 
 .skeleton {
-    background-color: $skeleton-bg;
+    background-color: lighten($color: $primary-color, $amount: 60%);
     position: relative;
     overflow: hidden;
 
