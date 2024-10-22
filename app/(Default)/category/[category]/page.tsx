@@ -27,24 +27,11 @@ export async function generateStaticParams() {
 }
 
 
- async function getProducts(category: string) {
-    const url = `/api/products/?category=${category}&limit=20`;
-    const response = await apiRequest('GET', url);
-    return response.results;
-}
-
 export default async function page({ params }: { params: Params }) {
-    const { category } = params;
-    const productsData =  getProducts(category);
 
 
-    const categoriesData =  getCategories();
+    const categories = await getCategories();
 
-    const [products, categories] = await Promise.all([productsData, categoriesData]);
-
-    if (products.length === 0) {
-        return redirect("/404")
-    }
 
     return (
         <>
@@ -59,8 +46,8 @@ export default async function page({ params }: { params: Params }) {
                         <Filter categories={categories} />
                     </Col>
                     <Col className="">
-                        <Topbar no_of_products={products.length} category={products[0]?.categories[0].name} />
-                        <ProductGrid products={products} grid={3} />
+                        <Topbar  />
+                        <ProductGrid grid={3} category={params.category}/>
                     </Col>
                 </Row>
             </Container>

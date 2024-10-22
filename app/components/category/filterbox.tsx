@@ -7,6 +7,7 @@ import ClearAll from "./clearAllbtn";
 import MobileFilter from "./MobileFIlter";
 import { CategoryItem } from "@/app/types/types";
 import CategoryListing from "./categoryListing";
+import PriceRangeSlider from "./priceRange";
 
 export default function Filter({ categories }: { categories: CategoryItem[] }) {
 
@@ -22,11 +23,7 @@ export default function Filter({ categories }: { categories: CategoryItem[] }) {
                 <div className="attributes-section">
                     <CategoryListing category={categories}/>
                     <Attributes attribute={size} />
-                    {/* <Attributes attribute={types} />
-                    <Attributes attribute={colors} />
-                    <Attributes attribute={materials} />
-                    <Attributes attribute={shapes} />
-                    <Attributes attribute={size} /> */}
+                    <PriceRangeSlider/>
                 </div>
             </div>
         </>

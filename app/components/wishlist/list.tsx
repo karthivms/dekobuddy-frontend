@@ -49,7 +49,7 @@ export default function Wishlist({ userid }: { userid: string }) {
         <Row className="my-4 row-gap-20">
             {status === 'loading' ? (<>
                 <h1 className="mt-3 font-h1  text-theme1 fw-4 pb-2">Wishlist</h1>
-                <ProductSkeleton />
+                <ProductSkeleton grid={20} array={5}/>
             </>
             ) : (<>
                 {wishlist.length > 0 ? (<>

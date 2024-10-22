@@ -1,11 +1,11 @@
 import { Col } from "react-bootstrap";
 import "@/app/sass/components/productskeleton.scss";
 
-export default function ProductSkeleton() {
+export default function ProductSkeleton({grid, array}:{grid:number, array : number}) {
     return (
         <>
-            {[...Array(5)].map((_, index) => (
-                <Col lg={20} key={`product_skeleton_${index}`} sm={3} className="p-1 mb-1 product_item ">
+            {[...Array(20)].map((_, index) => (
+                <Col lg={grid} key={`product_skeleton_${index}`} sm={3} className="p-1 mb-1 product_item ">
 
                     <div className="bg-white br-8 p-3 pt-1">
          

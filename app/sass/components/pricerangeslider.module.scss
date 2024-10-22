@@ -1,0 +1,54 @@
+@import '../variables.scss';
+
+
+.slider {
+    position: relative;
+  }
+  .slider .progress {
+    height: 100%;
+    left: 25%;
+    right: 25%;
+    position: absolute;
+
+  }
+  .rangeInput {
+    position: relative;
+
+    input {
+        position: absolute;
+        width: 100%;
+        height: 5px;
+        top: 50%;
+        background: none;
+        pointer-events: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+        &::-webkit-slider-thumb {
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid $primary-color;
+            pointer-events: auto;
+            cursor:e-resize;
+            -webkit-appearance: none;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+          }
+
+          &::-moz-range-thumb {
+            height: 17px;
+            width: 17px;
+            border: none;
+            cursor:e-resize;
+            border-radius: 50%;
+            background: #17a2b8;
+            pointer-events: auto;
+            -moz-appearance: none;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+          }
+      }
+  }
+
+

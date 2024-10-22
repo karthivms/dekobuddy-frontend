@@ -5,9 +5,18 @@ export async function GET(request: Request) {
     const username = process.env.API_USERNAME;
     const password = process.env.API_PASSWORD;
     const basicAuth = 'Basic ' + btoa(username + ':' + password);
+    const { searchParams } = new URL(request.url);
+    const category = searchParams.get('category'); 
+    const limit = searchParams.get('limit'); 
+    const offset = searchParams.get('offset'); 
+    const size = searchParams.get('size');
+    const sort_by = searchParams.get('sort_by');
+    const min_price = searchParams.get('min_price');
+    const max_price = searchParams.get('max_price');
 
+console.log(size)
     try {
-        const res = await fetch(`${baseUrl}/api/products/`, {
+        const res = await fetch(`${baseUrl}/api/products/?category=${category}&limit=${limit}&offset=${offset}&size=${size}&sort_by=${sort_by}&min_price=${min_price}&max_price=${max_price}`, {
             headers: {
                 'Authorization': basicAuth,
             },

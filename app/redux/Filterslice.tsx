@@ -1,38 +1,75 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiRequest } from '../api/apiConfig';
 import { Product } from '../types/types';
+import { RootState } from './store';
 
 
 interface initialState {
     attributes: string[]
-    products:Product[]
+    products: Product[]
     status: "loading" | "success" | "failure",
-    error: undefined
+    error: undefined,
+    count: number,
+    limit: number,
+    offset: number,
+    sort: string | null,
+    minprice: number,
+    maxprice: number,
+    currentCategory: string
 }
 
 const initialState: initialState = {
     attributes: [],
-    products:[],
+    products: [],
     status: "loading",
     error: undefined,
+    count: 0,
+    limit: 20,
+    offset: 0,
+    sort: null,
+    minprice: 4000,
+    maxprice: 40000,
+    currentCategory: ''
 }
 
-export const getProducts = createAsyncThunk<Product[],{ rejectValue: string }>(
+interface APIResponse {
+    count: number,
+    results: Product[]
+}
+
+export const getProducts = createAsyncThunk<APIResponse, string, { rejectValue: string }>(
     "products/getproducts",
-    async (_, { rejectWithValue }) => {
+    async (category, { rejectWithValue, getState }) => {
+
+        const state = getState() as RootState;
+        const limit = state.product.limit;
+        const offset = state.product.offset;
+        const size = state.product.attributes.join().replace(/\s+/g, '');
+        const sort = state.product.sort;
+        const min_price = state.product.minprice;
+        const max_price = state.product.maxprice;
 
         try {
-            const response = await apiRequest('GET', `http://localhost:3000/api/products`);
-            const data = await response.json();
-            return data.data.results;
+            const response = await apiRequest(
+                'GET', `http://localhost:3000/api/products`,
+                null,
+                {
+                    category: category,
+                    limit: limit,
+                    offset: offset,
+                    size: size,
+                    sort_by: sort,
+                    min_price: min_price,
+                    max_price: max_price
+                });
+            return response.data;
+
         } catch (error) {
             console.log(error);
             return rejectWithValue('Failed to get items');
         }
 
     })
-
-
 
 
 const filterSlice = createSlice({
@@ -46,7 +83,22 @@ const filterSlice = createSlice({
             state.attributes = state.attributes.filter(attr => attr !== action.payload);
         },
         clearAttributes: (state) => {
-            state.attributes = []
+            state.attributes = [];
+        },
+        updateOffset: (state, { payload }) => {
+            state.offset = payload;
+        },
+        updateSort: (state, { payload }) => {
+            state.sort = payload;
+        },
+        updateMinPrice: (state, { payload }) => {
+            state.minprice = payload;
+        },
+        updateMaxPrice: (state, { payload }) => {
+            state.maxprice = payload;
+        },
+        updateCurrentCategory: (state, { payload }) => {
+            state.currentCategory = payload;
         }
     },
     extraReducers: (builder) => {
@@ -55,7 +107,8 @@ const filterSlice = createSlice({
         });
         builder.addCase(getProducts.fulfilled, (state, action) => {
             state.status = "success";
-            state.products = action.payload;
+            state.count = action.payload.count;
+            state.products = action.payload.results;
         });
         builder.addCase(getProducts.rejected, (state) => {
             state.status = "failure";
@@ -63,7 +116,15 @@ const filterSlice = createSlice({
     }
 })
 
-export const { addAttribute, removeAttribute, clearAttributes } = filterSlice.actions;
-
+export const {
+    addAttribute,
+    removeAttribute,
+    clearAttributes,
+    updateOffset,
+    updateSort,
+    updateMinPrice,
+    updateCurrentCategory,
+    updateMaxPrice }
+    = filterSlice.actions;
 
 export default filterSlice.reducer;

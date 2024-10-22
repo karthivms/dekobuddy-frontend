@@ -17,7 +17,7 @@ export default function ActionButtons({ Apiinfo , productdata }: {Apiinfo:ApiInf
 
     const handleCartUpdate = () =>{
         const cartData = {
-            id: cartproducts[cartproducts.length - 1].id + 1,
+            id: cartproducts.length !== 0? cartproducts[cartproducts.length - 1].id + 1 : 1,
             products: productdata,
             quantity : Apiinfo.quantity,
             user_id:Apiinfo.user_id
