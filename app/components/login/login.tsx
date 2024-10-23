@@ -5,9 +5,9 @@ import Image from 'next/image';
 import { useState } from "react";
 import EyeOn from "../icons/eyeOn";
 import EyeOff from "../icons/eyeOff";
-import Link from "next/link";
 import { LoginUser } from "@/app/api/login";
 import { useFormStatus } from "react-dom";
+import ForgotPassword from "./forgotpassword";
 
 
 
@@ -132,7 +132,7 @@ export default function Login() {
                         <input type='checkbox' id="remember" className='me-2 text-black' />
                         <label htmlFor='remember'>Remember Me</label>
                     </span>
-                    <Link href={'/'} className='text-theme1 fw-3'>Forgot Password?</Link>
+                    <ForgotPassword />
                 </div>
                 {responseError && <div className="text-danger text-center mb-4 font-primary fw-3">{responseError}</div>}
                 <button className='btn3 fw-3 text-uppercase w-100 py-2' type="submit">{pending ? ("loading") : ("Log In")}</button>
@@ -142,7 +142,7 @@ export default function Login() {
                 <span className='fw-3 text-grey2'>Or</span>
                 <hr className="wc-40 d-inline-block" />
             </div>
-            <button className='bg-grey3 mt-2 border-border2-solid br-5 py-2 wc-80 fw-3 mx-auto d-block text-grey2 font-secondary '>
+            <button  className='bg-grey3 mt-2 border-border2-solid br-5 py-2 wc-80 fw-3 mx-auto d-block text-grey2 font-secondary '>
                 <Image src={google} width={18} height={18} alt='google' className=' d-inline-block mb-1' />
                 <span className='ms-2'>Sign in with Google</span>
             </button>

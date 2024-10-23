@@ -1,0 +1,22 @@
+.banner3 {
+    background-image: url("/images/about-banner.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+
+    @media screen and (max-width:600px) {
+        height: 200px;
+        background-position: right;
+    }
+}
+
+.about-image-div{
+    position: relative;
+
+    .experience{
+        position: absolute;
+        top: -40px;
+        right: -35px;
+    }
+}

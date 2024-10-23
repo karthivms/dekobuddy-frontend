@@ -13,6 +13,7 @@ import { AppDispatch, RootState } from "@/app/redux/store";
 import { getProducts, updateCurrentCategory, updateOffset } from "@/app/redux/Filterslice";
 import ProductSkeleton from "../productCardSkeleton";
 import Pagination from "./pagination";
+import Modal from "./Modal";
 
 
 export default function ProductGrid({ grid, category }: { grid: number, category: string }) {
@@ -20,7 +21,8 @@ export default function ProductGrid({ grid, category }: { grid: number, category
     const products = useSelector((state: RootState) => state.product.products);
     const state = useSelector((state: RootState) => state.product);
     const status = useSelector((state: RootState) => state.product.status);
-    const count = state.count
+    const count = state.count;
+    const [attModal, setAttModal] = useState<number | null>(null);
 
     const dispatch: AppDispatch = useDispatch()
 
@@ -61,7 +63,11 @@ export default function ProductGrid({ grid, category }: { grid: number, category
 
     useEffect(() => {
         dispatch(getProducts(category))
-    }, [state.attributes, category, state.offset, state.sort])
+    }, [state.attributes, category, state.offset, state.sort]);
+
+    const handleQuickAddClick = (productId: number) => {
+        setAttModal(attModal === productId ? null : productId);
+    };
 
     return (
         <>      <Row className="mt-4">
@@ -72,13 +78,16 @@ export default function ProductGrid({ grid, category }: { grid: number, category
                             <div className="bg-white br-8 p-3">
                                 <div className="product_grid">
                                     <div className="pro_btn_holder">
-                                        <Image alt="product-image" width={384} height={384} className="w-100 d-none zoomimage h-auto br-10" src={item.images[1].image} loading="lazy" />
+                                        <Image alt="product-image" width={384} height={384} className="w-100 zoomimage h-auto br-10" src={item.images[1].image} loading="lazy" />
                                         <Image alt="product-image" width={384} height={384} className="w-100 initialimage h-auto br-10" src={item.images[2].image} loading="lazy" />
                                         <Addtowishlist id={item.id} />
                                         <button
-                                            className="border-transparent-solid font-primary text-white py-1  wc-100 justify-content-center fw-3 d-flex align-items-center gap-6 cart_btn">
-                                            <CartIcon2 /> Add to Cart
+                                            className="border-transparent-solid font-primary text-white py-1  wc-100 justify-content-center fw-3 d-flex align-items-center gap-6 cart_btn"
+                                            onClick={() => handleQuickAddClick(item.id)}>
+                                            <CartIcon2 /> Quick Add
                                         </button>
+                                        {attModal === item.id && (
+                                            <Modal variations = {item.variations} closeModal={() => setAttModal(null)}/>)}
                                     </div>
                                     <h6 className="m-0 mt-3 font-primary"><Link href={`/product/${item.id}/${createSlug(item.name)}`}>{item.name}</Link></h6>
                                     {/* <p className="m-0 font-primary text-grey">{item.props}</p> */}

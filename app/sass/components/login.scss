@@ -55,6 +55,17 @@
     }
 }
 
+.modal-dialog {
+    width: 35%;
+    .modal-content {
+        background-color: $body-color;
+    }
+
+    svg {
+        cursor: pointer;
+    }
+}
+
 @media screen and (max-width:768px) {
     .login_page {
         padding: 0 !important;

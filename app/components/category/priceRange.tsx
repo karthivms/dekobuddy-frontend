@@ -13,7 +13,7 @@ const PriceRangeSlider = () => {
   const maxValue = useSelector((state: RootState) => state.product.maxprice);
   const category = useSelector((state: RootState) => state.product.currentCategory);
   const minRange = 4000;
-  const maxRange = 40000;
+  const maxRange = 5000;
   const dispatch: AppDispatch = useDispatch()
 
   const handleMinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +45,7 @@ const PriceRangeSlider = () => {
     }, 500)
 
     return () => clearTimeout(debounceTimer);
-  }, [minValue, maxValue])
+  }, [handleMinChange, handleMaxChange])
 
   const [open, setOpen] = useState(true);
 

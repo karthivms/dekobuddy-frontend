@@ -20,7 +20,9 @@ POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/cart/add-to-
 Content-Type: application/json
 
 {
-    "quantity":1,
+    "review":"nice product",
+    "rating":5,
+    "product_id":1740,
     "user_id":15
 }
 

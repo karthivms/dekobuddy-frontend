@@ -28,7 +28,7 @@ const initialState: initialState = {
     offset: 0,
     sort: null,
     minprice: 4000,
-    maxprice: 40000,
+    maxprice: 5000,
     currentCategory: ''
 }
 
