@@ -7,11 +7,12 @@ export default async function Page() {
 
     let userid: string = "";
 
-    const userData = await getUser()
+    const userData = await getUser();
 
     if (userData) {
         userid = userData.user_id;
     }
+    
     return (
         <Container>
             <Wishlist userid={userid} />

@@ -13,7 +13,7 @@ interface response {
 
 export const LoginUser = async (data: User) => {
 
-    const response: response = await apiRequest('POST', 'api/login/', data);
+    const response: response = await apiRequest('POST', '/login/', data);
 
     if (!response.error) {
         const encryptedSessionData = response.access;
@@ -24,7 +24,6 @@ export const LoginUser = async (data: User) => {
             path: '/',
         })
         redirect('/')
-
     } else {
         return response.error;
     }

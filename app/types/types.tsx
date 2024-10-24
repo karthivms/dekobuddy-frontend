@@ -5,7 +5,7 @@ export interface CategoryItem {
     name: string;
     slug: string;
     image: string;
-    active:boolean
+    active: boolean
 }
 
 
@@ -13,33 +13,36 @@ export interface CategoryItem {
 export interface User {
     username: string;
     password: string;
-  }
+}
 
 
-  export interface Product {
+export interface Product {
     id: number;
     name: string;
     images: productimage[];
-    categories:CategoryItem[]
-    short_description:string;
-    variations:variations[]
+    categories: CategoryItem[]
+    short_description: string;
+    variations: variations[]
     sale_price: number
     no_of_reviews: number;
     regular_price: string;
+    average_rating: null | number;
+    rating_count: number;
+    review_count: number;
 }
 
 export interface cartdata {
-    id:number,
-    products:Product,
-    quantity:number,
+    id: number,
+    products: Product,
+    quantity: number,
     user_id: number
 }
 
 
-export interface cartItem{
-    id:number,
-    products:Product,
-    quantity:number
+export interface cartItem {
+    id: number,
+    products: Product,
+    quantity: number
 }
 
 
@@ -54,4 +57,10 @@ export interface variations {
 export interface productimage {
     id: number,
     image: string
+}
+
+export interface Attribute {
+    id: number;
+    name: string;
+    values: string[];
 }

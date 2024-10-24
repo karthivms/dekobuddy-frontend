@@ -18,7 +18,7 @@ export default function CartSkeleton() {
                         </thead>
                     </table>
                     {[...Array(3)].map((_, index) => (
-                        <div className="skeleton h-40 br-5 mt-3"></div>
+                        <div key={`cart_skelton_${index}`} className="skeleton h-40 br-5 mt-3"></div>
                     ))}
                 </Col>
                 <Col className="h-276 mt-3 br-10">

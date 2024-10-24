@@ -17,7 +17,7 @@ interface params {
 
 
 const getProduct = async (id: number) => {
-    const response = await apiRequest('GET', `/api/products/?id=${id}`);
+    const response = await apiRequest('GET', `/products/?id=${id}`);
     return response.results[0];
 }
 

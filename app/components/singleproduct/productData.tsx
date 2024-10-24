@@ -49,12 +49,13 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
     return (
         <div className="ps-5 product_details">
             <h1 className="text-black font-medium fw-4 font-sm-h2 line-normal">{data.name}</h1>
-            <div className="d-flex align-items-center gap-10 mt-4">
+            {data.rating_count !== 0 && (<div className="d-flex align-items-center gap-10 mt-4">
                 <span className="d-flex align-items-center gap-6 bg-theme1 w-auto px-1 br-5 font-primary text-white">
-                    3.4 <Star fill={"white"} size={"13"} />
+                    {data.average_rating} <Star fill={"white"} size={"13"} />
                 </span>
-                <span className="font-large text-black fw-3">35 Ratings & {data.no_of_reviews} Reviews</span>
-            </div>
+                <span className="font-large text-black fw-3">{data.rating_count} Ratings & {data.review_count} Reviews</span>
+            </div>)}
+            
             <p className="my-3">{data.short_description}</p>
 
             {data.variations.length > 0 && (

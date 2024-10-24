@@ -12,7 +12,7 @@ import { apiRequest } from "../api/apiConfig";
 
 const fetchCategory = async () => {
   try {
-    const response = await apiRequest('GET', '/api/parentcategory/');
+    const response = await apiRequest('GET', '/parentcategory/');
     return response;
 
   } catch (error) {

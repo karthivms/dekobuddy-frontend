@@ -2,16 +2,11 @@
 
 import { addAttribute, removeAttribute } from "@/app/redux/Filterslice";
 import { RootState } from "@/app/redux/store";
+import { Attribute } from "@/app/types/types";
 import { useState } from "react";
 import { Button, Collapse } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
-
-interface Attribute {
-    id: number;
-    name: string;
-    values: string[];
-}
 
 const ArrowIcon = ({ open }: { open: boolean }) => (
     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#868588" style={{ transform: open ? 'rotate(90deg)' : 'rotate(270deg)', transition: 'transform 0.3s ease' }}>

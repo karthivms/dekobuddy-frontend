@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { cartdata, cartItem } from '../types/types';
 import { apiRequest } from '../api/apiConfig';
+import { RootState } from './store';
 
 
 interface initialState {
@@ -16,20 +17,25 @@ export const fetchCartItems = createAsyncThunk<cartItem[], string, { rejectValue
         if (id) {
             try {
                 const response = await apiRequest('GET', `http://localhost:3000/api/cart/${id}`);
+                localStorage.removeItem('cart')
                 return response.data[0].product_items;
             } catch (error) {
-                console.log(error)
-                return rejectWithValue('Failed to fetch wishlist items');
+                console.log(error);
+                return rejectWithValue('Failed to fetch cart items');
 
             }
+        } else {
+            const data = localStorage.getItem("cart");
+            return data ? JSON.parse(data) : [];
         }
         return [];
+
     })
 
 
 export const AddCartItems = createAsyncThunk<cartItem[], cartdata, { rejectValue: string }>(
     "cart/additems",
-    async (cartdata, { rejectWithValue }) => {
+    async (cartdata, { rejectWithValue, getState }) => {
 
         if (cartdata.user_id) {
             try {
@@ -39,15 +45,17 @@ export const AddCartItems = createAsyncThunk<cartItem[], cartdata, { rejectValue
                 console.log(error);
                 return rejectWithValue('Failed to add cart items');
             }
+        } else {
+            const state = getState() as RootState;
+            localStorage.setItem("cart", JSON.stringify(state.cart.cartItems));
         }
-        return [];
     })
 
 const initialState: initialState = {
     cartItems: [],
     status: "loading",
     error: undefined,
-    total:0
+    total: 0
 }
 
 const cartSlice = createSlice({
@@ -104,7 +112,7 @@ const cartSlice = createSlice({
             })
 
             state.total = total;
-        },
+        }
     },
 
     extraReducers: (builder) => {

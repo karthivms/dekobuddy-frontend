@@ -21,7 +21,13 @@ export async function generateStaticParams() {
 }
 
  async function getCategories() {
-    const url = `/api/parentcategory/`;
+    const url = `/parentcategory/`;
+    const response = await apiRequest('GET', url);
+    return response ;
+}
+
+async function getAttributes(category:string) {
+    const url = `/attribute/?category=${category}`;
     const response = await apiRequest('GET', url);
     return response ;
 }
@@ -30,8 +36,10 @@ export async function generateStaticParams() {
 export default async function page({ params }: { params: Params }) {
 
 
-    const categories = await getCategories();
+    const categoriesPromise =  getCategories();
+    const attributesPromise = getAttributes(params.category)
 
+    const [categories, attributes] = await Promise.all([categoriesPromise, attributesPromise])
 
     return (
         <>
@@ -43,7 +51,7 @@ export default async function page({ params }: { params: Params }) {
             <Container>
                 <Row className="my-4">
                     <Col lg={3} >
-                        <Filter categories={categories} />
+                        <Filter categories={categories} attributes={attributes}/>
                     </Col>
                     <Col className="">
                         <Topbar  />

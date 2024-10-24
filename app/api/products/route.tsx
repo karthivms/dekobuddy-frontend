@@ -5,6 +5,7 @@ export async function GET(request: Request) {
     const username = process.env.API_USERNAME;
     const password = process.env.API_PASSWORD;
     const basicAuth = 'Basic ' + btoa(username + ':' + password);
+
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category'); 
     const limit = searchParams.get('limit'); 
@@ -14,14 +15,18 @@ export async function GET(request: Request) {
     const min_price = searchParams.get('min_price');
     const max_price = searchParams.get('max_price');
 
-console.log(size)
+
+
     try {
-        const res = await fetch(`${baseUrl}/api/products/?category=${category}&limit=${limit}&offset=${offset}&size=${size}&sort_by=${sort_by}&min_price=${min_price}&max_price=${max_price}`, {
+        const url = `${baseUrl}/products/?category=${category}&limit=${limit}&offset=${offset}&size=${size}&sort_by=${sort_by}&min_price=${min_price}&max_price=${max_price}`;
+
+        const res = await fetch(url, {
             headers: {
                 'Authorization': basicAuth,
             },
             cache: 'no-cache'
         });
+        
 
         if (!res.ok) {
             const errorData = await res.json();
@@ -29,6 +34,7 @@ console.log(size)
         }
 
         const data = await res.json();
+
         return NextResponse.json({ data }, { status: 200 });
     } catch (error: any) {
         console.error('Error fetching products:', error);

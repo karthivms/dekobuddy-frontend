@@ -13,10 +13,10 @@ import { fetchWishlistItems } from '@/app/redux/wishlistslice';
 import { fetchCartItems } from '@/app/redux/cartSlice';
 
 
-export default function Menubar({username, userid}:{username:string, userid:string}) {
+export default function Menubar({ username, userid }: { username: string, userid: string }) {
     const cart = useSelector((state: RootState) => state.cart.cartItems);
     const wishlist = useSelector((state: RootState) => state.wishlist.wishlistItems);
-    const dispatch:AppDispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     const [show, setShow] = useState(false);
 
@@ -24,11 +24,10 @@ export default function Menubar({username, userid}:{username:string, userid:stri
         setShow(false)
     }
 
-
-  useEffect(() => {
-    dispatch(fetchWishlistItems(userid))
-    dispatch(fetchCartItems(userid))
-  }, [dispatch, userid])
+    useEffect(() => {
+        dispatch(fetchWishlistItems(userid))
+        dispatch(fetchCartItems(userid))
+    }, [dispatch, userid])
 
 
     useEffect(() => {

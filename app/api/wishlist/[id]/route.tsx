@@ -5,7 +5,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const password = process.env.API_PASSWORD;
     const basicAuth = 'Basic ' + btoa(username + ':' + password);
     try {
-      const res = await fetch(`${baseUrl}/api/wishlist/${params.id}`, {
+      const res = await fetch(`${baseUrl}/wishlist/${params.id}`, {
         headers: {
           'Authorization': basicAuth,
         },

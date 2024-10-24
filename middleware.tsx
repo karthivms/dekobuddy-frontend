@@ -43,5 +43,5 @@ export function middleware(request: NextRequest, response : NextResponse) {
 }
 
 export const config = {
-    matcher: ['/account', '/login'],
+    matcher: ['/account/:path*', '/login'],
 };

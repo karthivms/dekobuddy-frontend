@@ -5,6 +5,7 @@ import EyeOff from "../icons/eyeOff";
 import EyeOn from "../icons/eyeOn";
 import { useState } from "react";
 import { RegisterUser } from "@/app/api/Register";
+import Activation from "./activationPopup";
 
 interface ErrorObject {
     [key: string]: string;
@@ -15,7 +16,11 @@ export default function SignUp() {
     const [showCon, setShowCon] = useState(false);
     const [terms, setTerms] = useState(false);
     const [responseError, setResponseError] = useState("");
+    const [modalShow, setModalShow] = useState(false);
 
+const handleModal = () => {
+    setModalShow(false)
+}
 
     const [formData, setFormData] = useState({
         username: '',
@@ -63,7 +68,7 @@ export default function SignUp() {
                 errors.username = "username is required";
             } else if (!usernameRegex.test(formData.username)) {
                 errors.username = "Username can only contain letters";
-            } else if(formData.username.length < 4){
+            } else if (formData.username.length < 4) {
                 errors.username = "username must be at least 4 characters";
             } else {
                 errors.username = "";
@@ -124,7 +129,14 @@ export default function SignUp() {
         if (error.username === "" && error.password === "" && error.email === "" && error.confirmpassword === "" && error.acceptterms === "") {
             setError({})
             const response = await RegisterUser(formData);
-            setResponseError(response)
+            if (response === "successfully registered") {
+                setResponseError("")
+                setModalShow(true)
+
+            } else {
+                setResponseError(response)
+
+            }
             setFormData({
                 username: "",
                 email: "",
@@ -231,6 +243,7 @@ export default function SignUp() {
                 {responseError && <div className="text-danger text-center mb-4 font-primary fw-3">{responseError}</div>}
                 <button className='btn3 fw-3 text-uppercase w-100 py-2'>Sign Up</button>
             </form>
+            <Activation show={modalShow} handleShow={handleModal}/>
         </div>
     )
 }

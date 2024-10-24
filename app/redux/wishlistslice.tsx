@@ -26,7 +26,7 @@ export const fetchWishlistItems = createAsyncThunk<Product[], string, { rejectVa
         if (id) {
             try {
                 const response = await apiRequest('GET', `http://localhost:3000/api/wishlist/${id}`);
-                console.log(response)
+                console.log(response.data)
                 return response.data;
             } catch (error) {
                 console.log(error)
@@ -44,7 +44,6 @@ export const removeWishlistItems = createAsyncThunk<Product[], string, { rejectV
     async (id, { rejectWithValue }) => {
         try {
             const response = await apiRequest('GET', `http://localhost:3000/api/wishlist/6`);
-            console.log(response)
             return response.data;
         } catch (error) {
             console.log(error)

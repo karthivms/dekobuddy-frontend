@@ -1,15 +1,13 @@
 
 import Attributes from "./attributes";
 import Selected from "./selectedAttributes";
-
-import size from "@/app/datas/category/carpetsize.json";
 import ClearAll from "./clearAllbtn";
 import MobileFilter from "./MobileFIlter";
-import { CategoryItem } from "@/app/types/types";
+import { CategoryItem, Attribute } from "@/app/types/types";
 import CategoryListing from "./categoryListing";
 import PriceRangeSlider from "./priceRange";
 
-export default function Filter({ categories }: { categories: CategoryItem[] }) {
+export default function Filter({ categories, attributes }: { categories: CategoryItem[], attributes: Attribute[] }) {
 
     return (
         <>
@@ -21,9 +19,13 @@ export default function Filter({ categories }: { categories: CategoryItem[] }) {
                 </div>
                 <Selected />
                 <div className="attributes-section">
-                    <CategoryListing category={categories}/>
-                    <Attributes attribute={size} />
-                    <PriceRangeSlider/>
+                    <CategoryListing category={categories} />
+                    {attributes.map((item) => (
+                        <div key={`attributes_item_item.id`}>
+                            <Attributes attribute={item} />
+                        </div>
+                    ))}
+                    <PriceRangeSlider />
                 </div>
             </div>
         </>
