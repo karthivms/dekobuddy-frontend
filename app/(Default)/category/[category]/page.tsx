@@ -6,6 +6,7 @@ import "@/app/sass/components/category.scss";
 import { apiRequest } from "@/app/api/apiConfig";
 import {  CategoryItem } from "@/app/types/types";
 import { redirect } from "next/navigation";
+import { getUser } from "@/app/utilis/auth";
 
 
 type Params = {
@@ -39,7 +40,16 @@ export default async function page({ params }: { params: Params }) {
     const categoriesPromise =  getCategories();
     const attributesPromise = getAttributes(params.category)
 
-    const [categories, attributes] = await Promise.all([categoriesPromise, attributesPromise])
+    const [categories, attributes] = await Promise.all([categoriesPromise, attributesPromise]);
+
+   const user = await getUser();
+
+   let userid: string = "";
+
+   if (user) {
+       userid = user.user_id;
+   }
+
 
     return (
         <>
@@ -55,7 +65,7 @@ export default async function page({ params }: { params: Params }) {
                     </Col>
                     <Col className="">
                         <Topbar  />
-                        <ProductGrid grid={3} category={params.category}/>
+                        <ProductGrid grid={3} userid={userid} category={params.category}/>
                     </Col>
                 </Row>
             </Container>

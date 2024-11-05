@@ -5,11 +5,11 @@ import Star from "../icons/star";
 import QuanityHandler from "./quantityHandler";
 import ActionButtons from "./actionButtons";
 import Options from "./options";
-
 import { Product, variations } from '@/app/types/types';
 import formatPriceIndian from "@/app/utilis/formatPrice";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import Toaster from "../toaster";
 
 
 export default function ProductData({ data, userid }: { data: Product, userid: string }) {
@@ -24,12 +24,13 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
         if (foundVariation) {
             setActVariation(foundVariation);
         }
-    }, [params, data.variations]);
+    }, [data]);
 
     const handleVariationChange = (item: variations) => {
         const currentParams = new URLSearchParams(params.toString());
         currentParams.set('variation', item.sku);
-        router.push(`?${currentParams}`);
+        router.replace(`?${currentParams.toString()}`);
+        setActVariation(item)
     };
 
     const getDiscount = useCallback((price: number, salePrice: number) => {
@@ -46,6 +47,13 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
         user_id: Number(userid)
     }
 
+    const handleToastClose = () => {
+        setShow(false);
+    }
+
+    const [show, setShow] = useState(false);
+    const [wishmsg, SetWishmsg] = useState(true)
+
     return (
         <div className="ps-5 product_details">
             <h1 className="text-black font-medium fw-4 font-sm-h2 line-normal">{data.name}</h1>
@@ -55,8 +63,7 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
                 </span>
                 <span className="font-large text-black fw-3">{data.rating_count} Ratings & {data.review_count} Reviews</span>
             </div>)}
-            
-            <p className="my-3">{data.short_description}</p>
+            <div className="my-4 font-primary des_list fw-3" dangerouslySetInnerHTML={{__html : data.short_description}}></div>
 
             {data.variations.length > 0 && (
                 <div className="d-flex gap-20 align-items-center mt-3">
@@ -90,9 +97,11 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
                 )}
             </div>
 
-            <QuanityHandler count={count} setCount={setCount} />
-            <ActionButtons Apiinfo={cartAPiinfo} productdata={data} />
-            <Options title={data.name} />
+            <QuanityHandler stock={actVariation.stock} count={count} setCount={setCount} />
+            <ActionButtons Apiinfo={cartAPiinfo} category={data.categories[0].name} productid={data.id} image={data.images[0]} variation={actVariation} name={data.name}/>
+            <Options handleMsg={SetWishmsg} handleToast={setShow} id={data.id} userid={Number(userid)} price={Number(data.regular_price)} images={data.images} title={data.name} />
+            <Toaster show={show} msg={wishmsg} handleClose={handleToastClose}/>
+
         </div>
     );
 }

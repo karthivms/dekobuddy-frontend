@@ -9,9 +9,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         headers: {
           'Authorization': basicAuth,
         },
-        next: {
-          revalidate: 3600
-        }
+        cache : 'no-cache'
       });
   
       if (!res.ok) {

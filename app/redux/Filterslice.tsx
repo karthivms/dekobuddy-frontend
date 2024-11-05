@@ -27,8 +27,8 @@ const initialState: initialState = {
     limit: 20,
     offset: 0,
     sort: null,
-    minprice: 4000,
-    maxprice: 5000,
+    minprice: 0,
+    maxprice: 0,
     currentCategory: ''
 }
 
@@ -62,6 +62,7 @@ export const getProducts = createAsyncThunk<APIResponse, string, { rejectValue: 
                     min_price: min_price,
                     max_price: max_price
                 });
+                console.log(response)
             return response.data;
 
         } catch (error) {

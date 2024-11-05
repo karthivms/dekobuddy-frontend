@@ -1,19 +1,18 @@
-import { cartdata } from "@/app/types/types";
 
-export async function POST(request: Request) {
+export async function DELETE(request: Request) {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     try {
-        const body: cartdata = await request.json();
+        const body = await request.json();
 
         const bodyData = {
-            quantity: body.product.quantity,
-            variation_id : body.product.id,
             user_id: body.user_id
         }
 
-        const res = await fetch(`${baseUrl}/cart/add-to-cart/${body.productid}/`, {
-            method: 'POST',
+        console.log(body)
+
+        const res = await fetch(`${baseUrl}/cart/remove/${body.cart_id}/`, {
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },

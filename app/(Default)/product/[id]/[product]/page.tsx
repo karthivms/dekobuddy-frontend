@@ -22,11 +22,18 @@ const getProduct = async (id: number) => {
 }
 
 async function getSimilarProducts(category: string) {
-    const url = `/api/products/?category=${category}&limit=5`;
+    const url = `/products/?category=${category}&limit=5`;
 
     const response = await apiRequest('GET', url);
 
     return response.results;
+}
+
+async function getReviews(id: number) {
+    const url = `/rating/`;
+    const body = { product_id: id }
+    const response = await apiRequest('GET', url, body);
+    return response;
 }
 
 
@@ -34,10 +41,10 @@ export default async function page({ params }: { params: params }) {
 
 
     const { id } = params;
-    
-    const data =  await getProduct(id);
 
-    const [simproducts, userData] = await Promise.all([getSimilarProducts(data.categories[0].slug), getUser()])
+    const data = await getProduct(id);
+
+    const [simproducts, userData, reviews] = await Promise.all([getSimilarProducts(data.categories[0].slug), getUser(), getReviews(id)])
 
     let userid: string = "";
 
@@ -50,20 +57,21 @@ export default async function page({ params }: { params: params }) {
             <Container className="single_product_info">
                 <Row className="my-5">
                     <Col lg={5} className="d-none d-md-none d-lg-block">
-                        <ProductGallery images={data.images}/>
+                        <ProductGallery images={data.images} />
                     </Col>
                     <Col lg={5} className="d-block d-md-block d-lg-none">
                         <GallerySlider />
                     </Col>
                     <Col>
-                        <ProductData data={data} userid={userid}/>
+                        <ProductData data={data} userid={userid} />
                     </Col>
                 </Row>
             </Container>
 
-            <Description data={data.description}/>
-            <Ratings />
-            <SimilarProducts data={simproducts}/>
+            <Description data={data.description} /> 
+            <Ratings userid={Number(userid)} productid={id} reviews={reviews} average={data.average_rating} rat_count={data.rating_count} rev_count={data.review_count} />
+            
+            <SimilarProducts data={simproducts} />
         </>
 
     )

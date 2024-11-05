@@ -11,14 +11,25 @@ interface initialState {
     total: number
 }
 
+interface updateBody{
+    cart_id: number,
+    quantity:number,
+    user_id:number
+}
+
+interface deletebody{
+    cart_id: number,
+    user_id:number
+}
+
 export const fetchCartItems = createAsyncThunk<cartItem[], string, { rejectValue: string }>(
     "cart/fetchitems",
     async (id, { rejectWithValue }) => {
         if (id) {
             try {
                 const response = await apiRequest('GET', `http://localhost:3000/api/cart/${id}`);
-                localStorage.removeItem('cart')
-                return response.data[0].product_items;
+                localStorage.removeItem('cart');
+                return response.data[0];
             } catch (error) {
                 console.log(error);
                 return rejectWithValue('Failed to fetch cart items');
@@ -51,6 +62,44 @@ export const AddCartItems = createAsyncThunk<cartItem[], cartdata, { rejectValue
         }
     })
 
+
+    export const UpdateQuantity = createAsyncThunk<cartItem[], updateBody, { rejectValue: string }>(
+        "cart/updateitems",
+        async (cartdata, { rejectWithValue, getState }) => {
+    
+            if (cartdata.user_id) {
+                try {
+                    const response = await apiRequest('PUT', `http://localhost:3000/api/cart/updatecart`, cartdata);
+                    return response;
+                } catch (error) {
+                    console.log(error);
+                    return rejectWithValue('Failed to update cart items');
+                }
+            } else {
+                const state = getState() as RootState;
+                localStorage.setItem("cart", JSON.stringify(state.cart.cartItems));
+            }
+        })
+
+
+        export const DeleteCartItem = createAsyncThunk<cartItem[], deletebody, { rejectValue: string }>(
+            "cart/deleteitems",
+            async (cartdata, { rejectWithValue, getState }) => {
+        
+                if (cartdata.user_id) {
+                    try {
+                        const response = await apiRequest('DELETE', `http://localhost:3000/api/cart/deletecart`, cartdata);
+                        return response;
+                    } catch (error) {
+                        console.log(error);
+                        return rejectWithValue('Failed to delete cart item');
+                    }
+                } else {
+                    const state = getState() as RootState;
+                    localStorage.setItem("cart", JSON.stringify(state.cart.cartItems));
+                }
+            })
+
 const initialState: initialState = {
     cartItems: [],
     status: "loading",
@@ -64,16 +113,16 @@ const cartSlice = createSlice({
     reducers: {
         AddtoCart: (state, { payload }) => {
 
-            const isItem = state.cartItems.find((item) => item.products.id === payload.products.id);
+            const isItem = state.cartItems.find((item) => item.product.id === payload.product.id);
 
             const item = {
                 id: payload.id,
-                products: payload.products,
+                product: payload.product,
                 quantity: payload.quantity
             }
 
             if (isItem) {
-                isItem.quantity++;
+                isItem.product.quantity++;
             } else {
                 state.cartItems.push(item);
             }
@@ -84,21 +133,21 @@ const cartSlice = createSlice({
             state.cartItems = removeItem;
         },
         incrementQuantity: (state, { payload }) => {
-            const isItem = state.cartItems.find((item) => item.products.id === payload);
+            const isItem = state.cartItems.find((item) => item.id === payload);
 
             if (isItem) {
-                isItem.quantity++;
+                isItem.product.quantity++;
             }
 
         },
         decrementQuantity: (state, { payload }) => {
-            const isItem = state.cartItems.find((item) => item.products.id === payload);
+            const isItem = state.cartItems.find((item) => item.id === payload);
 
             if (isItem) {
-                if (isItem.quantity === 1) {
-                    isItem.quantity = 1
+                if (isItem.product.quantity === 1) {
+                    isItem.product.quantity = 1
                 } else {
-                    isItem.quantity--;
+                    isItem.product.quantity--;
                 }
             }
         },
@@ -108,7 +157,7 @@ const cartSlice = createSlice({
 
             state.cartItems.forEach((item) => {
 
-                total = total + item.quantity * Number(item.products.regular_price);
+                total = total + item.product.quantity * Number(item.product.regular_price);
             })
 
             state.total = total;

@@ -33,16 +33,54 @@ export interface Product {
 
 export interface cartdata {
     id: number,
-    products: Product,
-    quantity: number,
+    productid : number,
+    product: cartProduct,
     user_id: number
 }
 
+export interface wishlistdata {
+    id: number,
+    productid : number,
+    product: wishListProduct,
+    user_id: number
+}
+
+export interface cartProduct {
+    id: number,
+    name: string,
+    categories: string,
+    size: string,
+    regular_price: number,
+    images: {
+        id: number,
+        image: string
+    },
+    quantity: number
+
+}
 
 export interface cartItem {
     id: number,
-    products: Product,
-    quantity: number
+    product: cartProduct,
+}
+
+
+export interface wishListProduct {
+    id: number,
+    name: string,
+    regular_price: number,
+    images: productimage[]
+}
+
+export interface rating {
+    user_name:string,
+    rating:number
+}
+
+
+export interface wishlistItem {
+    id: number,
+    products: wishListProduct,
 }
 
 

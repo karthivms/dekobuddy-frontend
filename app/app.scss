@@ -36,3 +36,17 @@ a {
 ul{
   list-style-type: none;
 }
+
+.cartsidebar_btn{
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+
+  a:hover{
+    background-color: $secondary-color !important;
+  }
+}
+
+.cartsidebar{
+  height: 90% !important;
+}

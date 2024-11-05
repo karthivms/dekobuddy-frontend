@@ -11,36 +11,42 @@
         left: 0;
         top: 0;
     }
-
-
 }
 
 
 .pro_btn_holder {
     position: relative;
+    overflow: hidden;
+    border-radius: 5px;
 
-    .cart_btn {
-        position: absolute;
-        transition: all 0.5s ease;
-        background-color: lighten($color: $primary-color, $amount: 5%);
-        opacity: 0 !important;
-        bottom: 0;
-        z-index: 2;
-        border-radius: 0 0 5px 5px;
-
-        @media screen and (max-width:768px) {
-            opacity: 1 !important;
-        }
-
-        &:hover {
-            background-color: $primary-color !important;
-
-        }
-    }
 }
 
 .product_item {
+
+
+    .zoomimage {
+        position: absolute;
+        opacity: 0;
+        transition: all 0.8s ease;
+        top: 0;
+        transform: scale(0.8);
+    }
+
+    .initialimage {
+        transition: all 0.8s ease;
+    }
+
     &:hover {
+
+        .initialimage {
+            opacity: 0;
+        }
+
+        .zoomimage {
+            opacity: 1;
+            transform: scale(1);
+
+        }
 
         .cart_btn {
             opacity: 1 !important;

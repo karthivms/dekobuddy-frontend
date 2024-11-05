@@ -1,10 +1,10 @@
 'use client'
 
 
-export default function QuanityHandler({count, setCount }:{count:number, setCount :  React.Dispatch<React.SetStateAction<number>>}) {
+export default function QuanityHandler({stock, count, setCount }:{stock : number, count:number, setCount :  React.Dispatch<React.SetStateAction<number>>}) {
 
     const handleIncrementQuantity = () => {
-        if (count < 5) {
+        if (count < stock) {
             setCount(count + 1);
         }
     }

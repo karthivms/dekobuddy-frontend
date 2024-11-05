@@ -1,19 +1,20 @@
-import { cartdata } from "@/app/types/types";
 
-export async function POST(request: Request) {
+export async function PUT(request: Request) {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     try {
-        const body: cartdata = await request.json();
+        const body = await request.json();
 
         const bodyData = {
-            quantity: body.product.quantity,
-            variation_id : body.product.id,
+            cart_item_id:body.cart_id,
+            quantity: body.quantity,
             user_id: body.user_id
         }
 
-        const res = await fetch(`${baseUrl}/cart/add-to-cart/${body.productid}/`, {
-            method: 'POST',
+        console.log(bodyData)
+
+        const res = await fetch(`${baseUrl}/update_quantity/`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },

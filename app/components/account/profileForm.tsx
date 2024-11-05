@@ -10,16 +10,30 @@ interface ErrorObject {
     [key: string]: string;
 }
 
+interface userData {
+    first_name: string,
+    last_name: string,
+    email: string,
+    phone: string,
+    confirm_password: string
+}
 
-export default function Profile() {
+
+export default function Profile({ data }: { data: userData }) {
     const [show, setShow] = useState(false);
 
     const [formData, setFormData] = useState({
-        username: '',
-        password: '',
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        phone: data.phone,
+        old_password: '',
+        new_password: '',
+        confirm_password: ''
+
     });
 
-    const [error, setError] = useState<{ username?: string; password?: string }>({});
+    const [error, setError] = useState<{ email?: string; new_password?: string; confirm_password? :string }>({});
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,19 +53,24 @@ export default function Profile() {
 
         const errors: ErrorObject = {};
 
-        if (field === 'username') {
-            if (!formData.username) {
-                errors.username = "username is required";
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (field === "new_password") {
+            if (!passwordRegex.test(formData.new_password)) {
+                errors.new_password = "password must be at least 8 characters, including uppercase, lowercase, number, and special character.";
             } else {
-                errors.username = "";
+                errors.new_password = "";
             }
         }
 
-        if (field === 'password') {
-            if (!formData.password) {
-                errors.password = "password is required";
+        if (field === 'email') {
+            if (!formData.email){
+                errors.email = "email is required";
+            }else if(!emailRegex.test(formData.email)) {
+                errors.email = "email is not valid";
             } else {
-                errors.password = "";
+                errors.email = "";
             }
         }
 
@@ -61,15 +80,19 @@ export default function Profile() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        validateForm("username");
-        validateForm("password");
+        validateForm("new_password");
+        validateForm("email");
 
-        if (error.username === "" && error.password === "") {
+        if (error.email === "" && error.new_password === "") {
             setError({})
-            alert("form submitted")
             setFormData({
-                username: "",
-                password: ""
+                first_name: data.first_name,
+                last_name: data.last_name,
+                email: data.email,
+                phone: data.phone,
+                old_password: '',
+                new_password: '',
+                confirm_password: ''
             })
         }
     }
@@ -78,36 +101,28 @@ export default function Profile() {
         <>
             <div className='w-100'>
                 <form className='profile-form' onSubmit={handleSubmit}>
-                    <div className='form-group grid-box'>
+                    <div className='form-group grid-box mb-4'>
                         <div>
                             <label>First name</label>
                             <input
                                 type="text"
-                                name="username"
+                                name="first_name"
                                 autoComplete='username'
-                                value={formData.username}
+                                value={formData.first_name}
                                 onChange={handleChange}
-                                onKeyUp={() => validateForm("username")}
-                                className={error.username ? ('border-danger') : ('')}
                             />
-                            <div className="min-h-21 my-1">
-                                {error.username && <p className="text-danger m-0  font-primary fw-3">{error.username}</p>}
-                            </div>
+
                         </div>
                         <div>
                             <label>Last name</label>
                             <input
                                 type="text"
-                                name="username"
-                                autoComplete='username'
-                                value={formData.username}
+                                name="last_name"
+                                autoComplete='last_name'
+                                value={formData.last_name}
                                 onChange={handleChange}
-                                onKeyUp={() => validateForm("username")}
-                                className={error.username ? ('border-danger') : ('')}
                             />
-                            <div className="min-h-21 my-1">
-                                {error.username && <p className="text-danger m-0  font-primary fw-3">{error.username}</p>}
-                            </div>
+
                         </div>
                     </div>
 
@@ -117,60 +132,55 @@ export default function Profile() {
                             <input
                                 type="text"
                                 name="email"
-                                value={formData.password}
+                                value={formData.email}
                             />
                         </div>
                         <div className="min-h-21 my-1">
-                            {error.password && <p className="text-danger m-0 font-primary fw-3">{error.password}</p>}
+                            {error.email && <p className="text-danger m-0 font-primary fw-3">{error.email}</p>}
                         </div>
                     </div>
 
-                    <div className='form-group'>
+                    <div className='form-group mb-4 pb-1'>
                         <label>Phone Number</label>
                         <div className="password-input">
                             <input
-                                type='text' 
-                                name="email"
-                                value={formData.password}
+                                type='text'
+                                name="Phone"
+                                value={formData.phone}
                             />
                         </div>
-                        <div className="min-h-21 my-1">
-                            {error.password && <p className="text-danger m-0 font-primary fw-3">{error.password}</p>}
-                        </div>
+                  
                     </div>
                     <h3 className="font-h3 fw-4 text-theme1 mb-3">Password Change</h3>
-                    <div className='form-group'>
+                    <div className='form-group mb-4'>
                         <label>Current Password</label>
                         <div className="password-input">
                             <input
                                 type={show ? 'text' : 'password'}
-                                name="password"
-                                value={formData.password}
+                                name="old_password"
+                                value={formData.old_password}
                                 onChange={handleChange}
-                                onKeyUp={() => validateForm("password")}
-                                autoComplete="new-password"
-                                className={error.password ? ('border-danger') : ('')} />
+                                autoComplete="old_password"
+                                />
                             <div
                                 className="text-theme1"
                                 onClick={() => setShow(!show)}>
                                 {show ? <EyeOff /> : <EyeOn />}
                             </div>
                         </div>
-                        <div className="min-h-21 my-1">
-                            {error.password && <p className="text-danger m-0 font-primary fw-3">{error.password}</p>}
-                        </div>
+                        
                     </div>
                     <div className='form-group'>
                         <label>New Password</label>
                         <div className="password-input">
                             <input
                                 type={show ? 'text' : 'password'}
-                                name="password"
-                                value={formData.password}
+                                name="new_password"
+                                value={formData.new_password}
                                 onChange={handleChange}
-                                onKeyUp={() => validateForm("password")}
-                                autoComplete="new-password"
-                                className={error.password ? ('border-danger') : ('')} />
+                                onKeyUp={() => validateForm("new_password")}
+                                autoComplete="new_password"
+                                className={error.new_password ? ('border-danger') : ('')} />
                             <div
                                 className="text-theme1"
                                 onClick={() => setShow(!show)}>
@@ -178,7 +188,7 @@ export default function Profile() {
                             </div>
                         </div>
                         <div className="min-h-21 my-1">
-                            {error.password && <p className="text-danger m-0 font-primary fw-3">{error.password}</p>}
+                            {error.new_password && <p className="text-danger m-0 font-primary fw-3">{error.new_password}</p>}
                         </div>
                     </div>
                     <div className='form-group'>
@@ -186,12 +196,12 @@ export default function Profile() {
                         <div className="password-input">
                             <input
                                 type={show ? 'text' : 'password'}
-                                name="password"
-                                value={formData.password}
+                                name="confirm_password"
+                                value={formData.confirm_password}
                                 onChange={handleChange}
-                                onKeyUp={() => validateForm("password")}
-                                autoComplete="new-password"
-                                className={error.password ? ('border-danger') : ('')} />
+                                onKeyUp={() => validateForm("confirm_password")}
+                                autoComplete="confirm_password"
+                                className={error.confirm_password ? ('border-danger') : ('')} />
                             <div
                                 className="text-theme1"
                                 onClick={() => setShow(!show)}>
@@ -199,7 +209,7 @@ export default function Profile() {
                             </div>
                         </div>
                         <div className="min-h-21 my-1">
-                            {error.password && <p className="text-danger m-0 font-primary fw-3">{error.password}</p>}
+                            {error.confirm_password && <p className="text-danger m-0 font-primary fw-3">{error.confirm_password}</p>}
                         </div>
                     </div>
 

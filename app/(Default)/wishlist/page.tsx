@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
 import Wishlist from "@/app/components/wishlist/list";
-import '@/app/sass/components/wishlist.scss'
+import '@/app/sass/components/wishlist.scss';
 import { getUser } from "@/app/utilis/auth";
 
 export default async function Page() {

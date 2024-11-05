@@ -2,22 +2,45 @@
 import heart from "@/public/images/heart.png"
 import filheart from "@/public/images/filled-heart.png"
 
-import { useState } from "react";
 import Image from "next/image";
-import { addToWishlist } from "@/app/api/addtowishlist";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/app/redux/store";
+import { AddItem, addWishlistItems } from "@/app/redux/wishlistslice";
+import { productimage } from "@/app/types/types";
+import { Dispatch, SetStateAction } from "react";
 
-export default function Addtowishlist({ id }: { id: number }) {
-    const [fill, setFill] = useState(false)
+export default function Addtowishlist({ handleMsg, handleToast, name, userid, id, price, images }: { handleMsg: Dispatch<SetStateAction<boolean>>, handleToast: Dispatch<SetStateAction<boolean>>, name: string, userid: number, id: number, price: number, images: productimage[] }) {
+    const wishlist = useSelector((state: RootState) => state.wishlist.wishlistItems);
+    const dispatch: AppDispatch = useDispatch();
+    const isWishlistItem = wishlist.some((item) => item.products.id === id)
 
-    const handleWishlistItem = async (id: number) => {
-        console.log(id)
-        setFill(!fill)
-        await addToWishlist(id)
+    const handleWishlistItem = () => {
+        const wishlistdata = {
+            id: wishlist[wishlist.length - 1]?.id + 1,
+            productid: id,
+            product:
+            {
+                id: id,
+                name: name,
+                regular_price: price,
+                images: images
+            },
+            user_id: userid
+        }
+
+        dispatch(AddItem(wishlistdata))
+        dispatch(addWishlistItems(wishlistdata));
+        handleToast(true)
+        if (isWishlistItem) {
+            handleMsg(false);
+        } else {
+            handleMsg(true);
+        }
     }
 
     return (
-        <div className="text-danger addtowishlist wp-26 h-26 d-flex justify-content-center align-items-center bg-white br-13" onClick={() => handleWishlistItem(id)}>
-            {fill ? (
+        <div className="text-danger addtowishlist wp-26 h-26 d-flex justify-content-center align-items-center bg-white br-13" onClick={handleWishlistItem}>
+            {isWishlistItem ? (
                 <Image width={15} height={13} alt="heart" className="wp-13 h-auto" src={filheart} />
             ) : (<><Image width={15} height={13} alt="heart" className="wp-13 h-auto heart" src={heart} />
                 <Image width={15} height={13} alt="heart" className="wp-13 h-auto activeheart" src={filheart} /></>)}

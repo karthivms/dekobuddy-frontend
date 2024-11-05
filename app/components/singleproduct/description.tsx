@@ -13,11 +13,12 @@ export default function Description({data}:{data:string}) {
                 className="description-tabs bb-border2-2"
             >
                 <Tab eventKey="Description" title="Description" className='pt-5 ps-5 font-secondary line-relaxed'>
-                    {data}
+                <div className=" font-primary des_list fw-3" dangerouslySetInnerHTML={{__html : data}}></div>
+
                 </Tab>
-                <Tab eventKey="Information" title="Information" className='pt-5 ps-5 font-secondary line-relaxed'>
+                {/* <Tab eventKey="Information" title="Information" className='pt-5 ps-5 font-secondary line-relaxed'>
                     Tab content for Information
-                </Tab>
+                </Tab> */}
             </Tabs>
         </Container>
     )

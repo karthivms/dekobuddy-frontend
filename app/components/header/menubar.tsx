@@ -25,9 +25,12 @@ export default function Menubar({ username, userid }: { username: string, userid
     }
 
     useEffect(() => {
-        dispatch(fetchWishlistItems(userid))
         dispatch(fetchCartItems(userid))
-    }, [dispatch, userid])
+    }, [dispatch, userid, cart.length])
+
+    useEffect(() => {
+        dispatch(fetchWishlistItems(userid))
+    }, [dispatch, userid, wishlist.length])
 
 
     useEffect(() => {

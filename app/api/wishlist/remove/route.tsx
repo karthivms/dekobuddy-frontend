@@ -1,20 +1,22 @@
-import { cartdata } from "@/app/types/types";
 
-export async function POST(request: Request) {
+export async function DELETE(request: Request) {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const username = process.env.API_USERNAME;
+    const password = process.env.API_PASSWORD;
+    const basicAuth = 'Basic ' + btoa(username + ':' + password);
 
     try {
-        const body: cartdata = await request.json();
+        const body = await request.json();
 
         const bodyData = {
-            quantity: body.product.quantity,
-            variation_id : body.product.id,
             user_id: body.user_id
         }
 
-        const res = await fetch(`${baseUrl}/cart/add-to-cart/${body.productid}/`, {
-            method: 'POST',
+
+        const res = await fetch(`${baseUrl}/remove-wishlist-item/${body.wishlist_id}/`, {
+            method: 'DELETE',
             headers: {
+                'Authorization' : basicAuth,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(bodyData),
@@ -29,7 +31,7 @@ export async function POST(request: Request) {
         const data = await res.json();
         return new Response(JSON.stringify({ data }), { status: 200 });
     } catch (error: any) {
-        console.error('Error fetching products:', error);
+        console.error('Error removing product:', error);
         return new Response(JSON.stringify({ error: 'An error occurred' }), { status: 500 });
     }
 }

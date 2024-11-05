@@ -1,37 +1,35 @@
 'use client'
 
 
-import { AddCartItems, decrementQuantity, incrementQuantity } from "@/app/redux/cartSlice";
+import { AddCartItems, decrementQuantity, incrementQuantity, UpdateQuantity } from "@/app/redux/cartSlice";
 import { AppDispatch } from "@/app/redux/store";
-import { cartItem, Product } from "@/app/types/types";
+import { cartItem, cartProduct } from "@/app/types/types";
 import { useDispatch } from "react-redux";
 
-export default function QuanityHandler({  cartItems, product, userid, count }: {cartItems:cartItem[], cartid:number, product: Product, userid: number, count: number }) {
+export default function QuanityHandler({   cartid, userid, count }: {  cartid: number, userid: number, count: number }) {
 
     const dispatch: AppDispatch = useDispatch();
 
     const handleIncrementQuantity = () => {
-        dispatch(incrementQuantity(product.id));
+        dispatch(incrementQuantity(cartid));
         const cartData = {
-            id: cartItems[cartItems.length - 1].id + 1,
-            products: product,
-            quantity : 1,
+            cart_id: cartid,
+            quantity:1,
             user_id:userid
         }  
 
-        dispatch(AddCartItems(cartData))
+        dispatch(UpdateQuantity(cartData));
     }
 
     const handleDecrementQuantity = () => {
-        dispatch(decrementQuantity(product.id));
+        dispatch(decrementQuantity(cartid));
         const cartData = {
-            id: cartItems[cartItems.length - 1].id + 1,
-            products: product,
-            quantity : -1,
+            cart_id: cartid,
+            quantity:-1,
             user_id:userid
         }  
 
-        dispatch(AddCartItems(cartData))
+        dispatch(UpdateQuantity(cartData));
         
     }
     return (

@@ -2,18 +2,18 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import CartIcon2 from "../icons/carticon2";
-import { Product } from "@/app/types/types";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { AddCartItems, AddtoCart } from "@/app/redux/cartSlice";
 import { useState } from "react";
 import CartSidebar from "../cartSidebar";
+import { productimage, variations } from "@/app/types/types";
 
 interface ApiInfo {
     quantity: number,
     user_id: number
 }
 
-export default function ActionButtons({ Apiinfo, productdata }: { Apiinfo: ApiInfo, productdata: Product }) {
+export default function ActionButtons({ Apiinfo, category,  productid, image, variation, name  }: { Apiinfo: ApiInfo, category : string,  productid: number, image : productimage, variation : variations, name : string }) {
     const dispatch: AppDispatch = useDispatch();
     const cartproducts = useSelector((state: RootState) => state.cart.cartItems);
 
@@ -22,16 +22,24 @@ export default function ActionButtons({ Apiinfo, productdata }: { Apiinfo: ApiIn
     const handleClose = () => setShowSidebar(false);
 
     const handleCartUpdate = () => {
-        const cartData = {
-            id: cartproducts.length !== 0 ? cartproducts[cartproducts.length - 1].id + 1 : 1,
-            products: productdata,
-            quantity: Apiinfo.quantity,
-            user_id: Apiinfo.user_id
+        const cartAPiData = {
+            id : cartproducts[cartproducts.length - 1]?.id + 1,
+            productid : productid,
+            product: {
+                id : variation.id,
+                name : name,
+                regular_price : Number (variation.regular_price) ,
+                size : variation.size,
+                categories :  category,
+                images : image,
+                quantity : Apiinfo.quantity
+            },
+           user_id : Apiinfo.user_id
         }
 
-        dispatch(AddtoCart(cartData))
-        dispatch(AddCartItems(cartData))
-        setShowSidebar(true)
+        dispatch(AddtoCart(cartAPiData));
+        dispatch(AddCartItems(cartAPiData));
+        setShowSidebar(true);
     }
 
     return (

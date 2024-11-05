@@ -1,14 +1,4 @@
-POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/login/
-Authorization: Basic ZGVrbzoxMjM0
-Content-Type: application/json
 
-{
-    "username":"Arun",
-    "password":"Arun@1234",
-    }
-
-
-###
 
 GET http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/products/?category=living-area&limit=20&offset=0&size=&min_price=4000&max_price=5000
 Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
@@ -16,31 +6,122 @@ Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
 
 ###
 
-PUT http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/update_quantity/
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/cart/add-to-cart/1/ 
 Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
 Content-Type: application/json
 
 {
     "user_id":15,
     "quantity":1,
-    "product_id":2
+    "variation_id":2
 }
 
 ###
-POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/cart/add-to-cart/1797/
+
+DELETE http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/cart/remove/68/ 
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
 Content-Type: application/json
 
 {
-    "review":"nice product",
-    "rating":5,
-    "product_id":1740,
     "user_id":15
+}
+
+###
+PUT http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/update_quantity/
+Content-Type: application/json
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+
+{
+   
+    "cart_item_id":69,
+    "user_id":15,
+        "quantity":1
 }
 
 
 ### 
-POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/add-to-wishlist/15/1740/
-Authorization: Basic ZGVrbzoxMjM0
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/add-to-wishlist/22/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
+
+{
+    "user_id":15
+}
+
+###
+
+DELETE http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/remove-wishlist-item/52/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
+
+{
+    "user_id":15
+}
+
+
+###
+DELETE http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/remove-selected-wishlist-items/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
+
+{
+    "user_id":15,
+     "items":[40,41]
+
+}
+
+###
+GET http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/rating/
+Content-Type: application/json
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+
+
+{
+    "product_id" : 1
+}
+
+###
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/ratingvalue
+Content-Type: application/json
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+
+{
+    "rating": 4,
+    "review": "Nice product!",
+    "product_id": 1,
+    "user_id":15
+}
+
+###
+GET http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/rating/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
+
+{"product_id" : 4}
+
+
+###
+GET http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/profile/15/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
+
+
+
+###
+PUT http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/profile/15/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
+
+{
+    "first_name": "Arun",
+    "last_name": "M",
+    "email":"arun@zinavo.in",
+    "phone": "+91 9080371821",
+    "confirm_password":"wwewe"
+}
+
+
+
 
 
 

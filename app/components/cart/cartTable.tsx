@@ -12,7 +12,7 @@ import { cartItem } from "@/app/types/types";
 import Link from "next/link";
 import formatPriceIndian from "@/app/utilis/formatPrice";
 import { useEffect } from "react";
-import { gettotal, removeCartItem } from "@/app/redux/cartSlice";
+import { DeleteCartItem, gettotal, removeCartItem } from "@/app/redux/cartSlice";
 import CartSkeleton from "../cartSkeleton";
 
 
@@ -26,6 +26,16 @@ export default function CartTable({ userid }: { userid: string }) {
     useEffect(() => {
         dispatch(gettotal())
     }, [cartproducts])
+
+    const deleteItem = (id: number) => {
+        const delbody = {
+            cart_id: id,
+            user_id: Number(userid)
+        }
+
+        dispatch(removeCartItem(id));
+        dispatch(DeleteCartItem(delbody))
+    }
 
     return (
         <>
@@ -54,17 +64,19 @@ export default function CartTable({ userid }: { userid: string }) {
                                     </thead>
                                     <tbody className="">
                                         {cartproducts.map((product: cartItem) => (
-                                            <tr key={`cart_items_${product.id}_${product.products.id}`} >
+                                            <tr key={`cart_items_${product.id}_${product.product.id}`} >
                                                 <td>
-                                                    <Image alt="cart_images" width={60} height={60} src={product.products.images[0].image} className="br-5" />
+                                                    <Image alt="cart_images" width={60} height={60} src={product.product.images.image} className="br-5" />
                                                 </td>
-                                                <td><p className="mb-0 fw-3">{product.products.name}</p></td>
                                                 <td>
-                                                    <QuanityHandler cartItems={cartproducts} cartid={product.id} product={product.products} userid={Number(userid)} count={product.quantity} />
+                                                    <p className="mb-1 fw-3">{product.product.name} - {product.product.size}</p>
+                                                    <span className="font-small text-theme1 fw-4 bg-theme2 p-1 br-3">{product.product.categories}</span></td>
+                                                <td>
+                                                    <QuanityHandler cartid={product.idw} userid={Number(userid)} count={product.product.quantity} />
                                                 </td>
-                                                <td>{formatPriceIndian(product.quantity * Number(product.products.regular_price))}</td>
+                                                <td>{formatPriceIndian(product.product.quantity * Number(product.product.regular_price))}</td>
                                                 <td>
-                                                    <button className="delete-btn btn text-theme3 delete-cart" onClick={() => dispatch(removeCartItem(product.id))}>
+                                                    <button className="delete-btn btn text-theme3 delete-cart" onClick={() => deleteItem(product.id)}>
                                                         <BinIcon />
                                                     </button>
                                                 </td>

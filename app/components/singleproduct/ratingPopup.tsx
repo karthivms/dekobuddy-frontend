@@ -1,23 +1,50 @@
 'use client'
 
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Star from '../icons/star';
 import { ModalProps } from 'react-bootstrap';
+import rateProduct from '@/app/api/rateProduct';
 
 
 interface MyVerticallyCenteredModalProps extends ModalProps {
     onHide: () => void;
-  }
+    userid: number;
+    productid: number;
+}
 
 function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
     const [rate, setRate] = useState(0);
     const [comment, setComment] = useState("");
+    const [error, setError] = useState('');
 
-    const handlePopup = () => {
-        setRate(0);
-        setComment("");
-        props.onHide();
+    const handlePopup = async (e: FormEvent) => {
+        e.preventDefault();
+
+        if (rate === 0) {
+            setError('Please select a rating before submitting.')
+        } else {
+            const data = {
+                rating: rate,
+                review: comment,
+                product_id: props.productid,
+                user_id: props.userid
+            }
+            const response = await rateProduct(data);
+
+            setRate(0);
+            setComment("");
+            setError("");
+            props.onHide();
+
+            if (response.error) {
+                window.alert(response.error);
+            }
+           
+        }
+
+
+
     }
 
     return (
@@ -33,26 +60,28 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
                     Rate and review
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body className='pt-3'>
-                <h6 className='text-black fw-4 font-large'>Rating ({rate}/5)</h6>
-                {[...Array(5)].map((_, index) => (
-                    <span key={`key_${index}`} className="text-review me-2" onClick={() => setRate(index + 1)}>
-                        <Star fill={index < rate ? "currentcolor" : "none"} size={"20"} />
-                    </span>
-                ))}
-
-                <h6 className='text-black fw-4 font-large mt-4'>Review</h6>
-                <textarea className='w-100 h-150' value={comment} onChange={(e) => setComment(e.target.value)}/>
-            </Modal.Body>
-            <Modal.Footer className='bt-transparent-1 justify-content-between'>
-                <button className="fw-3 btn2 px-2" onClick={() => handlePopup()}>Cancel</button>
-                <button className="btn1 px-2 fw-3" onClick={() => handlePopup()}>Submit</button>
-            </Modal.Footer>
+            <form onSubmit={handlePopup}>
+                <Modal.Body className='pt-3'>
+                    <h6 className='text-black fw-4 font-large'>Rating ({rate}/5)</h6>
+                    {[...Array(5)].map((_, index) => (
+                        <span key={`key_${index}`} className="text-review me-2" onClick={() => setRate(index + 1)}>
+                            <Star fill={index < rate ? "currentcolor" : "none"} size={"20"} />
+                        </span>
+                    ))}
+                    {error && <p className="text-danger  mt-3 font-primary fw-3">{error}</p>}
+                    <h6 className='text-black fw-4 font-large mt-4'>Review</h6>
+                    <textarea className='w-100 h-150 p-2' value={comment} onChange={(e) => setComment(e.target.value)} />
+                </Modal.Body>
+                <Modal.Footer className='bt-transparent-1 justify-content-between'>
+                    <span className="fw-3 btn2 px-2 pointer" onClick={() => props.onHide()}>Cancel</span>
+                    <button className="btn1 px-2 fw-3" type='submit' >Submit</button>
+                </Modal.Footer>
+            </form>
         </Modal>
     );
 }
 
-function RatingPopup() {
+function RatingPopup({ userid, productid }: { userid: number, productid: number }) {
     const [modalShow, setModalShow] = useState(false);
 
     return (
@@ -67,6 +96,8 @@ function RatingPopup() {
             <MyVerticallyCenteredModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
+                userid={userid}
+                productid={productid}
             />
         </>
     );
