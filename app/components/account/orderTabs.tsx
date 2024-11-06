@@ -4,17 +4,37 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import OrderSummary from './orderSummary';
-import products from "@/app/datas/category/products.json";
+import { order } from '@/app/types/types';
 
 
 
 
-export default function OrderTabs() {
+export default function OrderTabs({ All, Delivered, Processing, Cancelled }: { All: order[], Delivered: order[], Processing: order[], Cancelled: order[] }) {
 
-    const moreproducts = products.slice(0, 2)
-    const singleproduct = products.slice(0, 1)
+    const ordertabs = [
+        {
+            id: 1,
+            order: "All",
+            data: All
+        },
+        {
+            id: 2,
+            order: "Delivered",
+            data: Delivered
 
+        },
+        {
+            id: 3,
+            order: "Processing",
+            data: Processing
 
+        },
+        {
+            id: 4,
+            order: "Cancelled",
+            data: Cancelled
+        }
+    ]
     return (
         <div >
             <h1 className='font-h3 fw-4 text-theme1'>My Orders</h1>
@@ -22,23 +42,23 @@ export default function OrderTabs() {
                 defaultActiveKey="All"
                 className="order-tabs mt-4"
             >
-                <Tab eventKey="All" title="All" >
-                    <OrderSummary orderproducts={moreproducts} status={`Delivery by Wed, Oct 2`} />
-                    <OrderSummary orderproducts={singleproduct} status={`Delivered`} />
-                    <OrderSummary orderproducts={singleproduct} status={`Cancelled`} />
-                </Tab>
-                <Tab eventKey="Delivered" title="Delivered" >
-                    <OrderSummary orderproducts={singleproduct} status={`Delivered`} />
+                {ordertabs.map((tabitem) => (
+                    <Tab eventKey={tabitem.order} title={tabitem.order} >
+                        {tabitem.data.length > 0 ? (<>
+                            {tabitem.data.map((item: order) => (
+                                <div key={`order_${item.id}`}>
+                                    <OrderSummary orderproducts={item} status={item.order_status} />
+                                </div>
+                            ))}
+                        </>) : (
+                            <p className='my-5 text-center text-theme1 fw-4'>No Orders Found</p>
+                        )}
 
-                </Tab>
-                <Tab eventKey="On Process" title="On Process" >
-                    <OrderSummary orderproducts={moreproducts} status={`Delivery by Wed, Oct 2`} />
 
-                </Tab>
-                <Tab eventKey="Cancelled" title="Cancelled" >
-                    <OrderSummary orderproducts={singleproduct} status={`Cancelled`} />
+                    </Tab>
+                ))}
 
-                </Tab>
+
             </Tabs>
         </div>
     )

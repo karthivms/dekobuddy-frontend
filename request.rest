@@ -108,19 +108,28 @@ Content-Type: application/json
 
 
 ###
-PUT http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/profile/15/
+PUT http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/profile/16/
 Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
 Content-Type: application/json
 
 {
-    "first_name": "Arun",
-    "last_name": "M",
-    "email":"arun@zinavo.in",
+    "first_name": "",
+    "last_name": "",
+    "email":"",
     "phone": "+91 9080371821",
-    "confirm_password":"wwewe"
+    "old_password":"Amvm1205$",
+    "new_password":"Arun@1205"
 }
 
+###
+POST  http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/orders/5/cancel/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
 
+{
+    "reason":"wrong order",
+    "comments" : "I have mistakenly ordered the product"
+}
 
 
 

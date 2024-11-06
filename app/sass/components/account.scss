@@ -142,6 +142,22 @@
     }
 }
 
+.order-listing{
+    position: relative;
+
+    &:hover{
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;    }
+
+    div a::before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
 
 @media screen and (max-width:768px) {
     .account_layout {
@@ -166,4 +182,18 @@
             width: auto !important;
         }
     }
+}
+
+.toast-message {
+    position: fixed !important;
+    right: 20px;
+    z-index: 999 !important;
+    bottom: 20px !important;
+    width: 300px !important;
+
+    .toast {
+        border-left: 4px solid $primary-color !important;
+border-radius:0 !important;
+    }
+
 }

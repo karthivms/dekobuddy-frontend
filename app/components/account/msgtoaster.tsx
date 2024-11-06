@@ -1,7 +1,8 @@
 'use client'
 
 import {  Toast, ToastContainer } from 'react-bootstrap';
-import Tick from './icons/tick';
+import Tick from '../icons/tick';
+
 
 
 function Toaster({msg, show, handleClose}:{msg : boolean, show : boolean, handleClose : () => void }) {
@@ -9,7 +10,7 @@ function Toaster({msg, show, handleClose}:{msg : boolean, show : boolean, handle
         <div className='toast-message'>
             <ToastContainer position={'bottom-end'}>
             <Toast onClose={handleClose}  show={show} delay={3000} autohide>
-                <Toast.Body className='bg-theme2 br-0 fw-4 text-theme1'><span className='me-2'><Tick color='currentcolor'/></span>{msg ? (<>Added to Wishlist</>):(<>Removed from Wishlist</>)}</Toast.Body>
+                <Toast.Body className='bg-theme2 br-0 fw-4 text-theme1'><span className='me-2'><Tick color='currentcolor'/></span>{msg ? (<>Profile Updated</>):(<>Something went wrong! Try again</>)}</Toast.Body>
             </Toast>
             </ToastContainer>
         </div>

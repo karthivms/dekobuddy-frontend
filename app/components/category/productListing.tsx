@@ -107,18 +107,17 @@ export default function ProductGrid({ grid, userid, category }: { grid: number, 
                                                 <Modal Apiinfo={cartAPiinfo} category={item.categories[0].name} productid={item.id} image={item.images[0]} name={item.name} variations={item.variations} closeModal={() => setAttModal(null)} />)}
                                         </div>
                                         <h6 className="m-0 mt-3 font-primary"><Link href={`/product/${item.id}/${createSlug(item.name)}`}>{item.name}</Link></h6>
-                                        {/* <p className="m-0 font-primary text-grey">{item.props}</p> */}
-                                        <div className="d-flex align-items-center">
+                                       {item.rating_count > 0 && (<div className="d-flex align-items-center">
                                             <div className="d-flex gap-1">
                                                 {[...Array(5)].map((_, index) => (
                                                     <span key={`key_${index}`} className="text-review">
-                                                        <Star fill={index < 4 ? "currentcolor" : "none"} size={"13"} />
+                                                        <Star fill={index < Math.floor(Number(item.average_rating)) ? "currentcolor" : "none"} size={"13"} />
                                                     </span>
                                                 ))}
                                             </div>
-                                            <span className="d-inline-block text-grey font-primary mt-1 ms-2">{item.no_of_reviews} Reviews</span>
-                                        </div>
-                                        <div className="font-primary fw-3 d-flex gap-10 text-black align-items-center">
+                                            <span className="d-inline-block text-grey font-primary mt-1 ms-2">{item.rating_count} Ratings</span>
+                                        </div>)} 
+                                        <div className="font-primary mt-1 fw-3 d-flex gap-10 text-black align-items-center">
                                             {item.sale_price ? (<>
                                                 <span>₹{item.sale_price}</span>
                                                 <s>₹{item.regular_price}</s>

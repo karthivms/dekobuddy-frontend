@@ -22,7 +22,7 @@ const getProduct = async (id: number) => {
 }
 
 async function getSimilarProducts(category: string) {
-    const url = `/products/?category=${category}&limit=5`;
+    const url = `/products/?category=${category}&limit=10&offset=10`;
 
     const response = await apiRequest('GET', url);
 
@@ -71,7 +71,7 @@ export default async function page({ params }: { params: params }) {
             <Description data={data.description} /> 
             <Ratings userid={Number(userid)} productid={id} reviews={reviews} average={data.average_rating} rat_count={data.rating_count} rev_count={data.review_count} />
             
-            <SimilarProducts data={simproducts} />
+            <SimilarProducts userid={userid} data={simproducts} />
         </>
 
     )

@@ -102,3 +102,38 @@ export interface Attribute {
     name: string;
     values: string[];
 }
+
+export interface orderItem{
+    id: number,
+    product_id: number,
+    product_name: string,
+    size: string,
+    price: string,
+    quantity: number,
+    total: number,
+    images: productimage[]
+}
+
+export interface address {
+    name: string,
+    address: string,
+    city: string,
+    state: string,
+    pincode: string,
+    country: string,
+    email: string,
+    phone: string,
+    address_type: string
+}
+
+export interface order {
+    id: number,
+    user_id: number,
+    order_id: string,
+    amount: string,
+    bill_amount: string,
+    order_status: string,
+    order_date: string,
+    order_items: orderItem[],
+    billing_address: address
+}

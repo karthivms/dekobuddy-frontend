@@ -59,7 +59,7 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
             <h1 className="text-black font-medium fw-4 font-sm-h2 line-normal">{data.name}</h1>
             {data.rating_count !== 0 && (<div className="d-flex align-items-center gap-10 mt-4">
                 <span className="d-flex align-items-center gap-6 bg-theme1 w-auto px-1 br-5 font-primary text-white">
-                    {data.average_rating} <Star fill={"white"} size={"13"} />
+                    {data.average_rating?.toFixed(1)} <Star fill={"white"} size={"13"} />
                 </span>
                 <span className="font-large text-black fw-3">{data.rating_count} Ratings & {data.review_count} Reviews</span>
             </div>)}

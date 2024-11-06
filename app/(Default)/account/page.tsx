@@ -6,8 +6,10 @@ const baseurl = process.env.NEXT_PUBLIC_API_BASE_URL;
 export async function GetProfileData(userid : string){
 
     const response = await apiRequest('GET', `${baseurl}/profile/${userid}`);
-    return response
-} 
+    return response;
+}
+
+
 
 export default async function page() {
 
@@ -24,7 +26,7 @@ export default async function page() {
     return (
         <>
             <h1 className='font-h3 fw-4 text-theme1 mb-3'>Profile Information</h1>
-            <Profile data={profiledata}/>
+            <Profile userid={userid} data={profiledata}/>
         </>
     )
 }

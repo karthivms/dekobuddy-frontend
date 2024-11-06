@@ -11,15 +11,15 @@ interface initialState {
     total: number
 }
 
-interface updateBody{
+interface updateBody {
     cart_id: number,
-    quantity:number,
-    user_id:number
+    quantity: number,
+    user_id: number
 }
 
-interface deletebody{
+interface deletebody {
     cart_id: number,
-    user_id:number
+    user_id: number
 }
 
 export const fetchCartItems = createAsyncThunk<cartItem[], string, { rejectValue: string }>(
@@ -29,7 +29,11 @@ export const fetchCartItems = createAsyncThunk<cartItem[], string, { rejectValue
             try {
                 const response = await apiRequest('GET', `http://localhost:3000/api/cart/${id}`);
                 localStorage.removeItem('cart');
-                return response.data[0];
+                if (response.data.length > 0) {
+                    return response.data[0];
+                } else {
+                    return response.data;
+                }
             } catch (error) {
                 console.log(error);
                 return rejectWithValue('Failed to fetch cart items');
@@ -63,42 +67,42 @@ export const AddCartItems = createAsyncThunk<cartItem[], cartdata, { rejectValue
     })
 
 
-    export const UpdateQuantity = createAsyncThunk<cartItem[], updateBody, { rejectValue: string }>(
-        "cart/updateitems",
-        async (cartdata, { rejectWithValue, getState }) => {
-    
-            if (cartdata.user_id) {
-                try {
-                    const response = await apiRequest('PUT', `http://localhost:3000/api/cart/updatecart`, cartdata);
-                    return response;
-                } catch (error) {
-                    console.log(error);
-                    return rejectWithValue('Failed to update cart items');
-                }
-            } else {
-                const state = getState() as RootState;
-                localStorage.setItem("cart", JSON.stringify(state.cart.cartItems));
+export const UpdateQuantity = createAsyncThunk<cartItem[], updateBody, { rejectValue: string }>(
+    "cart/updateitems",
+    async (cartdata, { rejectWithValue, getState }) => {
+
+        if (cartdata.user_id) {
+            try {
+                const response = await apiRequest('PUT', `http://localhost:3000/api/cart/updatecart`, cartdata);
+                return response;
+            } catch (error) {
+                console.log(error);
+                return rejectWithValue('Failed to update cart items');
             }
-        })
+        } else {
+            const state = getState() as RootState;
+            localStorage.setItem("cart", JSON.stringify(state.cart.cartItems));
+        }
+    })
 
 
-        export const DeleteCartItem = createAsyncThunk<cartItem[], deletebody, { rejectValue: string }>(
-            "cart/deleteitems",
-            async (cartdata, { rejectWithValue, getState }) => {
-        
-                if (cartdata.user_id) {
-                    try {
-                        const response = await apiRequest('DELETE', `http://localhost:3000/api/cart/deletecart`, cartdata);
-                        return response;
-                    } catch (error) {
-                        console.log(error);
-                        return rejectWithValue('Failed to delete cart item');
-                    }
-                } else {
-                    const state = getState() as RootState;
-                    localStorage.setItem("cart", JSON.stringify(state.cart.cartItems));
-                }
-            })
+export const DeleteCartItem = createAsyncThunk<cartItem[], deletebody, { rejectValue: string }>(
+    "cart/deleteitems",
+    async (cartdata, { rejectWithValue, getState }) => {
+
+        if (cartdata.user_id) {
+            try {
+                const response = await apiRequest('DELETE', `http://localhost:3000/api/cart/deletecart`, cartdata);
+                return response;
+            } catch (error) {
+                console.log(error);
+                return rejectWithValue('Failed to delete cart item');
+            }
+        } else {
+            const state = getState() as RootState;
+            localStorage.setItem("cart", JSON.stringify(state.cart.cartItems));
+        }
+    })
 
 const initialState: initialState = {
     cartItems: [],
