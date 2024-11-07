@@ -64,7 +64,7 @@ export default async function page({ params }: { params: Params }) {
                         <Filter categories={categories} attributes={attributes}/>
                     </Col>
                     <Col className="">
-                        <Topbar  />
+                        <Topbar  userid={userid}/>
                         <ProductGrid grid={3} userid={userid} category={params.category}/>
                     </Col>
                 </Row>

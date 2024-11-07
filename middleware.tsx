@@ -33,6 +33,10 @@ export function middleware(request: NextRequest, response : NextResponse) {
         return NextResponse.redirect(new URL('/login', request.url));
       }
 
+      if (!accessToken && request.nextUrl.pathname.startsWith('/checkout')) {
+        return NextResponse.redirect(new URL('/login', request.url));
+      }
+
 
       if (accessToken && request.nextUrl.pathname.startsWith('/login')) {
         return NextResponse.redirect(new URL('/', request.url));
@@ -43,5 +47,5 @@ export function middleware(request: NextRequest, response : NextResponse) {
 }
 
 export const config = {
-    matcher: ['/account/:path*', '/login'],
+    matcher: ['/account/:path*', '/login', '/checkout'],
 };

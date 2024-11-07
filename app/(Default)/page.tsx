@@ -10,9 +10,11 @@ import '../sass/components/home.scss';
 import { apiRequest } from "../api/apiConfig";
 
 
-const fetchCategory = async () => {
+
+
+const getHomeData = async () => {
   try {
-    const response = await apiRequest('GET', '/parentcategory/');
+    const response = await apiRequest('GET', 'http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/homeapi/');
     return response;
 
   } catch (error) {
@@ -24,25 +26,25 @@ const fetchCategory = async () => {
 
 export default async function Home() {
 
-  const data = await fetchCategory();
+  const homedata = await getHomeData();
 
   return (
     <>
-      <Banner />
+      <Banner data={homedata.main_banners[0]}/>
 
       {/* <ScrollWrapper direction={20}> */}
       <PromotionMenu />
       {/* </ScrollWrapper> */}
 
-      <Videoplayer url={"/images/video1.jpg"} />
-      <CategoryMenu category={data} />
-      <Videoplayer url={"/images/video2.jpg"} />
+      <Videoplayer url={homedata.videos_uploaded[0].video} thumbnail={"/images/thumbnail1.png"}/>
+      <CategoryMenu category={homedata.categories} />
+      <Videoplayer url={"/images/video2.jpg"} thumbnail={"/images/thumbnail1.png"}/>
 
       <ScrollWrapper direction={20}>
-        <Whychooseus />
+        <Whychooseus features={homedata.why_choose}/>
       </ScrollWrapper>
 
-      <Testimonials />
+      <Testimonials reviews={homedata.user_reviews}/>
     </>
   );
 }

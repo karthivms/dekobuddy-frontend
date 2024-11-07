@@ -1,29 +1,27 @@
 import { Col, Container, Row } from "react-bootstrap";
-import features from "@/app/datas/home/whychooseus.json"
 import Image from "next/image";
 
 interface feature {
-    id: number;
-    name: string;
-    img_url: string;
+    title: string;
+    image: string;
 }
 
 
 
-export default function Whychooseus() {
+export default function Whychooseus({features}:{features:feature[]}) {
     return (
         <Container className="mt-4 pt-2 mb-5 wc-70 w-sm-100">
             <Row className="row-gap-40">
                 {
                     features.map((item: feature) => (
-                        <Col lg={3} sm={6} xs={6} key={`feature_${item.id}`} className="text-center">
+                        <Col lg={3} sm={6} xs={6} key={`feature_${item.title}`} className="text-center">
                             <Image 
-                            src={item.img_url} 
+                            src={item.image} 
                             alt="features" 
                             width={97} 
                             height={97}
                             className="wp-75 h-auto" />
-                            <h6 className="mt-3 fw-4">{item.name}</h6>
+                            <h6 className="mt-3 fw-4">{item.title}</h6>
                         </Col>
                     ))
                 }

@@ -37,6 +37,12 @@ export default function CartTable({ userid }: { userid: string }) {
         dispatch(DeleteCartItem(delbody))
     }
 
+    const handleCheckout = () => {
+        if(!userid){
+            alert("login to continue")
+        }
+    }
+
     return (
         <>
             {status === 'loading' ? (<>
@@ -100,7 +106,7 @@ export default function CartTable({ userid }: { userid: string }) {
                                         <span className="text-black fw-4 font-large">{total}</span>
                                     </div>
 
-                                    <button className="btn bg-theme1 mt-2 py-2 text-white text-center w-100 fw-4 checkout_btn">Proceed to Checkout</button>
+                                    <Link href={'/checkout'} onClick={handleCheckout} className="btn bg-theme1 mt-2 py-2 text-white text-center w-100 fw-4 checkout_btn">Proceed to Checkout</Link>
                                 </div>
                             </Col>
                         </Row></>) : (

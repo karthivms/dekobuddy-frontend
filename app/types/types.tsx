@@ -137,3 +137,10 @@ export interface order {
     order_items: orderItem[],
     billing_address: address
 }
+
+export interface profile {
+    first_name: string,
+    last_name: string,
+    email: string,
+    phone: string
+}

@@ -6,10 +6,18 @@ import { Col, Row } from "react-bootstrap";
 import { changeStep } from "@/app/redux/checkoutslice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
+import { LogoutUser } from "@/app/utilis/logout";
+import { profile } from "@/app/types/types";
 
 
-function Logout() {
+
+
+function Logout({username, profiledata} : {username : string, profiledata : profile}) {
     const dispatch = useDispatch();
+
+    const handleLogout = async () => {
+        await LogoutUser()
+    }
 
     return (
         <>
@@ -24,13 +32,14 @@ function Logout() {
                     <Col >
                         <div className="d-flex gap-20 ">
                             <span className="text-secondary fw-3">Name</span>
-                            <span className="fw-4 d-inline-block">User</span>
+                            <span className="fw-4 d-inline-block">{username}</span>
                         </div>
-                        <div className="d-flex gap-20 mt-2">
+                        {profiledata.phone && (   <div className="d-flex gap-20 mt-2">
                             <span className="text-secondary fw-3">Phone</span>
-                            <span className="fw-4 d-inline-block">+91 9876543210</span>
-                        </div>
-                        <button className="btn text-theme1 mt-3 font-primary fw-3">
+                            <span className="fw-4 d-inline-block">{profiledata.phone}</span>
+                        </div>)}
+                     
+                        <button className="btn text-theme1 mt-3 font-primary fw-3" onClick={handleLogout}>
                             Logout & Sign in to another account
                         </button>
 
@@ -51,21 +60,21 @@ function Logout() {
                     </Col>
                 </Row>
                 <div className="px-4 mt-3">
-                    <span className="font-primary fw-3">Please note that upon clicking  &quot;Logout&quot; you will lose all items in cart and will be redirected to Flipkart home page.</span>
+                    <span className="font-primary fw-3">Please note that upon clicking  &quot;Logout&quot; you will lose all items in cart and will be redirected to home page.</span>
                 </div>
             </div>
         </>
     )
 }
 
-export default function LoginDetails() {
+export default function LoginDetails({username, profiledata}:{username : string, profiledata : profile}) {
     const step = useSelector((state: RootState) => state.checkout.activeStep)
     const dispatch = useDispatch();
 
     return (
         <>
             {step === 1 ? (
-                <Logout />
+                <Logout username={username} profiledata={profiledata}/>
             ) : (<div className="bg-grey3 mt-3 d-flex px-4 py-3 br-2 gap-15">
                 <Step number={1} />
                 <div className="d-flex justify-content-between w-100 flex-wrap row-gap-10 align-items-start">
@@ -74,8 +83,8 @@ export default function LoginDetails() {
                             <Tick color={"#8F5547"} />
                         </h4>
                         <div className="d-flex flex-wrap gap-10 mt-2 align-items-center">
-                            <span className="fw-4 d-inline-block">User</span>
-                            <span className="font-primary fw-3 ">+91 9876543210</span>
+                            <span className="fw-4 d-inline-block">{username}</span>
+                            <span className="font-primary fw-3 ">{profiledata.phone}</span>
                         </div>
 
                     </div>

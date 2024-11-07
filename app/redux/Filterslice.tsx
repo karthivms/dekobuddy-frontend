@@ -12,7 +12,7 @@ interface initialState {
     count: number,
     limit: number,
     offset: number,
-    sort: string | null,
+    sort: string ,
     minprice: number,
     maxprice: number,
     currentCategory: string
@@ -26,7 +26,7 @@ const initialState: initialState = {
     count: 0,
     limit: 20,
     offset: 0,
-    sort: null,
+    sort: '',
     minprice: 0,
     maxprice: 0,
     currentCategory: ''

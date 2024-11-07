@@ -10,12 +10,11 @@ import AddressIcon from "../icons/addressicon";
 import OrderIcon from "../icons/ordericon";
 import UserCircle from "../icons/usercircle";
 import { usePathname } from "next/navigation";
+import { LogoutUser } from "@/app/utilis/logout";
 
 
 export const SideBar = () => {
     const pathname = usePathname();
-
-    console.log(pathname)
 
     const getIcon =  (name: string) => {
         switch (name) {
@@ -32,6 +31,10 @@ export const SideBar = () => {
         }
 
     };
+
+    const handleLogout = async () => {
+        await LogoutUser()
+    }
 
     return (
         <>
@@ -51,7 +54,7 @@ export const SideBar = () => {
                 ))}
             </ul>
             <div className="p-3 bt-border3-1">
-                <button className="btn2 w-100 mt-2 py-1 fw-4">Logout</button>
+                <button className="btn2 w-100 mt-2 py-1 fw-4" onClick={handleLogout}>Logout</button>
             </div>
         </>
     )

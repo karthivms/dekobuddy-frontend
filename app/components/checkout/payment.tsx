@@ -4,9 +4,13 @@ import { useSelector } from "react-redux";
 import Step from "./step";
 import { RootState } from "@/app/redux/store";
 import GiftCard from "./giftCard";
+import { useState } from "react";
 
 export default function Payment() {
     const step = useSelector((state: RootState) => state.checkout.activeStep)
+
+    const [order, setOrder] = useState(false);
+
 
     return (
         <>
@@ -18,15 +22,21 @@ export default function Payment() {
                     </div>
                 </div>
                 <div className="px-4 py-3 bg-grey3">
-                <label htmlFor="male">
-                    <input type="radio" id="male" name="gender" value="male" />
-                    <div className="ms-2 d-inline-block">
-                        <span className="font-primary fw-3 ms-3">Cash on Delivery</span>
-                    </div>
-                </label>
+                    <label htmlFor="cod"className="d-flex align-items-center">
+                        <input type="radio" id="cod" name="cod" value="cod" onClick={() => setOrder(true)} />
+                        <div className="ms-2 d-inline-block">
+                            <span className="font-primary fw-3  pointer">Cash on Delivery</span>
+
+                        </div>
+
+                    </label>
+                    {order && (<button className="btn1 d-block font-primary mt-3 py-2 px-4">Confirm Order</button>
+                    )}
                 </div>
 
-                <GiftCard/>
+                <GiftCard />
+
+
             </>) : (<div className="bg-grey3 mt-4 d-flex px-4 py-3 br-2 gap-15">
                 <Step number={4} />
                 <div className="d-flex justify-content-between w-100 align-items-start gap-20">
