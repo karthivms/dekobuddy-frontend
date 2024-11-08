@@ -11,7 +11,7 @@ Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
 Content-Type: application/json
 
 {
-    "user_id":15,
+    "user_id":16,
     "quantity":1,
     "variation_id":2
 }
@@ -45,7 +45,7 @@ Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
 Content-Type: application/json
 
 {
-    "user_id":15
+    "user_id":16
 }
 
 ###
@@ -77,7 +77,7 @@ Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
 
 
 {
-    "product_id" : 1
+    "product_id" : 3
 }
 
 ###
@@ -130,6 +130,39 @@ Content-Type: application/json
     "reason":"wrong order",
     "comments" : "I have mistakenly ordered the product"
 }
+
+###
+POST https://countriesnow.space/api/v0.1/countries/states
+Content-Type: application/json
+
+{
+    "country": "Nigeria"
+}
+
+###
+GET  http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/order/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
+
+ {"user_id" : 16}
+
+###
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/addresses/16/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
+
+ {
+        "name": "Arun3",
+        "address_1": "okka412",
+        "city": "kadapa",
+        "postcode": "656879",
+        "Country_Region": "india",
+        "state_country": "andhra pradesh",
+        "phone": "998877665246",
+       "user":16
+}
+
+
 
 
 

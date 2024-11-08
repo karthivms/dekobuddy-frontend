@@ -73,9 +73,9 @@ export default function Page() {
                 </Row>
             </Container>
             <div className="mt-5">
-                <ScrollWrapper direction={20}>
+                {/* <ScrollWrapper direction={20}>
                     <Whychooseus />
-                </ScrollWrapper>
+                </ScrollWrapper> */}
             </div>
         </>
     )

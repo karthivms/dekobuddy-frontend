@@ -1,14 +1,13 @@
 import { Container } from "react-bootstrap";
 import contact from "@/app/datas/header/contact.json";
-import Phone from "../icons/phone";
 import Envelope from "../icons/envelope";
-
+import Phone from "../icons/phone";
 
 
 
 export default function Topbar() {
     const getIcon = (type: string) => {
-        return type === "email" ? <Phone /> : <Envelope/>
+        return type === "email" ?  <Envelope width="19" height="19"/>: <Phone />
     };
     return (
 

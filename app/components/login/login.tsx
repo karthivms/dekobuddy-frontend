@@ -8,6 +8,7 @@ import EyeOff from "../icons/eyeOff";
 import { LoginUser } from "@/app/api/login";
 import { useFormStatus } from "react-dom";
 import ForgotPassword from "./forgotpassword";
+import Toaster from "./toaster";
 
 
 
@@ -18,7 +19,9 @@ interface ErrorObject {
 export default function Login() {
     const [show, setShow] = useState(false);
     const [responseError, setResponseError] = useState("");
-    const { pending } = useFormStatus()
+    const { pending } = useFormStatus();
+    const [showToast, setShowToast] = useState(false);
+
 
     const [formData, setFormData] = useState({
         username: '',
@@ -75,8 +78,11 @@ export default function Login() {
             setError({})
 
             const response = await LoginUser(formData);
+             if (!response) {
+                setShowToast(true)
+            }
             setResponseError(response)
-
+           
             setFormData({
                 username: "",
                 password: ""
@@ -86,6 +92,9 @@ export default function Login() {
 
     }
 
+    const handleClose = () => {
+        setShowToast(false)
+    }
 
     return (
         <div className='w-100'>
@@ -142,11 +151,11 @@ export default function Login() {
                 <span className='fw-3 text-grey2'>Or</span>
                 <hr className="wc-40 d-inline-block" />
             </div>
-            <button  className='bg-grey3 mt-2 border-border2-solid br-5 py-2 wc-80 fw-3 mx-auto d-block text-grey2 font-secondary '>
+            <button className='bg-grey3 mt-2 border-border2-solid br-5 py-2 wc-80 fw-3 mx-auto d-block text-grey2 font-secondary '>
                 <Image src={google} width={18} height={18} alt='google' className=' d-inline-block mb-1' />
                 <span className='ms-2'>Sign in with Google</span>
             </button>
-
+            <Toaster show={showToast} handleClose={handleClose} />
         </div>
     )
 }

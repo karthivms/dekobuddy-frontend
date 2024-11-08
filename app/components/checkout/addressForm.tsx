@@ -1,8 +1,11 @@
 'use client'
 
+import { GetCountries } from '@/app/api/countries';
+import { GetState } from '@/app/api/states';
 import { changeStep } from '@/app/redux/checkoutslice';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Select from './selectItem';
 
 interface Props {
     setedit: () => void;
@@ -12,22 +15,29 @@ interface Props {
 const AddressForm: React.FC<Props> = ({ setedit, page }) => {
 
     const dispatch = useDispatch();
+    const [country, setCountry] = useState([])
+    const [state, setState] = useState([])
 
     const [formData, setFormData] = useState({
         name: '',
         mobileNumber: '',
         pincode: '',
-        locality: '',
+        country: '',
         address: '',
         city: '',
         state: '',
         landmark: '',
         alternatePhone: '',
-        addressType: 'home',
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
+        if (name === "mobileNumber" || name === "alternatePhone") {
+            if (!/^[\d+\-()\s]*$/.test(value)) {
+                return
+            }
+        }
+
         setFormData({
             ...formData,
             [name]: value,
@@ -39,6 +49,25 @@ const AddressForm: React.FC<Props> = ({ setedit, page }) => {
         console.log('Form Data:', formData);
     };
 
+    useEffect(() => {
+
+        async function getcountry() {
+            const response = await GetCountries();
+            setCountry(response)
+        }
+        getcountry()
+    }, [])
+
+    useEffect(() => {
+        async function getstate() {
+            const response = await GetState(formData.country);
+            setState(response?.data?.states)
+        }
+        getstate()
+
+    }, [formData.country])
+
+    console.log(formData)
     return (
         <form className="address-form wc-70" onSubmit={handleSubmit}>
             <div className="form-row">
@@ -67,29 +96,7 @@ const AddressForm: React.FC<Props> = ({ setedit, page }) => {
                 </div>
             </div>
 
-            <div className="form-row">
-                <div className="form-group">
-                    <input
-                        type="text"
-                        name="pincode"
-                        value={formData.pincode}
-                        placeholder='Pincode'
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
 
-                <div className="form-group">
-                    <input
-                        type="text"
-                        name="locality"
-                        value={formData.locality}
-                        placeholder='Locality'
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-            </div>
 
             <div className="form-group full-width">
                 <textarea
@@ -99,6 +106,19 @@ const AddressForm: React.FC<Props> = ({ setedit, page }) => {
                     onChange={handleChange}
                     required
                 />
+            </div>
+
+            <div className="form-row">
+
+                <div className="form-group">
+                    <Select data={country} handlechange={handleChange} type={'country'}/>
+
+                </div>
+
+                <div className="form-group">
+                    <Select data={state} handlechange={handleChange} type={'state'}/>
+
+                </div>
             </div>
 
             <div className="form-row">
@@ -114,14 +134,17 @@ const AddressForm: React.FC<Props> = ({ setedit, page }) => {
                 </div>
 
                 <div className="form-group">
-                    <select name="state" value={formData.state} onChange={handleChange} required>
-                        <option value="" disabled>Select State</option>
-                        <option value="state1">State 1</option>
-                        <option value="state2">State 2</option>
-                        <option value="state3">State 3</option>
-                        {/* Add more states as needed */}
-                    </select>
+                    <input
+                        type="text"
+                        name="pincode"
+                        value={formData.pincode}
+                        placeholder='Pincode'
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
+
+
             </div>
 
             <div className="form-row">
@@ -146,7 +169,7 @@ const AddressForm: React.FC<Props> = ({ setedit, page }) => {
                 </div>
             </div>
 
-            <div className="form-group">
+            {/* <div className="form-group">
                 <p>Address Type</p>
                 <div className='d-flex gap-20 mt-2 flex-wrap row-gap-20 align-items-center'>
                     <label className='d-flex gap-10  align-items-center'>
@@ -170,7 +193,7 @@ const AddressForm: React.FC<Props> = ({ setedit, page }) => {
                         Work (Delivery between 10 am to 5 pm)
                     </label>
                 </div>
-            </div>
+            </div> */}
             <div className='d-flex gap-20 flex-wrap'>
                 {page === "checkout" ? (<button className="btn1 h-35 br-0 px-4 mt-3 d-block  font-primary fw-3 text-uppercase" type="submit" onClick={() => dispatch(changeStep(3))}>
                     Save And Deliver here

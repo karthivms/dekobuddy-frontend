@@ -13,6 +13,7 @@ export async function GetProfileData(userid : string){
 
 
 
+
 export default async function page() {
 
     let userid: string = "";

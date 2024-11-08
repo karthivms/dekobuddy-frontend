@@ -14,11 +14,11 @@ import { DeleteCartItem, gettotal, removeCartItem } from "@/app/redux/cartSlice"
 import { useEffect } from "react";
 
 
-export default function OrderSummary({userid, profiledata}:{userid : string, profiledata : profile}) {
+export default function OrderSummary({ userid, profiledata }: { userid: string, profiledata: profile }) {
 
     const step = useSelector((state: RootState) => state.checkout.activeStep);
-    const cartproducts = useSelector((state : RootState) => state.cart.cartItems);
-    const dispatch : AppDispatch = useDispatch();
+    const cartproducts = useSelector((state: RootState) => state.cart.cartItems);
+    const dispatch: AppDispatch = useDispatch();
 
     useEffect(() => {
         dispatch(gettotal())
@@ -55,39 +55,44 @@ export default function OrderSummary({userid, profiledata}:{userid : string, pro
                     </div>
                 </div>
                 <div className="px-4 py-3 bg-grey3">
-                    {cartproducts.length > 0 ? (<>
-                        {cartproducts.map((item: cartItem) => (
-                        <Row key={`checkout_item_${item.id}`} className="row-gap-20">
+                    {cartproducts.length > 0 ? (
+                        <Row className="row-gap-20 mt-3">
+
                             <Col lg={8} >
-                                <div className="d-flex gap-20">
-                                    <div>
-                                        <Image alt="cart_images" width={60} height={60} src={item.product.images.image} className="br-5" />
-                                    </div>
-                                    <div className="d-grid align-items-between">
-                                        <p className="mb-0 fw-3">{item.product.name}</p>
-                                        <div className="font-primary fw-3 d-flex gap-10 text-black align-items-center">
-                                            <span>{formatPriceIndian(item.product.quantity * Number(item.product.regular_price))}</span>
+
+                                {cartproducts.map((item: cartItem) => (
+                                    <div className="mb-4" key={`checkout_item_${item.id}`}>
+                                        <div className="d-flex gap-20">
+                                            <div>
+                                                <Image alt="cart_images" width={60} height={60} src={item.product.images.image} className="br-5" />
+                                            </div>
+                                            <div className="d-grid align-items-between">
+                                                <p className="mb-0 fw-3">{item.product.name}</p>
+                                                <div className="font-primary fw-3 d-flex gap-10 text-black align-items-center">
+                                                    <span>{formatPriceIndian(item.product.quantity * Number(item.product.regular_price))}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d-flex align-items-center gap-20">
+                                            <QuanityHandler stock={item.product.stock} cartid={item.id} userid={Number(userid)} count={item.product.quantity} />
+                                            <button className="btn mt-4  fw-3 text-theme1" onClick={() => deleteItem(item.id)}>Remove</button>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="d-flex align-items-center gap-20">
-                                    <QuanityHandler cartid={item.id} userid={Number(userid)} count={item.product.quantity}/>
-                                    <button className="btn mt-4  fw-3 text-theme1" onClick={() => deleteItem(item.id)}>Remove</button>
-                                </div>
+
+
+                                ))}
                             </Col>
                             <Col className="text-end checkout_delivery">
                                 <span className="font-primary fw-3">Delivery Expected by {getDateTwoDaysFromToday()}</span>
                             </Col>
-                        </Row>
-                    ))}
-                    </>):(<p className="mb-0 text-theme1 fw-4">Your Checkout has no items</p>)}
-                  
+                        </Row>) : (<p className="mb-0 text-theme1 fw-4">Your Checkout has no items</p>)}
+
 
                 </div>
 
                 {/* <GstInvoice /> */}
-                {cartproducts.length > 0 &&   (<OrderMail email={profiledata.email}/>)}
-              
+                {cartproducts.length > 0 && (<OrderMail email={profiledata.email} />)}
+
             </>) : (<div className="bg-grey3 mt-4 d-flex px-4 py-3 br-2 gap-15">
                 <Step number={3} />
                 <div className="d-flex justify-content-between w-100 align-items-start gap-20">

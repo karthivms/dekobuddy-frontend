@@ -78,7 +78,7 @@ export default function CartTable({ userid }: { userid: string }) {
                                                     <p className="mb-1 fw-3">{product.product.name} - {product.product.size}</p>
                                                     <span className="font-small text-theme1 fw-4 bg-theme2 p-1 br-3">{product.product.categories}</span></td>
                                                 <td>
-                                                    <QuanityHandler cartid={product.id} userid={Number(userid)} count={product.product.quantity} />
+                                                    <QuanityHandler stock={product.product.stock} cartid={product.id} userid={Number(userid)} count={product.product.quantity} />
                                                 </td>
                                                 <td>{formatPriceIndian(product.product.quantity * Number(product.product.regular_price))}</td>
                                                 <td>

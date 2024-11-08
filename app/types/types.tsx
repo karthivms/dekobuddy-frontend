@@ -50,6 +50,7 @@ export interface cartProduct {
     name: string,
     categories: string,
     size: string,
+    stock : number,
     regular_price: number,
     images: {
         id: number,
@@ -74,7 +75,8 @@ export interface wishListProduct {
 
 export interface rating {
     user_name:string,
-    rating:number
+    rating:number,
+    review:string
 }
 
 

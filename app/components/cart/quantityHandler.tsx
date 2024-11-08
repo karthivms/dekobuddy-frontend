@@ -6,22 +6,26 @@ import { AppDispatch } from "@/app/redux/store";
 import { cartItem, cartProduct } from "@/app/types/types";
 import { useDispatch } from "react-redux";
 
-export default function QuanityHandler({   cartid, userid, count }: {  cartid: number, userid: number, count: number }) {
+export default function QuanityHandler({  stock, cartid, userid, count }: { stock : number, cartid: number, userid: number, count: number }) {
 
     const dispatch: AppDispatch = useDispatch();
 
     const handleIncrementQuantity = () => {
-        dispatch(incrementQuantity(cartid));
-        const cartData = {
-            cart_id: cartid,
-            quantity:1,
-            user_id:userid
-        }  
-
-        dispatch(UpdateQuantity(cartData));
+        if(count < stock){
+            dispatch(incrementQuantity(cartid));
+            const cartData = {
+                cart_id: cartid,
+                quantity:1,
+                user_id:userid
+            }  
+    
+            dispatch(UpdateQuantity(cartData));
+        }
+       
     }
 
     const handleDecrementQuantity = () => {
+        if (count != 1){
         dispatch(decrementQuantity(cartid));
         const cartData = {
             cart_id: cartid,
@@ -30,7 +34,7 @@ export default function QuanityHandler({   cartid, userid, count }: {  cartid: n
         }  
 
         dispatch(UpdateQuantity(cartData));
-        
+    }
     }
     return (
         <div className="mt-4 d-flex align-items-center text-theme1 fw-4 gap-1 quanity-handler">

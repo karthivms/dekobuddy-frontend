@@ -11,7 +11,6 @@ interface response {
 export const RegisterUser = async (data: User) => {
 
     const response: response = await apiRequest('POST', '/register/', data);
-    console.log(response)
     if (response.error) {
         return response.error;
     } else {

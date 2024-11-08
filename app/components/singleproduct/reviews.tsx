@@ -16,7 +16,7 @@ export default function Reviews({reviews}:{reviews : rating[]}) {
                     </div>
 
                     <div className='my-2 d-flex justify-content-between align-items-center'>
-                        <p className='mb-0 text-black font-secondary '>Very nice product</p>
+                        <p className='mb-0 text-black font-secondary '>{item.review}</p>
                         {/* <div className='d-flex align-items-center gap-6'>
                             <Image src={like} width={20} height={20} alt='like' />
                             <span className='font-primary text-grey'>20</span>

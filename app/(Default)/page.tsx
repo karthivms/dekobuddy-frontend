@@ -14,7 +14,7 @@ import { apiRequest } from "../api/apiConfig";
 
 const getHomeData = async () => {
   try {
-    const response = await apiRequest('GET', 'http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/homeapi/');
+    const response = await apiRequest('GET', '/homeapi/');
     return response;
 
   } catch (error) {
