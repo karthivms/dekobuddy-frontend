@@ -36,6 +36,7 @@ export default function Modal({ Apiinfo, category, productid, image, closeModal,
                 name: name,
                 regular_price: Number(variations[selectedSize].regular_price),
                 size: variations[selectedSize].size,
+                stock : variations[selectedSize].stock,
                 categories: category,
                 images: image,
                 quantity: 1
@@ -59,7 +60,7 @@ export default function Modal({ Apiinfo, category, productid, image, closeModal,
                     <h5 className="fw-5 font-small text-black text-uppercase">Select Size</h5>
                     <select className="w-100 border-border2-solid px-1 py-2 mt-1 font-primary" value={selectedSize} onChange={handleSort}>
                         {variations.map((item, index) => (
-                            <option value={index}>{item.size}</option>
+                            <option key={`variation_sizes_${item.size}`} value={index}>{item.size}</option>
                         ))}
                     </select>
                     <button className="btn1 w-100  font-primary mt-3 br-0 py-1" onClick={handleCartUpdate}>Add to cart</button>

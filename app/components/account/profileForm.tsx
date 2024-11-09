@@ -26,6 +26,8 @@ export default function Profile({ userid, data }: { userid: string, data: userDa
     const [showmsg, setShowMsg] = useState(false);
     const [showOld, setShowOld] = useState(false);
     const [showCon, setShowCon] = useState(false);
+    const [resError, setReserror] = useState('');
+
 
     const [formData, setFormData] = useState({
         first_name: data.first_name,
@@ -127,6 +129,7 @@ export default function Profile({ userid, data }: { userid: string, data: userDa
 
 
     const handleSubmit = async () => {
+        console.log(formData)
         validateForm("new_password");
         validateForm("email");
         validateForm("confirm_password");
@@ -136,7 +139,8 @@ export default function Profile({ userid, data }: { userid: string, data: userDa
         if (error.email === "" && error.new_password === "" && error.confirm_password === "" && error.old_password === "" && error.phone === "") {
 
             const response = await updateProfile(userid, formData);
-            if (response.email) {
+            console.log(response)
+            if (!response.error) {
                 setShowToast(true);
                 setShowMsg(true);
                 setFormData({
@@ -149,8 +153,10 @@ export default function Profile({ userid, data }: { userid: string, data: userDa
                     confirm_password: ''
                 })
             } else {
-                setShowToast(true);
                 setShowMsg(false);
+                setReserror(response.error)
+                setShowToast(true);
+                
             }
 
         }
@@ -294,7 +300,7 @@ export default function Profile({ userid, data }: { userid: string, data: userDa
 
 
             </div>
-            <Toaster msg={showmsg} show={showToast} handleClose={handleClose} />
+            <Toaster msg={showmsg} error={resError} show={showToast} handleClose={handleClose} />
         </>
     )
 }

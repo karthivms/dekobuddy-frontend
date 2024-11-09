@@ -26,11 +26,11 @@ export default function Menubar({ username, userid }: { username: string, userid
 
     useEffect(() => {
         dispatch(fetchCartItems(userid))
-    }, [dispatch, userid, cart.length])
+    }, [dispatch, userid])
 
     useEffect(() => {
         dispatch(fetchWishlistItems(userid))
-    }, [dispatch, userid, wishlist.length])
+    }, [dispatch, userid])
 
 
     useEffect(() => {

@@ -25,5 +25,8 @@ export async function updateProfile(userid : string, data : userData){
         payload.new_password = data.new_password;
     }
     const response = await apiRequest('PUT', `/profile/${userid}/`, payload);
+    console.log(
+        response
+    )
     return response;
 }

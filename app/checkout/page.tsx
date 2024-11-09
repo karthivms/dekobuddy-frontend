@@ -41,7 +41,7 @@ export default async function Page() {
             <Row className="mt-2 gap-20 row-gap-30">
                 <Col lg={8}>
                     <LoginDetails username={username} profiledata={profiledata}/>
-                    <Address />
+                    <Address userid={userid}/>
                     <OrderSummary userid={userid} profiledata={profiledata}/>
                     <Payment />
                 </Col>

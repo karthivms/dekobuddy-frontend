@@ -1,23 +1,38 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { address } from '../types/types';
+import { apiRequest } from '../api/apiConfig';
 
-const initialState = {
-    checkoutItems: ["wdw"],
-    userAddress:{
-        name: '',
-        mobileNumber: '',
-        pincode: '',
-        locality: '',
-        address: '',
-        city: '',
-        state: '',
-        landmark: '',
-        alternatePhone: '',
-        addressType: 'home',
-    },
+interface initialState {
+    addresses: address[]
+    status: "loading" | "success" | "failure",
+    error: undefined
+    activeStep: number
+}
+
+const initialState: initialState = {
+    addresses: [],
     status: "loading",
     activeStep: 3,
     error: undefined
 }
+
+
+export const fetchAddress = createAsyncThunk<address[], number, { rejectValue: string }>('/checkout/fetchAddress', async (id, { rejectWithValue }) => {
+    try {
+        const response = await apiRequest(
+            'GET', `http://localhost:3000/api/address`,
+            null,
+            {
+                id: id
+            });
+        return response.data;
+
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+})
+
 
 const cartSlice = createSlice({
     name: "Checkout",
@@ -26,6 +41,12 @@ const cartSlice = createSlice({
         changeStep: (state, action) => {
             state.activeStep = action.payload
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchAddress.fulfilled, (state, action) => {
+            state.addresses = action.payload;
+            state.status = "success"
+        })
     }
 })
 

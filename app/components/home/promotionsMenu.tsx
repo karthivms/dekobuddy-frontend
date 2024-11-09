@@ -1,9 +1,9 @@
+import { navigationItem } from "@/app/types/types";
 import NavigationMenu from "./navigationMenu";
-import promotion from "@/app/datas/home/promotionmenu.json";
 
-export default function PromotionMenu() {
+export default function PromotionMenu({data}:{data:navigationItem[]}) {
     const height = "220px"
     return (
-        <NavigationMenu links={promotion} height={height} id={"promotion"} />
+        <NavigationMenu  links={data} source={'promotion'} height={height} id={"promotion"} />
     )
 }

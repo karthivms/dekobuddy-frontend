@@ -3,12 +3,12 @@ interface country {
     name: string,
 }
 
-function Select({ data, handlechange, type }: { data: country[], handlechange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void, type: string }) {
+function Select({ value , data, handlechange, type }: {value : string, data: country[], handlechange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void, type: string }) {
     return (
-        <Form.Select aria-label="Default select example" onChange={handlechange} name={type}>
-            <option>Select {type}</option>
-            {data.map((country) => (
-                <option value={country.name}>{country.name}</option>
+        <Form.Select aria-label="Default select example" onChange={handlechange} value={value}  name={type} required>
+            <option value="">Select {type}</option>
+            {data && data.map((country) => (
+                <option key={`state_country_${country.name}`} value={country.name}>{country.name}</option>
             ))}
         </Form.Select>
     );

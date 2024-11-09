@@ -4,41 +4,45 @@ import { GetCountries } from '@/app/api/countries';
 import { GetState } from '@/app/api/states';
 import { changeStep, fetchAddress } from '@/app/redux/checkoutslice';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Select from './selectItem';
 import { AddAddress } from '@/app/api/addAddress';
-import { AppDispatch } from '@/app/redux/store';
+import { AppDispatch, RootState } from '@/app/redux/store';
 import Toaster from './toaster';
+import { address } from '@/app/types/types';
+import { EditAddress } from '@/app/api/editAddress';
 
 interface Props {
     setedit: () => void;
     page: string;
-    userid: string,
+    userid : string,
+    address : address
 }
 
-const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
+const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) => {
 
     const dispatch: AppDispatch = useDispatch();
     const [country, setCountry] = useState([])
-
     const [state, setState] = useState([]);
     const [show, setShow] = useState(false);
+
 
     const handleClose = () => {
         setShow(false)
     }
 
     const [formData, setFormData] = useState({
-        name: '',
-        mobileNumber: '',
-        pincode: '',
-        country: '',
-        address: '',
-        city: '',
-        state: '',
-        landmark: '',
-        alternatePhone: '',
-        user: Number(userid)
+        id : address.id,
+        name: address.name,
+        mobileNumber: address.phone,
+        pincode: address.postcode,
+        country: address.Country_Region,
+        address: address.address_1,
+        city: address.city,
+        state: address.state,
+        landmark: address.landmark === null? "" : address.landmark,
+        alternatePhone: address.alternative_phone === null? "" : address.alternative_phone,
+        user : Number(userid)
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -59,12 +63,12 @@ const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-    
 
-        const response = await AddAddress(formData);
+        const response = await EditAddress(formData);
         console.log(response)
 
         setFormData({
+            id : 0,
             name: '',
             mobileNumber: '',
             pincode: '',
@@ -74,7 +78,7 @@ const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
             state: '',
             landmark: '',
             alternatePhone: '',
-            user: Number(userid)
+            user : Number(userid)
         })
 
         setShow(true)
@@ -143,6 +147,7 @@ const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
 
                 <div className="form-group">
                     <Select value={formData.country} data={country} handlechange={handleChange} type={'country'} />
+
                 </div>
 
                 <div className="form-group">
@@ -226,16 +231,16 @@ const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
             </div> */}
             <div className='d-flex align-items-center mt-3 gap-20 flex-wrap'>
                 <button className="btn1 py-1 br-0 px-4 d-block  font-primary fw-3 text-uppercase" type="submit" onClick={() => dispatch(changeStep(3))}>
-                    {page === "checkout" ? (<>Save And Deliver here</>) : (<>Save</>)}
-                </button>
+                {page === "checkout" ? ( <>Save And Deliver here</>) : (<>Save</>)}
+                </button> 
 
                 <span className="btn2  br-0 py-1 px-4  font-primary fw-3 text-uppercase pointer" onClick={() => setedit()}>
                     Cancel
                 </span>
             </div>
-            <Toaster msg={'Address Added Successfully'} show={show} handleClose={handleClose} />
+            <Toaster msg={"Address updated successfully"} show={show} handleClose={handleClose}/>
         </form>
     );
 };
 
-export default AddressForm;
+export default EditAddressForm;

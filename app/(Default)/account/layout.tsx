@@ -7,6 +7,8 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+
+    
     return (
         <div>
             <Container className="my-4">

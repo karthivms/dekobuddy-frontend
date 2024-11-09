@@ -1,12 +1,15 @@
 
 // category Item
-export interface CategoryItem {
+export interface navigationItem {
     id: number;
     name: string;
-    slug: string;
+    slug?: string;
+    link?: string,
     image: string;
     active: boolean
 }
+
+
 
 
 // Login User
@@ -20,7 +23,7 @@ export interface Product {
     id: number;
     name: string;
     images: productimage[];
-    categories: CategoryItem[]
+    categories: navigationItem[]
     short_description: string;
     variations: variations[]
     sale_price: number
@@ -146,3 +149,19 @@ export interface profile {
     email: string,
     phone: string
 }
+
+export interface address {
+    id: number,
+    address_type: string,
+    name: string,
+    address_1: string,
+    city: string,
+    landmark: null | string,
+    postcode: string,
+    Country_Region: string,
+    state_country: string,
+    phone: string,
+    alternative_phone: null | string,
+    user: number
+}
+

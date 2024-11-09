@@ -33,7 +33,7 @@ export default async function Home() {
       <Banner data={homedata.main_banners[0]}/>
 
       {/* <ScrollWrapper direction={20}> */}
-      <PromotionMenu />
+      <PromotionMenu data={homedata.promotionsmenu}/>
       {/* </ScrollWrapper> */}
 
       <Videoplayer url={homedata.videos_uploaded[0].video} thumbnail={"/images/thumbnail1.png"}/>

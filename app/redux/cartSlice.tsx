@@ -22,6 +22,14 @@ interface deletebody {
     user_id: number
 }
 
+interface addResponse {
+    success: boolean,
+    cart_data: {
+        cart_item_id: number
+    }
+}
+
+
 export const fetchCartItems = createAsyncThunk<cartItem[], string, { rejectValue: string }>(
     "cart/fetchitems",
     async (id, { rejectWithValue }) => {
@@ -48,14 +56,14 @@ export const fetchCartItems = createAsyncThunk<cartItem[], string, { rejectValue
     })
 
 
-export const AddCartItems = createAsyncThunk<cartItem[], cartdata, { rejectValue: string }>(
+export const AddCartItems = createAsyncThunk<addResponse, cartdata, { rejectValue: string }>(
     "cart/additems",
     async (cartdata, { rejectWithValue, getState }) => {
 
         if (cartdata.user_id) {
             try {
                 const response = await apiRequest('POST', `http://localhost:3000/api/cart/addtocart`, cartdata);
-                return response;
+                return response.data;
             } catch (error) {
                 console.log(error);
                 return rejectWithValue('Failed to add cart items');
@@ -178,6 +186,13 @@ const cartSlice = createSlice({
         });
         builder.addCase(fetchCartItems.rejected, (state) => {
             state.status = "failure";
+        });
+        builder.addCase(AddCartItems.fulfilled, (state, action) => {
+            const isProduct = state.cartItems.some((item) => item.id === action.payload.cart_data.cart_item_id)
+            if (!isProduct) {
+                state.cartItems[state.cartItems.length - 1].id = action.payload.cart_data.cart_item_id;
+            }
+
         })
     }
 })

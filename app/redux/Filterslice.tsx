@@ -62,7 +62,6 @@ export const getProducts = createAsyncThunk<APIResponse, string, { rejectValue: 
                     min_price: min_price,
                     max_price: max_price
                 });
-                console.log(response)
             return response.data;
 
         } catch (error) {

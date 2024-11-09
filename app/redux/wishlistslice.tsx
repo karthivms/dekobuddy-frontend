@@ -18,8 +18,13 @@ interface deletebody {
     user_id: number
 }
 
-
-
+interface addResponse{
+    wishlist_item_id: number,
+    success: boolean,
+    added_to_wishlist: boolean,
+    wishlist_count: number
+  }
+  
 
 const initialState: state = {
     wishlistItems: [],
@@ -46,14 +51,14 @@ export const fetchWishlistItems = createAsyncThunk<wishlistItem[], string, { rej
     }
 );
 
-export const addWishlistItems = createAsyncThunk<wishlistItem[], wishlistdata, { rejectValue: string }>(
+export const addWishlistItems = createAsyncThunk<addResponse, wishlistdata, { rejectValue: string }>(
     "wishlist/addWishlistItems",
     async (wishlistdata, { rejectWithValue, getState }) => {
 
         if (wishlistdata.user_id) {
             try {
                 const response = await apiRequest('POST', `http://localhost:3000/api/wishlist/`, wishlistdata);
-                return response;
+                return response.data;
             } catch (error) {
                 console.log(error);
                 return rejectWithValue('Failed to add wishlist item');
@@ -171,6 +176,13 @@ const wishlistSlice = createSlice({
         builder.addCase(fetchWishlistItems.rejected, (state) => {
             state.status = 'failure';
         });
+        builder.addCase(addWishlistItems.fulfilled, (state, action) => {
+            const isProduct = state.wishlistItems.some((item) => item.id === action.payload.wishlist_item_id)
+            if (!isProduct && action.payload.added_to_wishlist) {
+                state.wishlistItems[state.wishlistItems.length - 1].id = action.payload.wishlist_item_id;
+            }
+
+        })
     }
 })
 

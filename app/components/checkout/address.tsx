@@ -8,7 +8,7 @@ import { RootState } from "@/app/redux/store";
 import { useState } from "react";
 import AddressForm from "./addressForm";
 
-function ChangeAddress() {
+function ChangeAddress({userid}:{userid : string}) {
     const dispatch = useDispatch();
     const [edit, setEdit] = useState(false);
     const [add, setAdd] = useState(false);
@@ -36,7 +36,7 @@ function ChangeAddress() {
                 </div>
             </div>
             {edit ? (<div className="px-4 py-4 bg-grey3">
-                <AddressForm page="checkout" setedit={changeState} />
+                <AddressForm userid={userid} page="checkout" setedit={changeState} />
             </div>) : (
                 <div className="px-4 py-4 bg-grey3">
                     <div className=" d-flex flex-wrap justify-content-between">
@@ -73,7 +73,7 @@ function ChangeAddress() {
             )}
             <div className="bg-grey3 mt-2 d-flex align-items-center px-4 py-3 br-2 gap-15">
                 {add ? (
-                    <AddressForm page="checkout" setedit={changeAddState} />
+                    <AddressForm userid={userid} page="checkout" setedit={changeAddState} />
                 ) : (
                     <button className="btn p-0" onClick={() => handleAddaddress()}>
                         <span className="mx-2 font-secondary fw-4">+</span> <span className="font-primary fw-3 line-tight mt-1">Add New Address</span>
@@ -87,13 +87,16 @@ function ChangeAddress() {
     )
 }
 
-export default function Address() {
+export default function Address({userid}:{userid : string}) {
     const dispatch = useDispatch()
     const step = useSelector((state: RootState) => state.checkout.activeStep)
 
+ 
+
+
     return (
         <>
-            {step === 2 ? (<ChangeAddress />) : (<div className="bg-grey3 mt-4 d-flex px-4 py-3 br-2 gap-15">
+            {step === 2 ? (<ChangeAddress userid={userid}/>) : (<div className="bg-grey3 mt-4 d-flex px-4 py-3 br-2 gap-15">
                 <Step number={2} />
                 <div className="d-flex justify-content-between flex-wrap row-gap-10 w-100 align-items-start gap-20">
                     <div>

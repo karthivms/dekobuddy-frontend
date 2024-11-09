@@ -63,7 +63,7 @@
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 1rem;
 
-        @media screen and (max-width:600px){
+        @media screen and (max-width:600px) {
             grid-template-columns: 1fr !important;
         }
     }
@@ -82,9 +82,8 @@
     select,
     textarea {
         padding: 8px;
-        border: none;
         border: 1px solid $border-color !important;
-
+        border-radius: 0 !important;
         font-size: 15px;
     }
 
@@ -142,13 +141,14 @@
     }
 }
 
-.order-listing{
+.order-listing {
     position: relative;
 
-    &:hover{
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;    }
+    &:hover {
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
 
-    div a::before{
+    div a::before {
         content: '';
         position: absolute;
         top: 0;
@@ -171,7 +171,8 @@
 
             ul {
                 padding: 0 !important;
-                li{
+
+                li {
                     transition: all 0.5s ease;
                 }
             }
@@ -193,7 +194,7 @@
 
     .toast {
         border-left: 4px solid $primary-color !important;
-border-radius:0 !important;
+        border-radius: 0 !important;
     }
 
 }
