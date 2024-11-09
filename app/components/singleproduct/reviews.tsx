@@ -6,7 +6,7 @@ export default function Reviews({reviews}:{reviews : rating[]}) {
     return (
         <Col className='h-290 overflow-y-scroll pe-5 custom-scrollbar'>
             {reviews.map((item: rating) => (
-                <div key={`review_${item.user_name}`} className='mb-4'>
+                <div key={`review_${item.id}`} className='mb-4'>
                     <div className='d-flex gap-8 align-items-center'>
                         <span className="d-flex align-items-center gap-6 bg-theme1 w-auto px-1 br-5 font-primary text-white">
                            {item.rating}

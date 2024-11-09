@@ -15,11 +15,8 @@ export default async function Header() {
         if(userData){
             username = userData.username;
             userid = userData.user_id;
-
         }
      
- 
-
     return (
         <header>
            <Topbar/>

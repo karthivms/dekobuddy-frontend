@@ -8,6 +8,7 @@ import { RootState } from './store';
 type state = {
     wishlistItems: wishlistItem[];
     selectedItems: number[];
+    added_to_wishlist: boolean,
     actionTab: boolean;
     status: "loading" | "success" | "failure";
     error: string | undefined;
@@ -18,17 +19,18 @@ interface deletebody {
     user_id: number
 }
 
-interface addResponse{
+interface addResponse {
     wishlist_item_id: number,
     success: boolean,
     added_to_wishlist: boolean,
     wishlist_count: number
-  }
-  
+}
+
 
 const initialState: state = {
     wishlistItems: [],
     selectedItems: [],
+    added_to_wishlist: false,
     actionTab: false,
     status: "loading",
     error: undefined
@@ -36,16 +38,22 @@ const initialState: state = {
 
 export const fetchWishlistItems = createAsyncThunk<wishlistItem[], string, { rejectValue: string }>(
     'wishlist/fetchWishlistItems',
-    async (id, { rejectWithValue }) => {
+    async (id, { rejectWithValue, getState }) => {
         if (id) {
             try {
-                const response = await apiRequest('GET', `http://localhost:3000/api/wishlist/${id}`);
+                const state = getState() as RootState;
+                const response = await apiRequest('GET', `${state.cart.url}/api/wishlist/${id}`);
+                localStorage.removeItem('wishlist');
+
                 return response.data;
             } catch (error) {
                 console.log(error)
                 return rejectWithValue('Failed to fetch wishlist items');
 
             }
+        }else{
+            const data = localStorage.getItem("wishlist");
+            return data ? JSON.parse(data) : [];
         }
         return [];
     }
@@ -57,7 +65,8 @@ export const addWishlistItems = createAsyncThunk<addResponse, wishlistdata, { re
 
         if (wishlistdata.user_id) {
             try {
-                const response = await apiRequest('POST', `http://localhost:3000/api/wishlist/`, wishlistdata);
+                const state = getState() as RootState;
+                const response = await apiRequest('POST', `${state.cart.url}/api/wishlist/`, wishlistdata);
                 return response.data;
             } catch (error) {
                 console.log(error);
@@ -66,6 +75,12 @@ export const addWishlistItems = createAsyncThunk<addResponse, wishlistdata, { re
         } else {
             const state = getState() as RootState;
             localStorage.setItem("wishlist", JSON.stringify(state.wishlist.wishlistItems));
+            const isFirstitem = state.wishlist.wishlistItems.length === 1;
+            return {
+                success: true,
+                wishlist_item_id: isFirstitem ? 1 : state.wishlist.wishlistItems[state.wishlist.wishlistItems.length - 1].id,
+                added_to_wishlist : state.wishlist.added_to_wishlist
+            }
         }
     })
 
@@ -77,7 +92,8 @@ export const removeWishlistItems = createAsyncThunk<wishlistItem[], deletebody, 
 
         if (wishlistdata.user_id) {
             try {
-                const response = await apiRequest('DELETE', `http://localhost:3000/api/wishlist/remove`, wishlistdata);
+                const state = getState() as RootState;
+                const response = await apiRequest('DELETE', `${state.cart.url}/api/wishlist/remove`, wishlistdata);
                 return response;
             } catch (error) {
                 console.log(error);
@@ -101,7 +117,7 @@ export const removeSelectedWishlistItems = createAsyncThunk<wishlistItem[], numb
                     items: state.wishlist.selectedItems,
                     user_id: id
                 }
-                const response = await apiRequest('DELETE', `http://localhost:3000/api/wishlist/remove-multiple`, delmultiplebody);
+                const response = await apiRequest('DELETE', `${state.cart.url}/api/wishlist/remove-multiple`, delmultiplebody);
                 return response;
             } catch (error) {
                 console.log(error);
@@ -127,9 +143,11 @@ const wishlistSlice = createSlice({
             }
 
             if (isItem) {
+                state.added_to_wishlist = false;
                 const filteredItems = state.wishlistItems.filter((item) => item.products.id !== payload.product.id);
                 state.wishlistItems = filteredItems;
             } else {
+                state.added_to_wishlist = true;
                 state.wishlistItems.push(item);
             }
         },

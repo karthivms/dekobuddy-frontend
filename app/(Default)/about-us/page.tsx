@@ -1,8 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import "@/app/sass/components/aboutus.scss"
 import Image from "next/image";
-import ScrollWrapper from "@/app/components/scrollanimation";
-import Whychooseus from "@/app/components/home/whychooseus";
+
 
 export default function Page() {
     return (
@@ -13,13 +12,13 @@ export default function Page() {
                 </Container>
             </Container>
 
-            <Container className="mt-5">
+            <Container className="mt-5" >
                 <Row className="align-items-center">
-                    <Col lg={5} className="about-image-div">
+                    <Col lg={{span : 5, order : 1}} className="about-image-div" xs={{order: 2}} >
                         <Image src={'/images/about-us.png'} alt="about-us" className="w-100 h-auto" width={725} height={603} />
                         <Image src={'/images/Experience.png'} alt="about-us" className="wp-150 h-auto experience" width={207} height={207} />
                     </Col>
-                    <Col className="ps-5">
+                    <Col className="ps-lg-5" xs={{order: 1}}>
                         <h2 className="text-uppercase font-h2 text-theme1 fw-4">About Us</h2>
                         <p className="text-justify line-relaxed text-black">Lorem ipsum dolor sit amet consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsum dolor
                             sit amet consectetur. Consequat feugiat lacus nisi malesuada alique Lorem ipsum dolor sit amet
@@ -41,7 +40,7 @@ export default function Page() {
 
             <Container className="mt-5">
                 <Row className="align-items-center">
-                    <Col>
+                    <Col >
                         <p className="text-center line-relaxed text-black">Lorem ipsum dolor sit amet consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsum dolor
                             sit amet consectetur. Consequat feugiat lacus nisi malesuada alique Lorem ipsum dolor sit amet
                             consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsum dolor sit amet consectetur.
@@ -58,10 +57,10 @@ export default function Page() {
 
             <Container className="mt-5">
                 <Row className="align-items-center">
-                    <Col lg={5}>
+                    <Col  lg={{span : 5, order : 1}} xs={{order: 2}}>
                         <Image src={'/images/About-us-3.png'} alt="about-us" className="w-100 h-auto" width={861} height={430} />
                     </Col>
-                    <Col>
+                    <Col  lg={{ order : 2}} xs={{order: 1}}>
                         <p className="text-center line-relaxed text-black">Lorem ipsum dolor sit amet consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsum dolor
                             sit amet consectetur. Consequat feugiat lacus nisi malesuada alique Lorem ipsum dolor sit amet
                             consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsum dolor sit amet consectetur.

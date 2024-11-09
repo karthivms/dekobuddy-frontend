@@ -1,7 +1,9 @@
+
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiRequest } from '../api/apiConfig';
 import { Product } from '../types/types';
 import { RootState } from './store';
+import { getDomainUrl } from '../utilis/getDomain';
 
 
 interface initialState {
@@ -12,7 +14,7 @@ interface initialState {
     count: number,
     limit: number,
     offset: number,
-    sort: string ,
+    sort: string,
     minprice: number,
     maxprice: number,
     currentCategory: string
@@ -37,6 +39,7 @@ interface APIResponse {
     results: Product[]
 }
 
+
 export const getProducts = createAsyncThunk<APIResponse, string, { rejectValue: string }>(
     "products/getproducts",
     async (category, { rejectWithValue, getState }) => {
@@ -51,7 +54,7 @@ export const getProducts = createAsyncThunk<APIResponse, string, { rejectValue: 
 
         try {
             const response = await apiRequest(
-                'GET', `http://localhost:3000/api/products`,
+                'GET', `${state.cart.url}/api/products`,
                 null,
                 {
                     category: category,

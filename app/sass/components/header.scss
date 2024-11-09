@@ -119,11 +119,7 @@ header {
                         font-weight: 500;
                     }
 
-                    &:first-child {
-                        a::after {
-                            content: "Account";
-                        }
-                    }
+                  
 
                     &:nth-child(2) {
                         a::after {

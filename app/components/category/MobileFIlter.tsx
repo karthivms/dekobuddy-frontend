@@ -12,8 +12,11 @@ import ClearAll from "./clearAllbtn";
 import { Offcanvas } from "react-bootstrap";
 import { useState } from "react";
 import FilterIcon from "../icons/filter";
+import CategoryListing from "./categoryListing";
+import { Attribute, navigationItem } from "@/app/types/types";
+import PriceRangeSlider from "./priceRange";
 
-export default function MobileFilter() {
+export default function MobileFilter({ categories, attributes }: { categories: navigationItem[], attributes: Attribute[] }) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -32,13 +35,14 @@ export default function MobileFilter() {
                     </div>
                     <Selected />
                     <div className="attributes-section">
-                        <Attributes attribute={patterns} />
-                        <Attributes attribute={types} />
-                        <Attributes attribute={colors} />
-                        <Attributes attribute={materials} />
-                        <Attributes attribute={shapes} />
-                        <Attributes attribute={size} />
-                    </div>
+                    <CategoryListing category={categories} />
+                    {attributes.map((item) => (
+                        <div key={`attributes_item_item.id`}>
+                            <Attributes attribute={item} />
+                        </div>
+                    ))}
+                    <PriceRangeSlider />
+                </div>
                 </div>
             </Offcanvas>
 

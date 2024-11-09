@@ -38,7 +38,7 @@ export default function CartTable({ userid }: { userid: string }) {
     }
 
     const handleCheckout = () => {
-        if(!userid){
+        if (!userid) {
             alert("login to continue")
         }
     }

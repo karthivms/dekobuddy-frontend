@@ -50,7 +50,7 @@ export default function Page() {
                             ))}
                         </ul>
                     </Col>
-                    <Col className="bg-theme2 p-5 br-10">
+                    <Col className="bg-theme2 mx-3 m-lg-0 p-lg-5 p-4 br-10">
                         <ContactForm />
                     </Col>
                 </Row>

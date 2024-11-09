@@ -3,7 +3,6 @@
 
 import { AddCartItems, decrementQuantity, incrementQuantity, UpdateQuantity } from "@/app/redux/cartSlice";
 import { AppDispatch } from "@/app/redux/store";
-import { cartItem, cartProduct } from "@/app/types/types";
 import { useDispatch } from "react-redux";
 
 export default function QuanityHandler({  stock, cartid, userid, count }: { stock : number, cartid: number, userid: number, count: number }) {

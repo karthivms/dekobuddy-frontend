@@ -77,6 +77,7 @@ export interface wishListProduct {
 }
 
 export interface rating {
+    id : number,
     user_name:string,
     rating:number,
     review:string

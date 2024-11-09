@@ -42,8 +42,8 @@ export default function Ratings({ userid, productid, reviews, average, rat_count
     }
 
     return (
-        <Container fluid className="mt-5 ">
-            <h2 className="mt-3 text-uppercase font-h2 text-center text-theme1 fw-4 pb-2">Ratings & Reviews</h2>
+        <Container fluid className=" ">
+            <h2 className=" text-uppercase font-h2 text-center text-theme1 fw-4 pb-2">Ratings & Reviews</h2>
             {Array.isArray(reviews) && reviews.length > 0 ? (
 
                 <Row className=" border-border2-solid rating_box p-5 mx-3 mt-4 gap-100">

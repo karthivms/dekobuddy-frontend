@@ -1,26 +1,16 @@
 'use client'
 
-import galimages from "@/app/datas/singleproduct/gallery.json";
 import Image from "next/image";
 import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
+import { productimage } from "@/app/types/types";
 
 
-interface Product {
-    id: number;
-    product_Image1: string;
-}
 
-export default function GallerySlider() {
 
-    const product = {
-        id: 1,
-        product_Image1: "/images/gallery_img_1.jpg"
-    }
-
-    const images = [product, ...galimages];
+export default function GallerySlider({ images }: { images: productimage[] }) {
 
 
     return (
@@ -39,9 +29,9 @@ export default function GallerySlider() {
                 }}
                 modules={[Autoplay, EffectFade, Pagination]}
             >
-                {images.map((item: Product) => (
+                {images.map((item: productimage) => (
                     <SwiperSlide  key={`testimonila_${item.id}`}>
-                            <Image src={item.product_Image1} alt="quote" width="552" height="558" className="w-100 h-400 br-30" />
+                            <Image src={item.image} alt="quote" width="552" height="558" className="w-100 h-400 br-30" />
                             
                     </SwiperSlide>
                 ))}

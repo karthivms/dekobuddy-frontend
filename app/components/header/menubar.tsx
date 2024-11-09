@@ -10,7 +10,7 @@ import { AppDispatch, RootState } from '@/app/redux/store';
 import Search from '../icons/search';
 import { useEffect, useState } from 'react';
 import { fetchWishlistItems } from '@/app/redux/wishlistslice';
-import { fetchCartItems } from '@/app/redux/cartSlice';
+import { fetchCartItems, updateUrl } from '@/app/redux/cartSlice';
 
 
 export default function Menubar({ username, userid }: { username: string, userid: string }) {
@@ -23,6 +23,10 @@ export default function Menubar({ username, userid }: { username: string, userid
     const hideOffcanvas = () => {
         setShow(false)
     }
+
+    useEffect(() => {
+        dispatch(updateUrl())
+    }, [dispatch, userid])
 
     useEffect(() => {
         dispatch(fetchCartItems(userid))

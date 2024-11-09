@@ -66,10 +66,11 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
             <div className="my-4 font-primary des_list fw-3" dangerouslySetInnerHTML={{__html : data.short_description}}></div>
 
             {data.variations.length > 0 && (
-                <div className="d-flex gap-20 align-items-center mt-3">
+                <div className="d-flex gap-20  mt-3">
                     <p className="mb-0 fw-3 font-large" style={{ color: "#494642" }}>Size:</p>
+                    <div className="d-flex flex-wrap row-gap-14 gap-14 align-items-center">
                     {data.variations.map((item) => (
-                        <div key={`Attname_${item.id}`}>
+                        <div key={`Attname_${item.id}`} >
                             <span
                                 onClick={() => handleVariationChange(item)}
                                 className={`fw-4 font-primary border-border2-solid py-1 px-2 pointer br-5 ${actVariation.sku === item.sku ? 'bg-theme2 text-theme1' : ''}`}>
@@ -77,6 +78,7 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
                             </span>
                         </div>
                     ))}
+                    </div>
                 </div>
             )}
 
@@ -97,8 +99,8 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
                 )}
             </div>
 
-            <QuanityHandler stock={actVariation.stock} count={count} setCount={setCount} />
-            <ActionButtons Apiinfo={cartAPiinfo} category={data.categories[0].name} productid={data.id} image={data.images[0]} variation={actVariation} name={data.name}/>
+            <QuanityHandler stock={actVariation.stock} variationId={actVariation.id} count={count} setCount={setCount} />
+            <ActionButtons Apiinfo={cartAPiinfo} category={data.categories[0].name} productid={data.id} image={data.images[0]} variation={actVariation} name={data.name} setCount={setCount}/>
             <Options handleMsg={SetWishmsg} handleToast={setShow} id={data.id} userid={Number(userid)} price={Number(data.regular_price)} images={data.images} title={data.name} />
             <Toaster show={show} msg={wishmsg} handleClose={handleToastClose}/>
 

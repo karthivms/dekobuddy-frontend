@@ -60,7 +60,7 @@ export default async function page({ params }: { params: params }) {
                         <ProductGallery images={data.images} />
                     </Col>
                     <Col lg={5} className="d-block d-md-block d-lg-none">
-                        <GallerySlider />
+                        <GallerySlider images={data.images} />
                     </Col>
                     <Col>
                         <ProductData data={data} userid={userid} />

@@ -1,7 +1,9 @@
+
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { cartdata, cartItem } from '../types/types';
 import { apiRequest } from '../api/apiConfig';
 import { RootState } from './store';
+import { getDomainUrl } from '../utilis/getDomain';
 
 
 interface initialState {
@@ -9,6 +11,7 @@ interface initialState {
     status: "loading" | "success" | "failure",
     error: undefined
     total: number
+    url : string
 }
 
 interface updateBody {
@@ -32,10 +35,11 @@ interface addResponse {
 
 export const fetchCartItems = createAsyncThunk<cartItem[], string, { rejectValue: string }>(
     "cart/fetchitems",
-    async (id, { rejectWithValue }) => {
+    async (id, { rejectWithValue, getState }) => {
         if (id) {
             try {
-                const response = await apiRequest('GET', `http://localhost:3000/api/cart/${id}`);
+                const state = getState() as RootState
+                const response = await apiRequest('GET', `${state.cart.url}/api/cart/${id}`);
                 localStorage.removeItem('cart');
                 if (response.data.length > 0) {
                     return response.data[0];
@@ -62,7 +66,8 @@ export const AddCartItems = createAsyncThunk<addResponse, cartdata, { rejectValu
 
         if (cartdata.user_id) {
             try {
-                const response = await apiRequest('POST', `http://localhost:3000/api/cart/addtocart`, cartdata);
+                const state = getState() as RootState
+                const response = await apiRequest('POST', `${state.cart.url}/api/cart/addtocart`, cartdata);
                 return response.data;
             } catch (error) {
                 console.log(error);
@@ -71,6 +76,9 @@ export const AddCartItems = createAsyncThunk<addResponse, cartdata, { rejectValu
         } else {
             const state = getState() as RootState;
             localStorage.setItem("cart", JSON.stringify(state.cart.cartItems));
+            const isFirstitem  = state.cart.cartItems.length === 1
+            console.log(isFirstitem)
+            return {success : true, cart_data : {cart_item_id : isFirstitem? 1 : state.cart.cartItems[state.cart.cartItems.length - 1].id }}
         }
     })
 
@@ -81,7 +89,8 @@ export const UpdateQuantity = createAsyncThunk<cartItem[], updateBody, { rejectV
 
         if (cartdata.user_id) {
             try {
-                const response = await apiRequest('PUT', `http://localhost:3000/api/cart/updatecart`, cartdata);
+                const state = getState() as RootState
+                const response = await apiRequest('PUT', `${state.cart.url}/api/cart/updatecart`, cartdata);
                 return response;
             } catch (error) {
                 console.log(error);
@@ -100,7 +109,8 @@ export const DeleteCartItem = createAsyncThunk<cartItem[], deletebody, { rejectV
 
         if (cartdata.user_id) {
             try {
-                const response = await apiRequest('DELETE', `http://localhost:3000/api/cart/deletecart`, cartdata);
+                const state = getState() as RootState
+                const response = await apiRequest('DELETE', `${state.cart.url}/api/cart/deletecart`, cartdata);
                 return response;
             } catch (error) {
                 console.log(error);
@@ -116,7 +126,8 @@ const initialState: initialState = {
     cartItems: [],
     status: "loading",
     error: undefined,
-    total: 0
+    total: 0,
+    url : ''
 }
 
 const cartSlice = createSlice({
@@ -130,11 +141,10 @@ const cartSlice = createSlice({
             const item = {
                 id: payload.id,
                 product: payload.product,
-                quantity: payload.quantity
             }
 
             if (isItem) {
-                isItem.product.quantity++;
+                isItem.product.quantity = isItem.product.quantity + payload.product.quantity;
             } else {
                 state.cartItems.push(item);
             }
@@ -173,6 +183,10 @@ const cartSlice = createSlice({
             })
 
             state.total = total;
+        },
+        updateUrl : (state) => {
+            const {url} = getDomainUrl();
+            state.url = url;
         }
     },
 
@@ -197,5 +211,5 @@ const cartSlice = createSlice({
     }
 })
 
-export const { AddtoCart, gettotal, removeCartItem, incrementQuantity, decrementQuantity } = cartSlice.actions
+export const { AddtoCart, gettotal, removeCartItem, incrementQuantity, decrementQuantity, updateUrl } = cartSlice.actions
 export default cartSlice.reducer;

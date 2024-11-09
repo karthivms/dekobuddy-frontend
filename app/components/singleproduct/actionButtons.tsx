@@ -14,7 +14,7 @@ interface ApiInfo {
     user_id: number
 }
 
-export default function ActionButtons({ Apiinfo, category,  productid, image, variation, name  }: { Apiinfo: ApiInfo, category : string,  productid: number, image : productimage, variation : variations, name : string }) {
+export default function ActionButtons({ Apiinfo, category, productid, image, variation, name, setCount }: { Apiinfo: ApiInfo, category: string, productid: number, image: productimage, variation: variations, name: string, setCount :  React.Dispatch<React.SetStateAction<number>> }) {
     const dispatch: AppDispatch = useDispatch();
     const cartproducts = useSelector((state: RootState) => state.cart.cartItems);
     const router = useRouter()
@@ -23,47 +23,67 @@ export default function ActionButtons({ Apiinfo, category,  productid, image, va
 
     const handleClose = () => setShowSidebar(false);
 
+    const isProduct = cartproducts.find((item) => item.product.id === variation.id)
+
+
     const handleCartUpdate = () => {
+
         const cartAPiData = {
-            id : cartproducts[cartproducts.length - 1]?.id + 1,
-            productid : productid,
+            id: cartproducts[cartproducts.length - 1]?.id + 1,
+            productid: productid,
             product: {
-                id : variation.id,
-                name : name,
-                regular_price : Number (variation.regular_price) ,
-                size : variation.size,
-                stock : variation.stock,
-                categories :  category,
-                images : image,
-                quantity : Apiinfo.quantity
+                id: variation.id,
+                name: name,
+                regular_price: Number(variation.regular_price),
+                size: variation.size,
+                stock: variation.stock,
+                categories: category,
+                images: image,
+                quantity: Apiinfo.quantity
             },
-           user_id : Apiinfo.user_id
+            user_id: Apiinfo.user_id
         }
 
+
+        if (isProduct) {
+            if (isProduct.product.quantity + Apiinfo.quantity > isProduct.product.stock) {
+                alert(`stock not available`);
+                return;
+            }
+        }
         dispatch(AddtoCart(cartAPiData));
         dispatch(AddCartItems(cartAPiData));
         setShowSidebar(true);
+        setCount(1)
     }
 
     const handleBuyNow = () => {
         const cartAPiData = {
-            id : cartproducts[cartproducts.length - 1]?.id + 1,
-            productid : productid,
+            id: cartproducts[cartproducts.length - 1]?.id + 1,
+            productid: productid,
             product: {
-                id : variation.id,
-                name : name,
-                regular_price : Number (variation.regular_price) ,
-                size : variation.size,
-                stock : variation.stock,
-                categories :  category,
-                images : image,
-                quantity : Apiinfo.quantity
+                id: variation.id,
+                name: name,
+                regular_price: Number(variation.regular_price),
+                size: variation.size,
+                stock: variation.stock,
+                categories: category,
+                images: image,
+                quantity: Apiinfo.quantity
             },
-           user_id : Apiinfo.user_id
+            user_id: Apiinfo.user_id
+        }
+
+        if (isProduct) {
+            if (isProduct.product.quantity + Apiinfo.quantity > isProduct.product.stock) {
+                alert(`stock not available`);
+                return;
+            }
         }
 
         dispatch(AddtoCart(cartAPiData));
         dispatch(AddCartItems(cartAPiData));
+        setCount(1)
         router.push('/checkout')
     }
 
@@ -71,7 +91,7 @@ export default function ActionButtons({ Apiinfo, category,  productid, image, va
         <div className="mt-4 d-flex align-items-center gap-20 actionbuttons">
             <button
                 className="border-transparent-solid bg-theme1 text-white py-1 br-5 wp-130 justify-content-center fw-3 d-flex align-items-center gap-6"
-                onClick={ handleCartUpdate }
+                onClick={handleCartUpdate}
             >
                 <CartIcon2 /> Add to Cart
             </button>
@@ -79,7 +99,7 @@ export default function ActionButtons({ Apiinfo, category,  productid, image, va
                 className="border-theme1-solid text-theme1 bg-transparent wp-130 py-1 br-5 fw-3" onClick={handleBuyNow}>
                 Buy Now
             </button>
-            <CartSidebar showsidebar={showsidebar} handleClose={handleClose}/>
+            <CartSidebar showsidebar={showsidebar} handleClose={handleClose} />
         </div>
     )
 } 
