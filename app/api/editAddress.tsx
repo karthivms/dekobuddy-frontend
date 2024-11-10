@@ -4,7 +4,8 @@ import { apiRequest } from "./apiConfig";
 
  interface propsdata {
     id : number,
-    name: string,
+    first_name: string,
+    email : string,
     mobileNumber: string,
     pincode: string,
     country: string,
@@ -18,7 +19,8 @@ import { apiRequest } from "./apiConfig";
 
 
  interface bodydata {
-    name: string,
+    first_name: string,
+    email : string,
     address_1: string,
     city: string,
     postcode: string,
@@ -33,7 +35,8 @@ import { apiRequest } from "./apiConfig";
 export async function EditAddress(data: propsdata) {
 
     const body : bodydata= {
-        name: data.name,
+        first_name: data.first_name,
+        email : data.email,
         address_1: data.address,
         city: data.city,
         postcode: data.pincode,

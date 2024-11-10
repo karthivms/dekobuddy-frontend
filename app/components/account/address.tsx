@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux"
 import AddressSkeleton from "./AddressSkeleton"
 import BinIcon from "../icons/binIcon"
 import EditIcon from "../icons/editIcon"
-import AddressForm from "../checkout/addressForm"
 import EditAddressForm from "../checkout/editAddress"
 
 
@@ -51,7 +50,7 @@ export default function Address({ userid }: { userid: string }) {
                 </div> */}
 
                             <div className="d-flex align-items-center">
-                                <span className="fw-4 ">{item.name}</span>
+                                <span className="fw-4 ">{item.first_name}</span>
                                 <span className="font-primary fw-3 ms-3">{item.phone}</span>
                                 <div className="ms-auto text-theme1">
                                     <span onClick={() => handleEdit(item)} className="me-2 pointer" title="edit"><EditIcon /></span> <BinIcon />
@@ -66,11 +65,6 @@ export default function Address({ userid }: { userid: string }) {
             </>)}
         </>)}
             
-
-
-
-
-
         </>
 
     )

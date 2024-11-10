@@ -7,8 +7,8 @@ function Select({ value , data, handlechange, type }: {value : string, data: cou
     return (
         <Form.Select aria-label="Default select example" onChange={handlechange} value={value}  name={type} required>
             <option value="">Select {type}</option>
-            {data && data.map((country) => (
-                <option key={`state_country_${country.name}`} value={country.name}>{country.name}</option>
+            {data && data.map((country, index) => (
+                <option key={`state_country_${country.name}_${index}`} value={country.name}>{country.name}</option>
             ))}
         </Form.Select>
     );

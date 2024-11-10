@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { address } from '../types/types';
 import { apiRequest } from '../api/apiConfig';
+import { RootState } from './store';
 
 interface initialState {
     addresses: address[]
@@ -17,10 +18,11 @@ const initialState: initialState = {
 }
 
 
-export const fetchAddress = createAsyncThunk<address[], number, { rejectValue: string }>('/checkout/fetchAddress', async (id, { rejectWithValue }) => {
+export const fetchAddress = createAsyncThunk<address[], number, { rejectValue: string }>('/checkout/fetchAddress', async (id, { rejectWithValue, getState }) => {
     try {
+        const state = getState() as RootState;
         const response = await apiRequest(
-            'GET', `http://localhost:3000/api/address`,
+            'GET', `${state.cart.url}/api/address`,
             null,
             {
                 id: id

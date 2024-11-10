@@ -120,17 +120,6 @@ export interface orderItem{
     images: productimage[]
 }
 
-export interface address {
-    name: string,
-    address: string,
-    city: string,
-    state: string,
-    pincode: string,
-    country: string,
-    email: string,
-    phone: string,
-    address_type: string
-}
 
 export interface order {
     id: number,
@@ -154,9 +143,10 @@ export interface profile {
 export interface address {
     id: number,
     address_type: string,
-    name: string,
+    first_name: string,
     address_1: string,
     city: string,
+    email : string,
     landmark: null | string,
     postcode: string,
     Country_Region: string,

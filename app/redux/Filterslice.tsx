@@ -3,7 +3,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiRequest } from '../api/apiConfig';
 import { Product } from '../types/types';
 import { RootState } from './store';
-import { getDomainUrl } from '../utilis/getDomain';
 
 
 interface initialState {

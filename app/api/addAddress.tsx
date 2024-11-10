@@ -3,8 +3,9 @@
 import { apiRequest } from "./apiConfig";
 
  interface propsdata {
-    name: string,
+    first_name: string,
     mobileNumber: string,
+    email : string,
     pincode: string,
     country: string,
     address: string,
@@ -17,8 +18,9 @@ import { apiRequest } from "./apiConfig";
 
 
  interface bodydata {
-    name: string,
+    first_name: string,
     address_1: string,
+    email : string,
     city: string,
     postcode: string,
     Country_Region: string,
@@ -32,8 +34,9 @@ import { apiRequest } from "./apiConfig";
 export async function AddAddress(data: propsdata) {
 
     const body : bodydata= {
-        name: data.name,
+        first_name: data.first_name,
         address_1: data.address,
+        email : data.email,
         city: data.city,
         postcode: data.pincode,
         Country_Region: data.country,
@@ -44,9 +47,9 @@ export async function AddAddress(data: propsdata) {
 
     if(data.landmark !== "" && data.alternatePhone !== ""){
         body.landmark = data.landmark;
-        body.alternative_phone = data.alternatePhone
+        body.alternative_phone = data.alternatePhone;
     }
 
-    const response = await apiRequest('POST', `http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/addresses/${data.user}/`, body);
+    const response = await apiRequest('POST', `/address/${data.user}/`, body);
     return response
 }

@@ -4,9 +4,8 @@ import { GetCountries } from '@/app/api/countries';
 import { GetState } from '@/app/api/states';
 import { changeStep, fetchAddress } from '@/app/redux/checkoutslice';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Select from './selectItem';
-import { AddAddress } from '@/app/api/addAddress';
 import { AppDispatch, RootState } from '@/app/redux/store';
 import Toaster from './toaster';
 import { address } from '@/app/types/types';
@@ -33,13 +32,14 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
 
     const [formData, setFormData] = useState({
         id : address.id,
-        name: address.name,
+        first_name: address.first_name,
+        email : address.email,
         mobileNumber: address.phone,
         pincode: address.postcode,
         country: address.Country_Region,
         address: address.address_1,
         city: address.city,
-        state: address.state,
+        state: address.state_country,
         landmark: address.landmark === null? "" : address.landmark,
         alternatePhone: address.alternative_phone === null? "" : address.alternative_phone,
         user : Number(userid)
@@ -69,7 +69,8 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
 
         setFormData({
             id : 0,
-            name: '',
+            first_name: '',
+            email : '',
             mobileNumber: '',
             pincode: '',
             country: '',
@@ -110,8 +111,8 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
 
                     <input
                         type="text"
-                        name="name"
-                        value={formData.name}
+                        name="first_name"
+                        value={formData.first_name}
                         placeholder='Name'
                         onChange={handleChange}
                         required
@@ -131,6 +132,16 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
                 </div>
             </div>
 
+            <div className="form-group full-width">
+                <input
+                    name="email"
+                    type="email"
+                    placeholder='Email'
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
 
 
             <div className="form-group full-width">

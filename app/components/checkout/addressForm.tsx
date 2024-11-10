@@ -29,8 +29,9 @@ const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
     }
 
     const [formData, setFormData] = useState({
-        name: '',
+        first_name: '',
         mobileNumber: '',
+        email : '',
         pincode: '',
         country: '',
         address: '',
@@ -59,14 +60,15 @@ const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-    
+
 
         const response = await AddAddress(formData);
         console.log(response)
 
         setFormData({
-            name: '',
+            first_name: '',
             mobileNumber: '',
+            email : '',
             pincode: '',
             country: '',
             address: '',
@@ -106,8 +108,8 @@ const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
 
                     <input
                         type="text"
-                        name="name"
-                        value={formData.name}
+                        name="first_name"
+                        value={formData.first_name}
                         placeholder='Name'
                         onChange={handleChange}
                         required
@@ -127,7 +129,17 @@ const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
                 </div>
             </div>
 
+            <div className="form-group full-width">
 
+                <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder='Email'
+                    required
+                />
+            </div>
 
             <div className="form-group full-width">
                 <textarea

@@ -2,6 +2,7 @@
 export async function GET(request: Request) {
     const username = process.env.API_USERNAME;
     const password = process.env.API_PASSWORD;
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const basicAuth = 'Basic ' + btoa(username + ':' + password);
 
     try {
@@ -10,7 +11,7 @@ export async function GET(request: Request) {
         const id = searchParams.get('id');
 
 
-        const res = await fetch( `http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/addresses/${id}/`, {
+        const res = await fetch( `${baseUrl}/address/${id}/`, {
             method: 'GET',
             headers: {
                 'Authorization': basicAuth,
@@ -25,6 +26,7 @@ export async function GET(request: Request) {
         }
 
         const data = await res.json();
+        console.log(new Response(JSON.stringify({ data }), { status: 200 }))
         return new Response(JSON.stringify({ data }), { status: 200 });
     } catch (error: any) {
         console.error('Error fetching Address:', error);

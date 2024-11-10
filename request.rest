@@ -147,37 +147,56 @@ Content-Type: application/json
  {"user_id" : 16}
 
 ###
-POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/addresses/16/
-Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/address/19/
+Authorization: Basic ZGVrbzpkZWtvMTIzQDEyMw==
 Content-Type: application/json
 
  {
-        "name": "Arun3",
-        "address_1": "okka412",
-        "city": "kadapa",
-        "postcode": "656879",
+        "first_name": "Arunmozhivarman",
+        "address_1": "10/22a kamarajar street",
+        "city": "Pollachi",
+        "postcode": "642114",
         "Country_Region": "india",
-        "state_country": "andhra pradesh",
-        "phone": "998877665246",
-       "user":16
+        "email" : "arun@zinavo.in",
+        "state_country": "tamilnadu",
+        "phone": "+91 9080372821",
+        "user":19
 }
 
 ###
-PUT http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/address/17/
-Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+PUT http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/addresses/6/
+Authorization: Basic ZGVrbzpkZWtvMTIzQDEyMw==
 Content-Type: application/json
 
  {
-        "name": "Arun3",
+        "first_name": "Arun M",
+        "email": "arunakil12@gmail.com",
         "address_1": "okka412",
         "city": "kadapa",
         "postcode": "656879",
         "Country_Region": "india",
         "state_country": "andhra pradesh",
         "phone": "998877665246",
-       "user":16
+        "user":16
 }
 
+
+###
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/order/
+Authorization: Basic ZGVrbzpkZWtvMTIzQDEyMw==
+Content-Type: application/json
+
+ {
+        "first_name": "Arunmozhivarman",
+        "address_1": "10/22a kamarajar street",
+        "city": "Pollachi",
+        "postcode": "642114",
+        "Country_Region": "india",
+        "email" : "arun@zinavo.in",
+        "state_country": "tamilnadu",
+        "phone": "+91 9080372821",
+        "user":19
+}
 
 
 

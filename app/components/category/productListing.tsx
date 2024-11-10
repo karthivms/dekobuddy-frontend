@@ -15,6 +15,7 @@ import ProductSkeleton from "../productCardSkeleton";
 import Pagination from "./pagination";
 import Modal from "./Modal";
 import Toaster from "../toaster";
+import formatPriceIndian from "@/app/utilis/formatPrice";
 
 
 export default function ProductGrid({ grid, userid, category }: { grid: number, userid: string, category: string }) {
@@ -126,7 +127,7 @@ export default function ProductGrid({ grid, userid, category }: { grid: number, 
                                                 </span>
                                             </>) : (
                                                 <span>
-                                                    ₹{item.regular_price}
+                                                    {formatPriceIndian(item.regular_price)}
                                                 </span>
                                             )}
 
