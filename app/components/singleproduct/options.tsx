@@ -1,6 +1,6 @@
 'use client'
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import ShareIcon from "../icons/shareicon";
 import Wishlisticon from "../icons/wishlisticon";
 import Link from "next/link";

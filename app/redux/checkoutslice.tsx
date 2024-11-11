@@ -83,6 +83,7 @@ export const fetchAddress = createAsyncThunk<address[], number, { rejectValue: s
 
     } catch (error) {
         console.log(error);
+        rejectWithValue('')
         return [];
     }
 })
@@ -131,6 +132,7 @@ const cartSlice = createSlice({
         },
         updateSelectedAddress: (state, action) => {
             const selected = state.addresses.find((item) => item.id === action.payload);
+            console.log(selected)
             if (selected) {
                 state.selectedAddress = selected;
             }
@@ -139,7 +141,8 @@ const cartSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchAddress.fulfilled, (state, action) => {
             state.addresses = action.payload;
-            if (state.selectedAddress.id === 0) {
+            console.log(state.selectedAddress);
+            if (!state.selectedAddress || state.selectedAddress.id === 0) {
                 state.selectedAddress = action.payload[0];
             }
             state.status = "success"

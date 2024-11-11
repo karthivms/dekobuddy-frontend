@@ -4,9 +4,9 @@ import { GetCountries } from '@/app/api/countries';
 import { GetState } from '@/app/api/states';
 import { changeStep, fetchAddress, updateSelectedAddress } from '@/app/redux/checkoutslice';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Select from './selectItem';
-import { AppDispatch, RootState } from '@/app/redux/store';
+import { AppDispatch } from '@/app/redux/store';
 import Toaster from './toaster';
 import { address } from '@/app/types/types';
 import { EditAddress } from '@/app/api/editAddress';
@@ -24,7 +24,6 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
     const [country, setCountry] = useState([])
     const [state, setState] = useState([]);
     const [show, setShow] = useState(false);
-    const status = useSelector((state: RootState) => state.checkout.status)
 
 
     const handleClose = () => {
@@ -66,8 +65,6 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
 
         const response = await EditAddress(formData);
         console.log(response)
-
-
 
 
         setShow(true)

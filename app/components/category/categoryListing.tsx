@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button, Collapse } from "react-bootstrap";
-import { CategoryItem } from "@/app/types/types";
+import { navigationItem } from "@/app/types/types";
 import Link from "next/link";
 
 
@@ -12,7 +12,7 @@ const ArrowIcon = ({ open }: { open: boolean }) => (
     </svg>
 );
 
-export default function CategoryListing({ category }: { category: CategoryItem[] }) {
+export default function CategoryListing({ category }: { category: navigationItem[] }) {
 
     const [open, setOpen] = useState(true);
 
@@ -30,9 +30,9 @@ export default function CategoryListing({ category }: { category: CategoryItem[]
             <Collapse in={open}>
                 <div id="example-collapse-text">
 
-                    {category.map((item: CategoryItem, index) => (
+                    {category.map((item: navigationItem, index) => (
                         <div key={`${item.name}_${index}`} className="mt-1 ps-3">
-                            <Link href={item.slug}>
+                            <Link href={item.slug ? `/category/${item.slug}` : ''}>
                                 <label className="ms-1 font-primary text-black " htmlFor={`${item.name}_value_${index}`}>{item.name}</label><br />
                             </Link>
                         </div>

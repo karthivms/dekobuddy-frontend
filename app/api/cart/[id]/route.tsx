@@ -19,7 +19,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const data = await res.json();
     return Response.json({ data });
   }
-  catch (error: any) {
+  catch (error) {
     console.error('Error fetching products:', error);
   }
 }

@@ -27,7 +27,7 @@ export async function DELETE(request: Request) {
 
         const data = await res.json();
         return new Response(JSON.stringify({ data }), { status: 200 });
-    } catch (error: any) {
+    } catch (error) {
         console.error('Error fetching products:', error);
         return new Response(JSON.stringify({ error: 'An error occurred' }), { status: 500 });
     }

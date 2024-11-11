@@ -16,7 +16,7 @@ interface Props {
     userid: string,
 }
 
-const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
+const AddressForm: React.FC<Props> = ({ setedit, userid }) => {
 
     const dispatch: AppDispatch = useDispatch();
     const [country, setCountry] = useState([])
@@ -31,7 +31,7 @@ const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
     const [formData, setFormData] = useState({
         first_name: '',
         mobileNumber: '',
-        email : '',
+        email: '',
         pincode: '',
         country: '',
         address: '',
@@ -68,7 +68,7 @@ const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
         setFormData({
             first_name: '',
             mobileNumber: '',
-            email : '',
+            email: '',
             pincode: '',
             country: '',
             address: '',
@@ -81,6 +81,8 @@ const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
 
         setShow(true)
         dispatch(fetchAddress(Number(userid)))
+
+        dispatch(changeStep(3))
     };
 
     useEffect(() => {
@@ -102,7 +104,7 @@ const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
     }, [formData.country])
 
     return (
-        <form className="address-form wc-70" onSubmit={handleSubmit}>
+        <form className="address-form wc-70" onSubmit={ handleSubmit}>
             <div className="form-row">
                 <div className="form-group">
 
@@ -237,8 +239,8 @@ const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
                 </div>
             </div> */}
             <div className='d-flex align-items-center mt-3 gap-20 flex-wrap'>
-                <button className="btn1 py-1 br-0 px-4 d-block  font-primary fw-3 text-uppercase" type="submit" onClick={() => dispatch(changeStep(3))}>
-                    {page === "checkout" ? (<>Save And Deliver here</>) : (<>Save</>)}
+                <button className="btn1 py-1 br-0 px-4 d-block  font-primary fw-3 text-uppercase" type="submit" >
+                    Save
                 </button>
 
                 <span className="btn2  br-0 py-1 px-4  font-primary fw-3 text-uppercase pointer" onClick={() => setedit()}>

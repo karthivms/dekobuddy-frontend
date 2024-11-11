@@ -42,8 +42,8 @@ export default function OrderTabs({ All, Delivered, Processing, Cancelled }: { A
                 defaultActiveKey="All"
                 className="order-tabs mt-4"
             >
-                {ordertabs.map((tabitem) => (
-                    <Tab eventKey={tabitem.order} title={tabitem.order} >
+                {ordertabs.map((tabitem, index) => (
+                    <Tab eventKey={tabitem.order} key={`tab_item_${index}`} title={tabitem.order} >
                         {tabitem.data.length > 0 ? (<>
                             {tabitem.data.map((item: order) => (
                                 <div key={`order_${item.id}`}>

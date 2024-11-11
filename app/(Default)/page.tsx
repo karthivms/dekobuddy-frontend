@@ -38,7 +38,6 @@ export default async function Home() {
 
       <Videoplayer url={homedata.videos_uploaded[0].video} thumbnail={"/images/thumbnail1.png"}/>
       <CategoryMenu category={homedata.categories} />
-      <Videoplayer url={"/images/video2.jpg"} thumbnail={"/images/thumbnail1.png"}/>
 
       <ScrollWrapper direction={20}>
         <Whychooseus features={homedata.why_choose}/>

@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import Star from '../icons/star';
 import { ModalProps } from 'react-bootstrap';
 import ForgotPasswordApi from '@/app/api/forgotPassword';
 

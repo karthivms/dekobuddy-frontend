@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from '@/app/sass/components/pricerangeslider.module.scss';
 import ArrowIcon from '@/app/components/icons/arrowIcon';
 import { Button, Collapse } from 'react-bootstrap';
@@ -16,7 +16,7 @@ const PriceRangeSlider = () => {
   const maxRange = 1000000;
   const dispatch: AppDispatch = useDispatch()
 
-  const handleMinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMinChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
 
     if (inputValue === '' || isNaN(Number(inputValue))) {
@@ -25,9 +25,9 @@ const PriceRangeSlider = () => {
       const value = Math.min(Number(event.target.value), maxValue - 1);
       dispatch(updateMinPrice(value))
     }
-  };
+  },[maxValue, dispatch]);
 
-  const handleMaxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMaxChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
 
     if (inputValue === '' || isNaN(Number(inputValue))) {
@@ -36,7 +36,7 @@ const PriceRangeSlider = () => {
       const value = Math.max(Number(event.target.value), minValue + 1);
       dispatch(updateMaxPrice(value))
     }
-  };
+  }, [minValue, dispatch]);
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
@@ -45,7 +45,7 @@ const PriceRangeSlider = () => {
     }, 500)
 
     return () => clearTimeout(debounceTimer);
-  }, [handleMinChange, handleMaxChange])
+  }, [handleMinChange, handleMaxChange, dispatch, category])
 
   const [open, setOpen] = useState(true);
 

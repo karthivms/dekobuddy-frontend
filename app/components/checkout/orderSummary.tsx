@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { Col, Row } from "react-bootstrap";
 import Step from "./step";
-import GstInvoice from "./gstInvoice";
 import OrderMail from "./orderMail";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/store";
@@ -24,7 +23,7 @@ export default function OrderSummary({ userid, profiledata }: { userid: string, 
 
     useEffect(() => {
         dispatch(gettotal())
-    }, [cartproducts])
+    }, [cartproducts, dispatch])
 
     function getDateTwoDaysFromToday() {
         const today = new Date();

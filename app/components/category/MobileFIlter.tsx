@@ -2,12 +2,6 @@
 
 import Attributes from "./attributes";
 import Selected from "./selectedAttributes";
-import patterns from "@/app/datas/category/patterns.json";
-import types from "@/app/datas/category/types.json";
-import colors from "@/app/datas/category/colors.json";
-import materials from "@/app/datas/category/materials.json";
-import shapes from "@/app/datas/category/shapes.json";
-import size from "@/app/datas/category/carpetsize.json";
 import ClearAll from "./clearAllbtn";
 import { Offcanvas } from "react-bootstrap";
 import { useState } from "react";

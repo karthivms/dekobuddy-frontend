@@ -1,7 +1,7 @@
 'use client'
 
 
-import { AddCartItems, decrementQuantity, incrementQuantity, UpdateQuantity } from "@/app/redux/cartSlice";
+import {  decrementQuantity, incrementQuantity, UpdateQuantity } from "@/app/redux/cartSlice";
 import { AppDispatch } from "@/app/redux/store";
 import { useDispatch } from "react-redux";
 

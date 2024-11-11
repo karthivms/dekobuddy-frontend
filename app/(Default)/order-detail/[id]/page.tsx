@@ -13,7 +13,7 @@ type Params = {
     id: string;
 };
 
-export async function getorder(userid: string, id: string) {
+ async function getorder(userid: string, id: string) {
     const response = await apiRequest('GET', '/order/', null, { user_id: userid, order_id: id });
     return response;
 }

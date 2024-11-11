@@ -33,7 +33,7 @@ export default function Page() {
             setColor("danger");
                 }
     
-    }, [params])
+    }, [params, token])
    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;

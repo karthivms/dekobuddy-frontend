@@ -30,7 +30,7 @@ export async function POST(request: Request) {
         const data = await res.json();
         console.log(data)
         return new Response(JSON.stringify({ data }), { status: 200 });
-    } catch (error: any) {
+    } catch (error) {
         console.error('Error fetching Address:', error);
         return new Response(JSON.stringify({ error: 'An error occurred' }), { status: 500 });
     }

@@ -1,7 +1,7 @@
 'use client'
 
 import { RootState } from "@/app/redux/store";
-import { useEffect, useMemo, useState, useCallback } from "react";
+import {  useMemo, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 
 interface ChildComponentProps {

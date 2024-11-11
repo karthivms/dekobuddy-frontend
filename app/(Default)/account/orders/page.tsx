@@ -3,27 +3,28 @@ import OrderTabs from "@/app/components/account/orderTabs";
 import { getUser } from "@/app/utilis/auth";
 
 
-export async function getorders(userid:string) {
+ async function getorders(userid:string) {
     const response = await apiRequest('GET', '/order/', null, {user_id : userid});
+    console.log(response)
     return response;
 }
 
-export async function getDeliveredorders(userid:string) {
+ async function getDeliveredorders(userid:string) {
     const response = await apiRequest('GET', '/order/', null, {user_id : userid, order_status : 'Delivered'});
     return response;
 }
 
-export async function getProcessingorders(userid:string) {
+ async function getProcessingorders(userid:string) {
     const response = await apiRequest('GET', '/order/', null, {user_id : userid, order_status : 'Processing'});
     return response;
 }
 
-export async function getCancelledorders(userid:string) {
+ async function getCancelledorders(userid:string) {
     const response = await apiRequest('GET', '/order/', null, {user_id : userid, order_status : 'Cancelled'});
     return response;
 }
 
-export default async function page() {
+ export default async function page() {
 
     let userid: string = "";
 

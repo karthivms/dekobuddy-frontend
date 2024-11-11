@@ -73,6 +73,7 @@ export interface wishListProduct {
     id: number,
     name: string,
     regular_price: number,
+    sale_price? : number,
     images: productimage[]
 }
 

@@ -4,7 +4,7 @@ import "@/app/sass/components/productskeleton.scss";
 export default function ProductSkeleton({grid, array}:{grid:number, array : number}) {
     return (
         <>
-            {[...Array(20)].map((_, index) => (
+            {[...Array(array)].map((_, index) => (
                 <Col lg={grid} key={`product_skeleton_${index}`} sm={6} xs={6} className="p-1 mb-1 product_item ">
 
                     <div className="bg-white br-8 p-3 pt-1">

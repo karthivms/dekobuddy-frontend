@@ -4,8 +4,7 @@ import Topbar from "@/app/components/category/topbar";
 import Filter from "@/app/components/category/filterbox";
 import "@/app/sass/components/category.scss";
 import { apiRequest } from "@/app/api/apiConfig";
-import {  CategoryItem } from "@/app/types/types";
-import { redirect } from "next/navigation";
+import {  navigationItem } from "@/app/types/types";
 import { getUser } from "@/app/utilis/auth";
 
 
@@ -16,7 +15,7 @@ type Params = {
 
 export async function generateStaticParams() {
     const categories = await getCategories();
-    return categories.map((item: CategoryItem) => ({
+    return categories.map((item: navigationItem) => ({
         category: item.slug,
     }));
 }
@@ -64,7 +63,7 @@ export default async function page({ params }: { params: Params }) {
                         <Filter categories={categories} attributes={attributes}/>
                     </Col>
                     <Col className="">
-                        <Topbar  userid={userid}/>
+                        <Topbar  />
                         <ProductGrid grid={3} userid={userid} category={params.category}/>
                     </Col>
                 </Row>

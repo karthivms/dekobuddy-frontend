@@ -1,7 +1,7 @@
 'use client'
 
 import { Product } from '@/app/types/types';
-import { Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import Image from 'next/image';

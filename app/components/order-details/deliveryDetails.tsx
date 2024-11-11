@@ -4,15 +4,15 @@ import CancelOrder from "./cancelOrder";
 import { order } from "@/app/types/types";
 
 export const Delivery = ({ data, id }: { data : order,id: number }) => {
-    function getDateTwoDaysFromToday() {
-        const today = new Date();
-        today.setDate(today.getDate() + 2);
-        return today.toLocaleDateString('en-US', {
-            weekday: 'short',
-            month: 'short',
-            day: 'numeric',
-        });
-    }
+    // function getDateTwoDaysFromToday() {
+    //     const today = new Date();
+    //     today.setDate(today.getDate() + 2);
+    //     return today.toLocaleDateString('en-US', {
+    //         weekday: 'short',
+    //         month: 'short',
+    //         day: 'numeric',
+    //     });
+    // }
 
     return (
         <>
@@ -24,18 +24,18 @@ export const Delivery = ({ data, id }: { data : order,id: number }) => {
             <Col lg={8}>
                 <h5 className="font-large text-black">Billing Address</h5>
                 <ul className="m-0 ps-3 ">
-                    <li className="fw-4 text-black mb-1">{data.billing_address.name}</li>
+                    <li className="fw-4 text-black mb-1">{data.billing_address.first_name}</li>
                         <li >
-                            {data.billing_address.address},
+                            {data.billing_address.address_1},
                         </li>
                         <li >
                             {data.billing_address.city},
                         </li>
                         <li >
-                            {data.billing_address.state},
+                            {data.billing_address.state_country},
                         </li>
                         <li >
-                            {data.billing_address.pincode}
+                            {data.billing_address.postcode}
                         </li>
                     <li className="fw-4 text-black mt-2 mb-1">Phone Number</li>
                     <li>{data.billing_address.phone}</li>

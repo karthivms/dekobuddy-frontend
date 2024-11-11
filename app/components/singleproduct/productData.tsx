@@ -24,7 +24,7 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
         if (foundVariation) {
             setActVariation(foundVariation);
         }
-    }, [data]);
+    }, [data, params]);
 
     const handleVariationChange = (item: variations) => {
         const currentParams = new URLSearchParams(params.toString());

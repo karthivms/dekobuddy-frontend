@@ -225,6 +225,49 @@ Content-Type: application/json
 }
 
 
+###
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/order/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
+
+{
+    "cartItems": [
+        {
+            "id": 145,
+            "quantity": 1,
+            "total_amount": "1080000",
+            "free_product": "False"
+        }
+    ],
+    "shipping_info": {
+        "first_name": "deko",
+        "address_1": "4rewrt6546",
+        "city": "hjhgjh",
+        "postcode": "876654",
+        "Country_Region": "uiyiujhh",
+        "state_country": "hgjghjghj",
+        "email": "arun@zinavo.in",
+        "phone": "9989875643",
+        "alternative_phone": "alternative_phone"
+    },
+    "billing_info": {
+        "first_name": "deko",
+        "address_1": "4rewrt6546",
+        "city": "hjhgjh",
+        "postcode": "876654",
+        "Country_Region": "uiyiujhh",
+        "state_country": "hgjghjghj",
+        "email": "arun@zinavo.in",
+        "phone": "9989875643",
+        "alternative_phone": "alternative_phone"
+    },
+    "total_amount": "108000.00",
+    "tax_amount": "0.00",
+    "amount": "97210.00",
+    "shipping_cost": "0.00",
+}
+
+
 
 
 

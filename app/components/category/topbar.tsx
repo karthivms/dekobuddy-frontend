@@ -2,19 +2,18 @@
 
 import { updateSort } from "@/app/redux/Filterslice";
 import { AppDispatch, RootState } from "@/app/redux/store";
-import { useRouter, useSearchParams } from "next/navigation";
+import {  useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 
 
-export default function Topbar({userid}:{userid : string}) {
+export default function Topbar() {
 
     const products = useSelector((state: RootState) => state.product);
     const category = products.products[0]?.categories[0].name;
     const params = useSearchParams();
-    const router= useRouter();
     const dispatch:AppDispatch = useDispatch();
     const [disabled,setDisabled] = useState(false)
 
@@ -27,7 +26,7 @@ export default function Topbar({userid}:{userid : string}) {
 
     useEffect(() => {
         dispatch(updateSort(params?.get('sort') ))
-    }, [params])
+    }, [params, dispatch])
 
     return (
         <div >

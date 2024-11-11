@@ -42,7 +42,7 @@ export default function ProductGrid({ grid, userid, category }: { grid: number, 
 
     useEffect(() => {
         dispatch(updateOffset(0));
-    }, [category])
+    }, [category, dispatch])
 
     const handlePageChange = (pageNumber: number) => {
         setPage(pageNumber)
@@ -61,12 +61,12 @@ export default function ProductGrid({ grid, userid, category }: { grid: number, 
 
     useEffect(() => {
         dispatch(updateCurrentCategory(category))
-    }, [category])
+    }, [category, dispatch])
 
 
     useEffect(() => {
         dispatch(getProducts(category))
-    }, [state.attributes, category, state.offset, state.sort]);
+    }, [state.attributes, category, state.offset, state.sort, dispatch]);
 
     const handleQuickAddClick = (productId: number) => {
         setAttModal(attModal === productId ? null : productId);

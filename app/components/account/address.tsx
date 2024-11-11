@@ -24,7 +24,7 @@ export default function Address({ userid }: { userid: string }) {
 
     useEffect(() => {
         dispatch(fetchAddress(Number(userid)))
-    }, [userid])
+    }, [userid, dispatch])
 
     const changeState = () => {
         setEdit(false)

@@ -23,7 +23,7 @@ export default function CartSidebar({ showsidebar, handleClose }: { showsidebar:
                 </div>
                 <div className="p-3 ">
                     {cartItems.map((item: cartItem) => (
-                        <div className="d-flex flex-wrap justify-content-between gap-10">
+                        <div key={`cart_item_sidebar_${item.id}`} className="d-flex flex-wrap justify-content-between gap-10">
                             <div className="wc-20"> <Image alt="cart_images" width={70} height={70} src={item.product.images.image} className="br-5" /></div>
                             <div className="wc-60">
                                 <p className="mb-1 fw-3 font-primary">{item.product.name} - {item.product.size}</p>

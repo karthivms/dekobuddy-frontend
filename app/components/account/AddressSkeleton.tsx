@@ -1,4 +1,3 @@
-import { Col } from "react-bootstrap";
 import "@/app/sass/components/productskeleton.scss";
 
 export default function AddressSkeleton({ array, height}:{ array : number, height : number}) {

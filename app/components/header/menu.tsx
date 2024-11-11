@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import CartIcon from "../icons/carticon";
 import Wishlisticon from "../icons/wishlisticon";
 import AccountIcon from "../icons/accounticon";
-import { Product } from "@/app/types/types";
 
 
 

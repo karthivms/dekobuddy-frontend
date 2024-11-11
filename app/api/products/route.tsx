@@ -42,7 +42,7 @@ export async function GET(request: Request) {
         const data = await res.json();
 
         return NextResponse.json({ data }, { status: 200 });
-    } catch (error: any) {
+    } catch (error) {
         console.error('Error fetching products:', error);
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }

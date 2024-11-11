@@ -5,7 +5,7 @@ const baseurl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 
 
-export async function GetProfileData(userid : string){
+ async function GetProfileData(userid : string){
 
     const response = await apiRequest('GET', `${baseurl}/profile/${userid}`);
     return response;

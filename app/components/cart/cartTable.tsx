@@ -25,7 +25,7 @@ export default function CartTable({ userid }: { userid: string }) {
 
     useEffect(() => {
         dispatch(gettotal())
-    }, [cartproducts])
+    }, [cartproducts, dispatch])
 
     const deleteItem = (id: number) => {
         const delbody = {
