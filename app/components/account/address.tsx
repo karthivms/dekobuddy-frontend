@@ -40,7 +40,7 @@ export default function Address({ userid }: { userid: string }) {
         <>{edit ? (<>
             <EditAddressForm userid={userid} page="account" setedit={changeState} address={editState} />
         </>) : (<>
-            {status === 'loading' ? (<AddressSkeleton array={3} />) : (<>
+            {status === 'loading' ? (<AddressSkeleton array={3} height={80} />) : (<>
                 {addresses && addresses.map((item: address) => (
                     <div className="border-border-solid p-3 mb-4" key={`address_${item.id}`}>
                         <div>

@@ -198,6 +198,32 @@ Content-Type: application/json
         "user":19
 }
 
+###
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/apply-coupon/
+Authorization: Basic ZGVrbzpkZWtvMTIzQDEyMw==
+Content-Type: application/json
+
+{
+    "coupon_code": "Deko10",
+    "cart_total": 1692000,
+    "ship_cost": 0,
+    "cart_items": [
+        {
+            "id": 8,
+            "quantity": 9,
+            "name": "Sharafi Indian Hand Knotted",
+            "total": 972000
+        },
+        {
+            "id": 9,
+            "quantity": 2,
+            "name": "Indian Hand Knotted",
+            "total": 720000
+        }
+    ],
+    "user": 19
+}
+
 
 
 

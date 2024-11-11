@@ -3,18 +3,20 @@
 import Tick from "../icons/tick";
 import Step from "./step";
 import { useDispatch, useSelector } from "react-redux";
-import { changeStep, fetchAddress } from "@/app/redux/checkoutslice";
+import { changeStep, fetchAddress, updateSelectedAddress } from "@/app/redux/checkoutslice";
 import { AppDispatch, RootState } from "@/app/redux/store";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AddressForm from "./addressForm";
 import { address } from "@/app/types/types";
 import { fetchCartItems, updateUrl } from "@/app/redux/cartSlice";
 import AddressSkeleton from "../account/AddressSkeleton";
+import EditAddressForm from "./editAddress";
 
-function ChangeAddress({ userid, selectedAdd, addresses, setSelectedAdd }: { userid: string, selectedAdd: address, addresses: address[], setSelectedAdd: Dispatch<SetStateAction<address>> }) {
+function ChangeAddress({ userid, selectedAdd, addresses }: { userid: string, selectedAdd: address, addresses: address[] }) {
     const dispatch: AppDispatch = useDispatch();
     const [edit, setEdit] = useState(false);
     const [add, setAdd] = useState(false);
+    const [editState, setEditState] = useState(addresses[0]);
 
 
 
@@ -28,8 +30,9 @@ function ChangeAddress({ userid, selectedAdd, addresses, setSelectedAdd }: { use
         setAdd(true)
         setEdit(false)
     }
-    const handleEditaddress = () => {
+    const handleEditaddress = (item : address) => {
         setAdd(false)
+        setEditState(item)
         setEdit(true)
     }
     return (
@@ -41,7 +44,7 @@ function ChangeAddress({ userid, selectedAdd, addresses, setSelectedAdd }: { use
                 </div>
             </div>
             {edit ? (<div className="px-4 py-4 bg-grey3">
-                <AddressForm userid={userid} page="checkout" setedit={changeState} />
+                <EditAddressForm userid={userid} page="checkout" setedit={changeState} address={editState} />
             </div>) : (
                 <div className="px-4 py-4 bg-grey3">
                     {addresses.map((item) => (
@@ -55,10 +58,10 @@ function ChangeAddress({ userid, selectedAdd, addresses, setSelectedAdd }: { use
                                             checked={selectedAdd.id === item.id}
                                             name={`${item.id}`}
                                             value={`${item.id}`}
-                                            onClick={() => setSelectedAdd(item)}
+                                            onClick={() => dispatch(updateSelectedAddress(item.id))}
                                         />
                                         <div className="ms-2 d-inline-block">
-                                            <span className="fw-4 ">{item.first_name}</span>
+                                            <span className="fw-4 pointer">{item.first_name}</span>
                                             {/* <span className="fw-4 ms-3 font-small text-secondary text-uppercase bg-border2 p-1 br-2">Home</span> */}
                                             <span className="font-primary fw-3 ms-3">{item.phone}</span>
                                         </div>
@@ -72,7 +75,7 @@ function ChangeAddress({ userid, selectedAdd, addresses, setSelectedAdd }: { use
 
                             </div>
                             <div>
-                                <button className="btn text-uppercase fw-3 text-theme1 ms-4" onClick={() => handleEditaddress()}>
+                                <button className="btn text-uppercase fw-3 text-theme1 ms-4" onClick={() => handleEditaddress(item)}>
                                     Edit
                                 </button>
                             </div>
@@ -131,40 +134,21 @@ export default function Address({ userid }: { userid: string }) {
 
 
     const addresses = useSelector((state: RootState) => state.checkout.addresses);
-    const [editState, setEditState] = useState(addresses[0]);
+    const SelectedAdd = useSelector((state : RootState) => state.checkout.selectedAddress)
 
 
-    useEffect(() => {
-        setSelectedAdd(addresses[0])
-    }, [addresses])
-
-    const [SelectedAdd, setSelectedAdd] = useState<address>({
-        id: 0,
-        first_name: "",
-        address_type: "Billing",
-        email: "",
-        phone: "",
-        postcode: "",
-        Country_Region: "",
-        address_1: "",
-        city: "",
-        state_country: "",
-        landmark: "",
-        alternative_phone: "",
-        user: 0
-    });
 
 
     return (
         <>
-            {step === 2 ? (<ChangeAddress userid={userid} selectedAdd={SelectedAdd} addresses={addresses} setSelectedAdd={setSelectedAdd} />) : (<div className="bg-grey3 mt-4 d-flex px-4 py-3 br-2 gap-15">
+            {step === 2 ? (<ChangeAddress userid={userid} selectedAdd={SelectedAdd} addresses={addresses}  />) : (<div className="bg-grey3 mt-4 d-flex px-4 py-3 br-2 gap-15">
                 <Step number={2} />
                 <div className="d-flex justify-content-between flex-wrap row-gap-10 w-100 align-items-start gap-20">
-                    <div>
+                    <div className="wc-80">
                         <h4 className="text-uppercase font-secondary fw-4 text-theme3 mb-0">Delivery Address
                             <Tick color="#8F5547" />
                         </h4>
-                        {status === "loading" ? (<AddressSkeleton array={1} />) : (<>
+                        {status === "loading"  ? (<AddressSkeleton array={1} height={20}/>) : (<>
                             <span className="fw-4 d-inline-block mt-2">{SelectedAdd.first_name}</span>
                             <span className="font-primary fw-3 ms-2">
                                 {SelectedAdd.address_1}, {SelectedAdd.landmark && SelectedAdd.landmark}, {SelectedAdd.city}, {SelectedAdd.state_country}, {SelectedAdd.postcode}

@@ -3,10 +3,10 @@
 import { useSelector } from "react-redux";
 import Step from "./step";
 import { RootState } from "@/app/redux/store";
-import GiftCard from "./giftCard";
+import Coupon from "./Coupon";
 import { useState } from "react";
 
-export default function Payment() {
+export default function Payment({userid}:{userid : string}) {
     const step = useSelector((state: RootState) => state.checkout.activeStep)
 
     const [order, setOrder] = useState(false);
@@ -34,7 +34,7 @@ export default function Payment() {
                     )}
                 </div>
 
-                <GiftCard />
+                <Coupon userid={userid}/>
 
 
             </>) : (<div className="bg-grey3 mt-4 d-flex px-4 py-3 br-2 gap-15">

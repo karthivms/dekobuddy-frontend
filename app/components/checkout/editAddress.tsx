@@ -2,9 +2,9 @@
 
 import { GetCountries } from '@/app/api/countries';
 import { GetState } from '@/app/api/states';
-import { changeStep, fetchAddress } from '@/app/redux/checkoutslice';
+import { changeStep, fetchAddress, updateSelectedAddress } from '@/app/redux/checkoutslice';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Select from './selectItem';
 import { AppDispatch, RootState } from '@/app/redux/store';
 import Toaster from './toaster';
@@ -14,8 +14,8 @@ import { EditAddress } from '@/app/api/editAddress';
 interface Props {
     setedit: () => void;
     page: string;
-    userid : string,
-    address : address
+    userid: string,
+    address: address
 }
 
 const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) => {
@@ -24,6 +24,7 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
     const [country, setCountry] = useState([])
     const [state, setState] = useState([]);
     const [show, setShow] = useState(false);
+    const status = useSelector((state: RootState) => state.checkout.status)
 
 
     const handleClose = () => {
@@ -31,18 +32,18 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
     }
 
     const [formData, setFormData] = useState({
-        id : address.id,
+        id: address.id,
         first_name: address.first_name,
-        email : address.email,
+        email: address.email,
         mobileNumber: address.phone,
         pincode: address.postcode,
         country: address.Country_Region,
         address: address.address_1,
         city: address.city,
         state: address.state_country,
-        landmark: address.landmark === null? "" : address.landmark,
-        alternatePhone: address.alternative_phone === null? "" : address.alternative_phone,
-        user : Number(userid)
+        landmark: address.landmark === null ? "" : address.landmark,
+        alternatePhone: address.alternative_phone === null ? "" : address.alternative_phone,
+        user: Number(userid)
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -60,17 +61,24 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
         });
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent, id: number) => {
         e.preventDefault();
-
 
         const response = await EditAddress(formData);
         console.log(response)
 
+
+
+
+        setShow(true)
+        dispatch(fetchAddress(Number(userid)))
+
+            dispatch(updateSelectedAddress(id))
+        
         setFormData({
-            id : 0,
+            id: 0,
             first_name: '',
-            email : '',
+            email: '',
             mobileNumber: '',
             pincode: '',
             country: '',
@@ -79,11 +87,11 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
             state: '',
             landmark: '',
             alternatePhone: '',
-            user : Number(userid)
+            user: Number(userid)
         })
 
-        setShow(true)
-        dispatch(fetchAddress(Number(userid)))
+        dispatch(changeStep(3))
+
     };
 
     useEffect(() => {
@@ -105,7 +113,7 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
     }, [formData.country])
 
     return (
-        <form className="address-form wc-70" onSubmit={handleSubmit}>
+        <form className="address-form wc-70" onSubmit={(event) => handleSubmit(event, formData.id)}>
             <div className="form-row">
                 <div className="form-group">
 
@@ -241,15 +249,15 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
                 </div>
             </div> */}
             <div className='d-flex align-items-center mt-3 gap-20 flex-wrap'>
-                <button className="btn1 py-1 br-0 px-4 d-block  font-primary fw-3 text-uppercase" type="submit" onClick={() => dispatch(changeStep(3))}>
-                {page === "checkout" ? ( <>Save And Deliver here</>) : (<>Save</>)}
-                </button> 
+                <button className="btn1 py-1 br-0 px-4 d-block  font-primary fw-3 text-uppercase" type="submit" >
+                    {page === "checkout" ? (<>Save And Deliver here</>) : (<>Save</>)}
+                </button>
 
                 <span className="btn2  br-0 py-1 px-4  font-primary fw-3 text-uppercase pointer" onClick={() => setedit()}>
                     Cancel
                 </span>
             </div>
-            <Toaster msg={"Address updated successfully"} show={show} handleClose={handleClose}/>
+            <Toaster msg={"Address updated successfully"} show={show} handleClose={handleClose} />
         </form>
     );
 };

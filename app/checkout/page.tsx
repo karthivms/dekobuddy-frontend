@@ -43,7 +43,7 @@ export default async function Page() {
                     <LoginDetails username={username} profiledata={profiledata}/>
                     <Address userid={userid}/>
                     <OrderSummary userid={userid} profiledata={profiledata}/>
-                    <Payment />
+                    <Payment userid={userid}/>
                 </Col>
                 <Col className="checkout_total">
                     <PriceDetail/>
