@@ -3,14 +3,14 @@ export async function POST(request: Request) {
     const username = process.env.API_USERNAME;
     const password = process.env.API_PASSWORD;
     const basicAuth = 'Basic ' + btoa(username + ':' + password);
-    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     try {
 
         const body = await request.json();
+        console.log(body)
   
 
-        const res = await fetch(`${baseUrl}/apply-coupon/`, {
+        const res = await fetch(`http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/order/`, {
             method: 'POST',
             headers: {
                 'Authorization': basicAuth,
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
         console.log(data)
         return new Response(JSON.stringify({ data }), { status: 200 });
     } catch (error) {
-        console.error('Error Adding Coupon:', error);
+        console.error('Error Placing Order:', error);
         return new Response(JSON.stringify({ error: 'An error occurred' }), { status: 500 });
     }
 }

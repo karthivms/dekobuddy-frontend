@@ -1,16 +1,24 @@
 'use client'
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Step from "./step";
-import { RootState } from "@/app/redux/store";
+import { AppDispatch, RootState } from "@/app/redux/store";
 import Coupon from "./Coupon";
 import { useState } from "react";
+import { placeOrder } from "@/app/redux/checkoutslice";
 
-export default function Payment({userid}:{userid : string}) {
+export default function Payment({ userid }: { userid: string }) {
     const step = useSelector((state: RootState) => state.checkout.activeStep)
 
     const [order, setOrder] = useState(false);
+    const dispatch: AppDispatch = useDispatch()
 
+
+    const handleOrder = (e: React.FormEvent) => {
+        e.preventDefault();
+        dispatch(placeOrder(Number(userid)));
+
+    }
 
     return (
         <>
@@ -22,19 +30,21 @@ export default function Payment({userid}:{userid : string}) {
                     </div>
                 </div>
                 <div className="px-4 py-3 bg-grey3">
-                    <label htmlFor="cod"className="d-flex align-items-center">
-                        <input type="radio" id="cod" name="cod" value="cod" onClick={() => setOrder(true)} />
-                        <div className="ms-2 d-inline-block">
-                            <span className="font-primary fw-3  pointer">Cash on Delivery</span>
+                    <form onSubmit={handleOrder}>
+                        <label htmlFor="cod" className="d-flex align-items-center">
+                            <input type="radio" id="cod" name="cod" required value="cod" onClick={() => setOrder(true)} />
+                            <div className="ms-2 d-inline-block">
+                                <span className="font-primary fw-3  pointer">Cash on Delivery</span>
 
-                        </div>
+                            </div>
 
-                    </label>
-                    {order && (<button className="btn1 d-block font-primary mt-3 py-2 px-4">Confirm Order</button>
-                    )}
+                        </label>
+                        {order && (<button className="btn1 d-block font-primary mt-3 py-2 px-4" >Confirm Order</button>
+                        )}
+                    </form>
                 </div>
 
-                <Coupon userid={userid}/>
+                <Coupon userid={userid} />
 
 
             </>) : (<div className="bg-grey3 mt-4 d-flex px-4 py-3 br-2 gap-15">

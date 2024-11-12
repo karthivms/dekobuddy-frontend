@@ -24,7 +24,7 @@ export default function CategoryListing({ category }: { category: navigationItem
                 aria-expanded={open}
                 className="mt-4 w-100 bg-transparent text-capitalize border-transparent-solid text-black font-primary d-flex align-items-center fw-4 justify-content-between p-0"
             >
-                Categories
+                Sub Categories
                 <ArrowIcon open={open} />
             </Button>
             <Collapse in={open}>
@@ -32,7 +32,7 @@ export default function CategoryListing({ category }: { category: navigationItem
 
                     {category.map((item: navigationItem, index) => (
                         <div key={`${item.name}_${index}`} className="mt-1 ps-3">
-                            <Link href={item.slug ? `/category/${item.slug}` : ''}>
+                            <Link href={item.slug ? `/category/subcategory/${item.slug}` : ''}>
                                 <label className="ms-1 font-primary text-black " htmlFor={`${item.name}_value_${index}`}>{item.name}</label><br />
                             </Link>
                         </div>

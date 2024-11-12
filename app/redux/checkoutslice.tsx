@@ -11,6 +11,13 @@ interface couponResponse {
 
 }
 
+
+interface OrderResponse {
+    success: boolean,
+    order_id: string
+
+}
+
 interface dataType {
     coupon: string,
     userid: string
@@ -18,6 +25,7 @@ interface dataType {
 
 interface initialState {
     addresses: address[]
+    orderPlaced: boolean,
     status: "loading" | "success" | "failure",
     couponStatus: "loading" | "success" | "failure",
     selectedAddress: {
@@ -44,6 +52,7 @@ interface initialState {
 
 const initialState: initialState = {
     addresses: [],
+    orderPlaced: false,
     status: "loading",
     couponStatus: "success",
     selectedAddress: {
@@ -113,7 +122,58 @@ export const ApplyCoupon = createAsyncThunk<couponResponse, dataType, { rejectVa
         if (response.error) {
             console.log(response.error)
             return response.error
-        } 
+        }
+        return response.data;
+
+    } catch (error) {
+        console.log(error);
+        return rejectWithValue('')
+    }
+})
+
+
+export const placeOrder = createAsyncThunk<OrderResponse, Number, { rejectValue: string }>('/checkout/placeorder', async (id, { rejectWithValue, getState }) => {
+    try {
+        const state = getState() as RootState;
+        const address = state.checkout.selectedAddress
+        const body = {
+            user_id: id,
+            cartItems: state.cart.cartItems.map((item) => ({
+                id: item.product.id,
+                quantity: item.product.quantity,
+                total_amount: `${item.product.quantity * item.product.regular_price}`
+            }
+            )),
+            billing_info: {
+                first_name: address.first_name,
+                address_1: address.address_1,
+                city: address.city,
+                postcode: address.postcode,
+                Country_Region: address.Country_Region,
+                state_country: address.state_country,
+                email: address.email,
+                phone: address.phone,
+                alternative_phone: address.alternative_phone,
+                landmark: address.landmark
+            },
+            total_amount: `${state.cart.total}`,
+            tax_amount: "0.00",
+            amount: state.checkout.discounted_total !== '' ? `${state.checkout.discounted_total}` : `${state.cart.total}`,
+            shipping_cost: "0.00",
+            discount: state.checkout.discount_amount === '' ? '0' : `${state.checkout.discount_amount}`,
+            coupon_code: state.checkout.coupon_code !== '' ? state.checkout.coupon_code : ''
+
+        }
+
+        const response = await apiRequest(
+            'POST', `${state.cart.url}/api/placeOrder`,
+            body,
+        );
+        if (response.error) {
+            console.log(response.error)
+            return response.error
+        }
+        console.log(response.data)
         return response.data;
 
     } catch (error) {
@@ -136,12 +196,16 @@ const cartSlice = createSlice({
             if (selected) {
                 state.selectedAddress = selected;
             }
+        },
+        removeCoupon: (state) => {
+            state.coupon_code = "";
+            state.discounted_total = "";
+            state.discount_amount = "";
         }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchAddress.fulfilled, (state, action) => {
             state.addresses = action.payload;
-            console.log(state.selectedAddress);
             if (!state.selectedAddress || state.selectedAddress.id === 0) {
                 state.selectedAddress = action.payload[0];
             }
@@ -162,9 +226,7 @@ const cartSlice = createSlice({
 
             }
 
-            state.discounted_total = '10000';
-            state.discount_amount = '2000';
-            state.coupon_code = 'Deko10';
+
         })
         builder.addCase(ApplyCoupon.pending, (state) => {
             state.couponStatus = 'loading';
@@ -173,9 +235,14 @@ const cartSlice = createSlice({
             state.couponStatus = 'failure';
             state.error = ""
         })
+        builder.addCase(placeOrder.fulfilled, (state, action) => {
+            if (action.payload.success) {
+                state.orderPlaced = true
+            }
+        })
     }
 })
 
-export const { changeStep, updateSelectedAddress } = cartSlice.actions;
+export const { changeStep, updateSelectedAddress, removeCoupon } = cartSlice.actions;
 
 export default cartSlice.reducer;

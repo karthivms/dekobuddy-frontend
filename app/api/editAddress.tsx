@@ -51,6 +51,6 @@ export async function EditAddress(data: propsdata) {
         body.alternative_phone = data.alternatePhone
     }
 
-    const response = await apiRequest('PUT', `/address/${data.id}/`, body);
+    const response = await apiRequest('PUT', `/addresses/${data.id}/`, body);
     return response;
 }

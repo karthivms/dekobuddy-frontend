@@ -2,7 +2,7 @@
 
 import { GetCountries } from '@/app/api/countries';
 import { GetState } from '@/app/api/states';
-import { changeStep, fetchAddress } from '@/app/redux/checkoutslice';
+import { changeStep, fetchAddress, updateSelectedAddress } from '@/app/redux/checkoutslice';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Select from './selectItem';
@@ -16,7 +16,7 @@ interface Props {
     userid: string,
 }
 
-const AddressForm: React.FC<Props> = ({ setedit, userid }) => {
+const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
 
     const dispatch: AppDispatch = useDispatch();
     const [country, setCountry] = useState([])
@@ -60,10 +60,7 @@ const AddressForm: React.FC<Props> = ({ setedit, userid }) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-
-
         const response = await AddAddress(formData);
-        console.log(response)
 
         setFormData({
             first_name: '',
@@ -79,10 +76,20 @@ const AddressForm: React.FC<Props> = ({ setedit, userid }) => {
             user: Number(userid)
         })
 
+    
         setShow(true)
         dispatch(fetchAddress(Number(userid)))
 
+        setTimeout(() => {
+            dispatch(updateSelectedAddress(response.id))
+                setedit();
+            
+
+        }, 2000)
+
         dispatch(changeStep(3))
+     
+        
     };
 
     useEffect(() => {
@@ -104,7 +111,7 @@ const AddressForm: React.FC<Props> = ({ setedit, userid }) => {
     }, [formData.country])
 
     return (
-        <form className="address-form wc-70" onSubmit={ handleSubmit}>
+        <form className="address-form wc-70" onSubmit={handleSubmit}>
             <div className="form-row">
                 <div className="form-group">
 

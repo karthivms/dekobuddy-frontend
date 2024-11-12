@@ -9,12 +9,20 @@ import AddressSkeleton from "./AddressSkeleton"
 import BinIcon from "../icons/binIcon"
 import EditIcon from "../icons/editIcon"
 import EditAddressForm from "../checkout/editAddress"
+import { DeleteAddress } from "@/app/api/deleteAddress"
+import Toaster from "../checkout/toaster"
+import { Spinner } from "react-bootstrap"
 
 
 
 export default function Address({ userid }: { userid: string }) {
 
     const [edit, setEdit] = useState(false);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => {
+        setShow(false)
+    }
 
     const addresses = useSelector((state: RootState) => state.checkout.addresses);
     const status = useSelector((state: RootState) => state.checkout.status);
@@ -35,6 +43,13 @@ export default function Address({ userid }: { userid: string }) {
         setEditState(item)
     }
 
+    const handleDelete = async (id: number) => {
+        const response = await DeleteAddress(id);
+        setShow(true)
+      
+        dispatch(fetchAddress(Number(userid)))
+    }
+
 
     return (
         <>{edit ? (<>
@@ -53,18 +68,23 @@ export default function Address({ userid }: { userid: string }) {
                                 <span className="fw-4 ">{item.first_name}</span>
                                 <span className="font-primary fw-3 ms-3">{item.phone}</span>
                                 <div className="ms-auto text-theme1">
-                                    <span onClick={() => handleEdit(item)} className="me-2 pointer" title="edit"><EditIcon /></span> <BinIcon />
+                                    <span onClick={() => handleEdit(item)} className="me-2 pointer" title="edit"><EditIcon /></span>
+                                    <span onClick={() => handleDelete(item.id)} className="pointer" title="delete">
+                                     <BinIcon />
+                                         </span>
                                 </div>
                             </div>
                             <span className="font-primary d-block fw-3 d-inline-block mt-2">
                                 {item.address_1}, {item.landmark && item.landmark}, {item.city}, {item.state_country}, {item.postcode}
                             </span>
                         </div>
+                        <Toaster msg={'Address Deleted Successfully'} show={show} handleClose={handleClose} />
+
                     </div>
                 ))}
             </>)}
         </>)}
-            
+
         </>
 
     )

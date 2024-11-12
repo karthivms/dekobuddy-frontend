@@ -1,12 +1,16 @@
 'use client'
 
-import { useSelector } from "react-redux";
-import { RootState } from '@/app/redux/store';
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from '@/app/redux/store';
+import CloseIcon from "../icons/closeiconSmall";
+import { removeAttribute } from "@/app/redux/Filterslice";
 
 
 export default function Selected() {
 
-    const attributes = useSelector((state: RootState) => state.product.attributes)
+    const attributes = useSelector((state: RootState) => state.product.attributes);
+    const dispatch: AppDispatch = useDispatch();
+
     return (
         <>
             {
@@ -15,6 +19,7 @@ export default function Selected() {
                         {attributes.map((item: string, index) => (
                             <span key={`selected_${index}`} className="bg-white px-2 py-1 br-10 font-small fw-4 text-theme1">
                                 {item}
+                                <span className="ms-1 pointer" onClick={() => dispatch(removeAttribute(item))}><CloseIcon /></span>
                             </span>
                         ))}
                     </div>

@@ -13,17 +13,13 @@ interface ApiInfo {
     user_id: number
 }
 
-export default function Modal({ Apiinfo, category, productid, image, closeModal, variations, name }: { Apiinfo: ApiInfo, category: string, productid: number, image: productimage, name: string, closeModal: () => void, variations: variations[] }) {
+export default function Modal({handleSelected, selectedSize, Apiinfo, category, productid, image, closeModal, variations, name }: {handleSelected : (value:number) => void, selectedSize: number, Apiinfo: ApiInfo, category: string, productid: number, image: productimage, name: string, closeModal: () => void, variations: variations[] }) {
 
     const cartproducts = useSelector((state: RootState) => state.cart.cartItems);
     const dispatch: AppDispatch = useDispatch()
 
-    const [selectedSize, setSelectedsize] = useState(0);
 
-    const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = e.target.value
-        setSelectedsize(Number(value));
-    }
+    
 
     const [showsidebar, setShowSidebar] = useState(false);
 
@@ -58,7 +54,7 @@ export default function Modal({ Apiinfo, category, productid, image, closeModal,
                 <div className="wc-90 mx-auto px-2 pt-3 pb-2 bg-white br-3 mt-2">
                     <button className="btn attModalClose" onClick={closeModal}><CloseIcon /></button>
                     <h5 className="fw-5 font-small text-black text-uppercase">Select Size</h5>
-                    <select className="w-100 border-border2-solid px-1 py-2 mt-1 font-primary" value={selectedSize} onChange={handleSort}>
+                    <select className="w-100 border-border2-solid px-1 py-2 mt-1 font-primary" value={selectedSize} onChange={(e) => handleSelected(Number(e.target.value))}>
                         {variations.map((item, index) => (
                             <option key={`variation_sizes_${item.size}`} value={index}>{item.size}</option>
                         ))}

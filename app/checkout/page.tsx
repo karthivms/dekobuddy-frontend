@@ -29,8 +29,6 @@ export default async function Page() {
         userid = userData.user_id;
     }
 
-
-
     const profiledata = await  GetProfileData(userid);
 
 

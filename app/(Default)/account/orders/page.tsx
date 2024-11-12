@@ -5,7 +5,6 @@ import { getUser } from "@/app/utilis/auth";
 
  async function getorders(userid:string) {
     const response = await apiRequest('GET', '/order/', null, {user_id : userid});
-    console.log(response)
     return response;
 }
 
@@ -15,7 +14,7 @@ import { getUser } from "@/app/utilis/auth";
 }
 
  async function getProcessingorders(userid:string) {
-    const response = await apiRequest('GET', '/order/', null, {user_id : userid, order_status : 'Processing'});
+    const response = await apiRequest('GET', '/order/', null, {user_id : userid, order_status : 'processing'});
     return response;
 }
 

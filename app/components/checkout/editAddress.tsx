@@ -70,8 +70,7 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
         setShow(true)
         dispatch(fetchAddress(Number(userid)))
 
-            dispatch(updateSelectedAddress(id))
-        
+
         setFormData({
             id: 0,
             first_name: '',
@@ -87,8 +86,13 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
             user: Number(userid)
         })
 
+        setShow(true)
         dispatch(changeStep(3))
+        setTimeout(() => {
+            setedit()
+            dispatch(updateSelectedAddress(id))
 
+        }, 2000)
     };
 
     useEffect(() => {
