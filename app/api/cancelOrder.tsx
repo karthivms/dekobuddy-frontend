@@ -7,7 +7,7 @@ interface reason {
    comment : string
 }
 
-export async function cancelOrder(orderid : number, data : reason){
+export async function cancelOrder(orderid : string, data : reason){
 
     const response = await apiRequest('POST', `/orders/${orderid}/cancel/`, data);
     return response;

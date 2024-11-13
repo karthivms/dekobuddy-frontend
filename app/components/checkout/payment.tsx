@@ -4,11 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import Step from "./step";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import Coupon from "./Coupon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { placeOrder } from "@/app/redux/checkoutslice";
+import { redirect } from "next/navigation";
+import { Spinner } from "react-bootstrap";
 
 export default function Payment({ userid }: { userid: string }) {
-    const step = useSelector((state: RootState) => state.checkout.activeStep)
+    const step = useSelector((state: RootState) => state.checkout.activeStep);
+    const order_status = useSelector((state: RootState) => state.checkout.orderPlaced);
+    const orderStatus = useSelector((state: RootState) => state.checkout.orderStatus);
+    const order_id = useSelector((state: RootState) => state.checkout.placed_order_id);
 
     const [order, setOrder] = useState(false);
     const dispatch: AppDispatch = useDispatch()
@@ -18,8 +23,23 @@ export default function Payment({ userid }: { userid: string }) {
         e.preventDefault();
         dispatch(placeOrder(Number(userid)));
 
+
     }
 
+    if (orderStatus === 'loading') {
+        return <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>
+    }
+
+
+    useEffect(() => {
+        if (order_status) {
+            redirect(`/order-success/${order_id}`)
+        }
+    }, [dispatch, handleOrder, order_status])
+
+   
     return (
         <>
             {step === 4 ? (<>

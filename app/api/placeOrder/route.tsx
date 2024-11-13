@@ -3,6 +3,7 @@ export async function POST(request: Request) {
     const username = process.env.API_USERNAME;
     const password = process.env.API_PASSWORD;
     const basicAuth = 'Basic ' + btoa(username + ':' + password);
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     try {
 
@@ -10,7 +11,7 @@ export async function POST(request: Request) {
         console.log(body)
   
 
-        const res = await fetch(`http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/order/`, {
+        const res = await fetch(`${baseUrl}/place-order/`, {
             method: 'POST',
             headers: {
                 'Authorization': basicAuth,

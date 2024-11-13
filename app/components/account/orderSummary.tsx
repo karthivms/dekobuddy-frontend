@@ -29,13 +29,13 @@ export default function OrderSummary({ orderproducts, status }: { orderproducts:
             </div>
             {orderproducts.order_items.map((item: orderItem) => (
                 <Row key={`checkout_item_${item.id}`} className='mt-4'>
-                    <Col lg={8} className="d-flex gap-20 flex-wrap row-gap-10">
+                    <Col lg={12} className="d-flex gap-20 row-gap-10">
                         <div>
                             <Image alt="cart_images" width={60} height={60} src={item.images[0].image} className="br-5" />
                         </div>
                         <div className="d-grid align-items-between">
-                            <p className="mb-0 fw-3">{item.product_name}</p>
-                            <div className="font-primary fw-3 d-flex gap-10 text-black align-items-center">
+                            <p className="mb-0 fw-4 font-sm-primary">{item.product_name}</p>
+                            <div className="font-primary  fw-3 d-flex gap-10 text-black align-items-center">
                                 <span>{formatPriceIndian(item.price)}</span>
                             </div>
                         </div>

@@ -11,9 +11,10 @@ import Search from '../icons/search';
 import { useEffect, useState } from 'react';
 import { fetchWishlistItems } from '@/app/redux/wishlistslice';
 import { fetchCartItems, updateUrl } from '@/app/redux/cartSlice';
+import { categoryMenu } from '@/app/types/types';
 
 
-export default function Menubar({ username, userid }: { username: string, userid: string }) {
+export default function Menubar({ categoryMenu, username, userid }: {categoryMenu : categoryMenu[], username: string, userid: string }) {
     const cart = useSelector((state: RootState) => state.cart.cartItems);
     const wishlist = useSelector((state: RootState) => state.wishlist.wishlistItems);
     const dispatch: AppDispatch = useDispatch();
@@ -78,7 +79,7 @@ export default function Menubar({ username, userid }: { username: string, userid
                                             placeholder='Search for Products...'
                                             className="bg-theme1 border-transparent-solid br-3 wp-220 h-30 text-white font-primary pe-4" />
                                     </form>
-                                    <Menu cart={cart.length} username={username} wishlist={wishlist.length} hideOffcanvas={hideOffcanvas} />
+                                    <Menu categoryMenu={categoryMenu} cart={cart.length} username={username} wishlist={wishlist.length} hideOffcanvas={hideOffcanvas} />
                                 </Nav>
 
                             </Offcanvas.Body>

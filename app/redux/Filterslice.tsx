@@ -17,6 +17,8 @@ interface initialState {
     minprice: number,
     maxprice: number,
     currentCategory: string
+    currentSubCategory: string
+
 }
 
 const initialState: initialState = {
@@ -30,7 +32,9 @@ const initialState: initialState = {
     sort: '',
     minprice: 0,
     maxprice: 0,
-    currentCategory: ''
+    currentCategory: '',
+    currentSubCategory: ''
+
 }
 
 interface APIResponse {
@@ -50,6 +54,7 @@ export const getProducts = createAsyncThunk<APIResponse, string, { rejectValue: 
         const sort = state.product.sort;
         const min_price = state.product.minprice;
         const max_price = state.product.maxprice;
+        const subcategory = state.product.currentSubCategory;
 
         try {
             const response = await apiRequest(
@@ -62,7 +67,8 @@ export const getProducts = createAsyncThunk<APIResponse, string, { rejectValue: 
                     size: size,
                     sort_by: sort,
                     min_price: min_price,
-                    max_price: max_price
+                    max_price: max_price,
+                    subcategories__slug : subcategory
                 });
             return response.data;
 
@@ -101,6 +107,9 @@ const filterSlice = createSlice({
         },
         updateCurrentCategory: (state, { payload }) => {
             state.currentCategory = payload;
+        },
+        updateSubCategory: (state, { payload }) => {
+            state.currentSubCategory = payload;
         }
     },
     extraReducers: (builder) => {
@@ -126,6 +135,7 @@ export const {
     updateSort,
     updateMinPrice,
     updateCurrentCategory,
+    updateSubCategory,
     updateMaxPrice }
     = filterSlice.actions;
 

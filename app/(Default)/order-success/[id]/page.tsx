@@ -6,14 +6,13 @@ import { apiRequest } from "@/app/api/apiConfig";
 import { getUser } from "@/app/utilis/auth";
 import { order, orderItem } from "@/app/types/types";
 import formatPriceIndian from "@/app/utilis/formatPrice";
-import Link from "next/link";
 
 
 type Params = {
     id: string;
 };
 
- async function getorder(userid: string, id: string) {
+async function getorder(userid: string, id: string) {
     const response = await apiRequest('GET', '/order/', null, { user_id: userid, order_id: id });
     return response;
 }
@@ -32,12 +31,14 @@ export default async function OrderDetail({ params }: { params: Params }) {
     return (
         <>
             <Container className="my-4 ">
-                <Link href={'/account/orders'} className="fw-3 mb-2 d-flex align-items-center">
-                    <span className="font-h2 me-2">&lsaquo;</span> Your Orders</Link>
+
                 <Row className="gap-40 align-items-start px-3 row-gap-40">
                     <Col lg={8} className="bg-grey3 br-10 p-4">
+                    
                     <h3 className='font-secondary fw-4 mb-5'># ORDER ID : {params.id}</h3>
 
+                    <Image src={'/images/check.png'} width={256} height={256} className="wp-50 h-auto m-auto d-block" alt="confirmed" />
+                        <h1 className="font-h2 text-center text-success mt-3 mb-5">Thank You, Your Order has been placed successfully</h1>
                         <Delivery data={order[0]} id={params.id} />
                     </Col>
                     <Col className="bg-theme2 br-10 p-4 order_summary">
@@ -50,12 +51,12 @@ export default async function OrderDetail({ params }: { params: Params }) {
                                     <div className="d-flex gap-10">
                                         <Image alt="cart_images" width={60} height={60} src={item.images[0].image} className="br-5" />
                                         <div className="d-grid align-items-between">
-                                        <p className="mb-0 fw-3 font-primary">{item.product_name}</p>
-                                        <p className="mb-0 fw-3 font-primary text-theme1">quantity :{item.quantity}</p>
+                                            <p className="mb-0 fw-3 font-primary">{item.product_name}</p>
+                                            <p className="mb-0 fw-3 font-primary text-theme1">quantity :{item.quantity}</p>
 
+                                        </div>
                                     </div>
-                                    </div>
-                                   
+
                                     <div>
                                         <div className="font-primary fw-3 d-flex gap-10 text-black align-items-center">
                                             <span>{formatPriceIndian(item.price)}</span>

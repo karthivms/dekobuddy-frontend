@@ -6,6 +6,48 @@ header {
     z-index: 999;
 }
 
+.categorymenu #basic-nav-dropdown {
+    color: black !important;
+
+    &:hover {
+        color: $primary-color !important;
+    }
+
+
+}
+
+.categorymenu .dropdown-menu {
+    padding: 0 !important;
+    display: none;
+
+    .subcategorymenu{
+        display: none;
+        position: absolute;
+        left: 100%;
+        background-color: white;
+        border-radius: 3px;
+        border: 1px solid $border-color3;
+        top: 0;
+        width: 100%;
+    }
+
+    .catmenu{
+        position: relative;
+    }
+
+    .catmenu:hover .subcategorymenu{
+        display: block;
+    }
+    
+
+    a:hover {
+        background-color: lighten($secondary-color, 15%);
+    }
+}
+
+.categorymenu:hover .dropdown-menu {
+    display: block;
+}
 
 .search-form {
     position: relative;
@@ -82,14 +124,14 @@ header {
             display: block !important;
             margin-left: 0 !important;
 
-            li{
+            li {
                 position: relative;
                 padding: 15px !important;
                 border-bottom: 1px solid $border-color3 ;
             }
 
-            &:nth-child(2){
-                a::after{
+            &:nth-child(2) {
+                a::after {
                     content: "";
                     position: absolute;
                     width: 100%;
@@ -97,13 +139,13 @@ header {
                     top: 0;
                     left: 0;
                 }
-                
+
             }
 
             &:last-child {
                 li {
 
-                    a{
+                    a {
                         position: static;
                     }
 
@@ -119,7 +161,7 @@ header {
                         font-weight: 500;
                     }
 
-                  
+
 
                     &:nth-child(2) {
                         a::after {
@@ -135,27 +177,27 @@ header {
                 }
             }
 
-                a {
-                    padding: 0 !important;
-                    font-size: 15px;
-                    font-weight: 500;
+            a {
+                padding: 0 !important;
+                font-size: 15px;
+                font-weight: 500;
 
-                    sup {
-                        display: none;
-                    }
+                sup {
+                    display: none;
                 }
-            
+            }
+
         }
     }
 
 }
 
 button.navbar-toggler {
-    border:none;
-    box-shadow:none !important;
-    outline:none !important;
+    border: none;
+    box-shadow: none !important;
+    outline: none !important;
 
-    span{
+    span {
         background-image: url('/images/menu.svg');
     }
 }

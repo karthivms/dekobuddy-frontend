@@ -1,19 +1,25 @@
 'use client'
 
 import { cancelOrder } from "@/app/api/cancelOrder";
+import { RootState } from "@/app/redux/store";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { ModalProps } from 'react-bootstrap';
+import { useSelector } from "react-redux";
 
 
 interface MyVerticallyCenteredModalProps extends ModalProps {
     onHide: () => void;
-    id : number
+    id : string
 }
 
-export default function CancelOrder({id}:{id:number}) {
+export default function CancelOrder({id}:{id:string}) {
     const [modalShow, setModalShow] = useState(false);
+    const order_id = useSelector((state:RootState) => state.checkout.placed_order_id )
 
+    if(order_id === id){
+        return;
+    }
     return (
         <>
             <button className="ms-auto d-block btn2 px-2 py-1 cancel_order_btn" onClick={() => setModalShow(true)}>

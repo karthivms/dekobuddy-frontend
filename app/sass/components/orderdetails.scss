@@ -1,5 +1,9 @@
 @import '@/app/sass/variables';
 
+.mobileProgress {
+    display: none;
+}
+
 .shipmentTracking {
     width: 80%;
     display: flex;
@@ -8,13 +12,13 @@
     position: relative;
 
     .activestatus {
-        div {
+        .statusCheck {
             background-color: #624632 !important;
         }
     }
 
     .statusBar {
-        div {
+        .statusCheck {
             width: 30px;
             height: 30px;
             margin: auto;
@@ -24,7 +28,7 @@
             border-radius: 50%;
             box-shadow: rgba(50, 50, 93, 0.25) 0px 10px 5px -20px inset, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
 
-            svg{
+            svg {
                 position: absolute;
                 top: 50%;
                 left: 50%;
@@ -43,28 +47,38 @@
         z-index: 1;
         box-shadow: rgba(50, 50, 93, 0.15) 0px 10px 5px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -28px inset;
 
-        div{
-            position:absolute;
-            content:"";
-            top:0;
-            height:100%;
-            background-color:$primary-color;
-            z-index:999;
+        div {
+            position: absolute;
+            content: "";
+            top: 0;
+            height: 100%;
+            background-color: $primary-color;
+            z-index: 999;
         }
     }
 }
 
-.cancelpopup > div{
+.cancelpopup>div {
     width: 30%;
 }
 
-@media screen and (max-width:768px){
-    .shipmentTracking{
+@media screen and (max-width:768px) {
+    .shipmentTracking {
         width: 100% !important;
     }
 
-    .cancel_order_btn{
+    .cancel_order_btn {
         margin-top: 20px;
-        margin-left:initial !important ;
+        margin-left: initial !important;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .mobileProgress {
+        display: block;
+    }
+
+    .largeProgress {
+        display: none;
     }
 }

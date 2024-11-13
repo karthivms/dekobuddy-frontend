@@ -122,6 +122,10 @@
     border: none;
     gap: 20px;
 
+    @media screen and (max-width : 600px) {
+        gap:8px;
+    }
+
     button {
         border: 1px solid $primary-color !important;
         padding: 3px 15px;

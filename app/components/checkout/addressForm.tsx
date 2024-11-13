@@ -16,7 +16,7 @@ interface Props {
     userid: string,
 }
 
-const AddressForm: React.FC<Props> = ({ setedit, page, userid }) => {
+const AddressForm: React.FC<Props> = ({ setedit, userid }) => {
 
     const dispatch: AppDispatch = useDispatch();
     const [country, setCountry] = useState([])

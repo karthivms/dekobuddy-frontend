@@ -44,14 +44,16 @@ export const fetchWishlistItems = createAsyncThunk<wishlistItem[], string, { rej
                 const state = getState() as RootState;
                 const response = await apiRequest('GET', `${state.cart.url}/api/wishlist/${id}`);
                 localStorage.removeItem('wishlist');
-
+                if (response.data.error) {
+                    return [];
+                }
                 return response.data;
             } catch (error) {
                 console.log(error)
                 return rejectWithValue('Failed to fetch wishlist items');
 
             }
-        }else{
+        } else {
             const data = localStorage.getItem("wishlist");
             return data ? JSON.parse(data) : [];
         }
@@ -79,7 +81,7 @@ export const addWishlistItems = createAsyncThunk<addResponse, wishlistdata, { re
             return {
                 success: true,
                 wishlist_item_id: isFirstitem ? 1 : state.wishlist.wishlistItems[state.wishlist.wishlistItems.length - 1].id,
-                added_to_wishlist : state.wishlist.added_to_wishlist
+                added_to_wishlist: state.wishlist.added_to_wishlist
             }
         }
     })

@@ -21,6 +21,8 @@ export default function SimilarProducts({ userid, data }: { userid: string, data
     const state = useSelector((state: RootState) => state.product);
     const count = state.count;
     const [attModal, setAttModal] = useState<number | null>(null);
+    const [selectedSize, setSelectedsize] = useState(0);
+
 
     const handleQuickAddClick = (productId: number) => {
         setAttModal(attModal === productId ? null : productId);
@@ -45,7 +47,15 @@ export default function SimilarProducts({ userid, data }: { userid: string, data
     }
 
     const [show, setShow] = useState(false);
-    const [wishmsg, SetWishmsg] = useState(true)
+    const [wishmsg, SetWishmsg] = useState(true);
+
+
+    
+    const handleSelected = (value: number) => {
+
+        setSelectedsize(value)
+
+    }
     return (
         <Container className='mt-5 mb-4'>
             <h2 className="mt-3 text-uppercase font-h2 text-center text-theme1 fw-4 pb-2">Similar Products</h2>
@@ -83,7 +93,7 @@ export default function SimilarProducts({ userid, data }: { userid: string, data
                                             <CartIcon2 /> Quick Add
                                         </button>
                                         {attModal === item.id && (
-                                            <Modal Apiinfo={cartAPiinfo} category={item.categories[0].name} productid={item.id} image={item.images[0]} name={item.name} variations={item.variations} closeModal={() => setAttModal(null)} />)}
+                                            <Modal handleSelected={handleSelected} selectedSize={selectedSize} Apiinfo={cartAPiinfo} category={item.categories[0].name} productid={item.id} image={item.images[0]} name={item.name} variations={item.variations} closeModal={() => setAttModal(null)} />)}
                                     </div>
                                     <h6 className="m-0 mt-3 font-primary"><Link href={`/product/${item.id}/${createSlug(item.name)}`}>{item.name}</Link></h6>
                                     {item.rating_count > 0 && (<div className="d-flex align-items-center">

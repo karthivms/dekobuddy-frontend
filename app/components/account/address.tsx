@@ -11,7 +11,6 @@ import EditIcon from "../icons/editIcon"
 import EditAddressForm from "../checkout/editAddress"
 import { DeleteAddress } from "@/app/api/deleteAddress"
 import Toaster from "../checkout/toaster"
-import { Spinner } from "react-bootstrap"
 
 
 
@@ -45,9 +44,12 @@ export default function Address({ userid }: { userid: string }) {
 
     const handleDelete = async (id: number) => {
         const response = await DeleteAddress(id);
-        setShow(true)
-      
-        dispatch(fetchAddress(Number(userid)))
+        if (response) {
+            setShow(true)
+
+            dispatch(fetchAddress(Number(userid)))
+        }
+
     }
 
 
@@ -70,8 +72,8 @@ export default function Address({ userid }: { userid: string }) {
                                 <div className="ms-auto text-theme1">
                                     <span onClick={() => handleEdit(item)} className="me-2 pointer" title="edit"><EditIcon /></span>
                                     <span onClick={() => handleDelete(item.id)} className="pointer" title="delete">
-                                     <BinIcon />
-                                         </span>
+                                        <BinIcon />
+                                    </span>
                                 </div>
                             </div>
                             <span className="font-primary d-block fw-3 d-inline-block mt-2">

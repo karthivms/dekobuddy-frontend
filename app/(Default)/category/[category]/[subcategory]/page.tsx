@@ -11,6 +11,7 @@ import Link from "next/link";
 
 type Params = {
     category: string;
+    subcategory: string;
 };
 
 
@@ -22,7 +23,7 @@ export async function generateStaticParams() {
 }
 
 async function getCategories() {
-    const url = `/parentcategory/`;
+    const url = `/subcategory/`;
     const response = await apiRequest('GET', url);
     return response;
 }
@@ -68,13 +69,16 @@ export default async function page({ params }: { params: Params }) {
         <>
             <Container fluid className="banner2">
                 <Container className="d-flex h-100 align-items-center">
-                    <h1 className="font-big font-sm-h1 text-theme3 fw-6">{deslugger(params.category)}</h1>
+                    <h1 className="font-big font-sm-h1 text-theme3 fw-6">{deslugger(params.subcategory)}</h1>
                 </Container>
             </Container>
             <Container className="mt-3">
                 <ul className="breadcrumbs">
                     <li className="d-inline font-primary  fw-4"><Link href="/" className="text-theme1">Home</Link></li>
-                    <li className="d-inline text-black font-primary">{deslugger(params.category)}</li>
+                    <li className="d-inline  font-primary fw-4">
+                        <Link href={`/category/${params.category}`} className="text-theme1">{deslugger(params.category)}</Link>
+                    </li>
+                    <li className="d-inline text-black font-primary">{deslugger(params.subcategory)}</li>
                 </ul>
             </Container>
             <Container>
@@ -84,7 +88,7 @@ export default async function page({ params }: { params: Params }) {
                     </Col>
                     <Col className="">
                         <Topbar />
-                        <ProductGrid grid={3} userid={userid} category={params.category} subcategory="" />
+                        <ProductGrid grid={3} userid={userid} category={params.category} subcategory={params.subcategory} />
                     </Col>
                 </Row>
             </Container>

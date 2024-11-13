@@ -10,7 +10,7 @@ import CartIcon2 from "../icons/carticon2";
 import { Product } from '@/app/types/types'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/store";
-import { getProducts, updateCurrentCategory, updateOffset } from "@/app/redux/Filterslice";
+import { getProducts, updateCurrentCategory, updateOffset, updateSubCategory } from "@/app/redux/Filterslice";
 import ProductSkeleton from "../productCardSkeleton";
 import Pagination from "./pagination";
 import Modal from "./Modal";
@@ -18,7 +18,7 @@ import Toaster from "../toaster";
 import formatPriceIndian from "@/app/utilis/formatPrice";
 
 
-export default function ProductGrid({ grid, userid, category }: { grid: number, userid: string, category: string }) {
+export default function ProductGrid({ grid, userid, category, subcategory }: { grid: number, userid: string, category: string, subcategory : string }) {
 
     const products = useSelector((state: RootState) => state.product.products);
     const state = useSelector((state: RootState) => state.product);
@@ -30,7 +30,6 @@ export default function ProductGrid({ grid, userid, category }: { grid: number, 
 
 
     const dispatch: AppDispatch = useDispatch()
-
 
 
     const getDiscount = useCallback((reg_price: number, sale_price: number) => {
@@ -69,6 +68,10 @@ export default function ProductGrid({ grid, userid, category }: { grid: number, 
         dispatch(updateCurrentCategory(category))
     }, [category, dispatch])
 
+    useEffect(() => {
+        dispatch(updateSubCategory(subcategory))
+    }, [subcategory, dispatch])
+
 
     useEffect(() => {
         dispatch(getProducts(category))
@@ -93,11 +96,9 @@ export default function ProductGrid({ grid, userid, category }: { grid: number, 
     const handleSelected = (value: number) => {
 
         setSelectedsize(value)
-        console.log(selectedSize)
 
     }
 
-    console.log(selectedSize)
     return (
         <>
             <Toaster show={show} msg={wishmsg} handleClose={handleToastClose} />

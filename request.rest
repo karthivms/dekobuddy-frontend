@@ -262,7 +262,7 @@ Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
 Content-Type: application/json
 
 {
-	"query": "in"
+	"query": "etna"
 }
 
 

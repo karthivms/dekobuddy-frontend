@@ -14,15 +14,16 @@ export async function GET(request: Request) {
     const sort_by = searchParams.get('sort_by');
     const min_price = searchParams.get('min_price');
     const max_price = searchParams.get('max_price');
+    const subcategories__slug = searchParams.get('subcategories__slug');
 
 
 
     try {
         let url = '';
         if (Number(min_price) !== 0 && Number(max_price) !== 0) {
-            url = `${baseUrl}/products/?category=${category}&limit=${limit}&offset=${offset}&size=${size}&sort_by=${sort_by}&min_price=${min_price}&max_price=${max_price}`;
+            url = `${baseUrl}/products/?category=${category}&subcategories__slug=${subcategories__slug}&limit=${limit}&offset=${offset}&size=${size}&sort_by=${sort_by}&min_price=${min_price}&max_price=${max_price}`;
         } else {
-            url = `${baseUrl}/products/?category=${category}&limit=${limit}&offset=${offset}&size=${size}&sort_by=${sort_by}`;
+            url = `${baseUrl}/products/?category=${category}&subcategories__slug=${subcategories__slug}&limit=${limit}&offset=${offset}&size=${size}&sort_by=${sort_by}`;
         }
 
 

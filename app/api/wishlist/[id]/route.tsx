@@ -14,7 +14,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
   
       if (!res.ok) {
         const errorData = await res.json();
-        return errorData;
+        return new Response(JSON.stringify({ error: errorData }), { status: res.status });
       }
       const data = await res.json();
       return Response.json({ data });

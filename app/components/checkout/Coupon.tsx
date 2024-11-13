@@ -31,7 +31,6 @@ export default function Coupon({ userid }: { userid: string }) {
     useEffect(() => {
         if (!error) {
             setShow(false)
-            console.log(show)
         }
     }, [dispatch, error, state.coupon_code])
 

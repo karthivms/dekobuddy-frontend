@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { address } from '../types/types';
 import { apiRequest } from '../api/apiConfig';
 import { RootState } from './store';
+import { redirect } from 'next/navigation';
 
 interface couponResponse {
     discounted_total?: string,
@@ -28,6 +29,7 @@ interface initialState {
     orderPlaced: boolean,
     status: "loading" | "success" | "failure",
     couponStatus: "loading" | "success" | "failure",
+    orderStatus: "loading" | "success" | "failure",
     selectedAddress: {
         id: number,
         address_type: string,
@@ -48,6 +50,7 @@ interface initialState {
     discount_amount: string,
     coupon_code: string,
     activeStep: number
+    placed_order_id: string
 }
 
 const initialState: initialState = {
@@ -55,6 +58,7 @@ const initialState: initialState = {
     orderPlaced: false,
     status: "loading",
     couponStatus: "success",
+    orderStatus: "success",
     selectedAddress: {
         id: 0,
         address_type: "Billing",
@@ -74,7 +78,8 @@ const initialState: initialState = {
     discounted_total: '',
     discount_amount: '',
     coupon_code: '',
-    error: undefined
+    error: undefined,
+    placed_order_id: ''
 }
 
 
@@ -132,7 +137,7 @@ export const ApplyCoupon = createAsyncThunk<couponResponse, dataType, { rejectVa
 })
 
 
-export const placeOrder = createAsyncThunk<OrderResponse, Number, { rejectValue: string }>('/checkout/placeorder', async (id, { rejectWithValue, getState }) => {
+export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue: string }>('/checkout/placeorder', async (id, { rejectWithValue, getState }) => {
     try {
         const state = getState() as RootState;
         const address = state.checkout.selectedAddress
@@ -145,6 +150,7 @@ export const placeOrder = createAsyncThunk<OrderResponse, Number, { rejectValue:
             }
             )),
             billing_info: {
+                address_id: address.id,
                 first_name: address.first_name,
                 address_1: address.address_1,
                 city: address.city,
@@ -170,7 +176,6 @@ export const placeOrder = createAsyncThunk<OrderResponse, Number, { rejectValue:
             body,
         );
         if (response.error) {
-            console.log(response.error)
             return response.error
         }
         console.log(response.data)
@@ -201,6 +206,9 @@ const cartSlice = createSlice({
             state.coupon_code = "";
             state.discounted_total = "";
             state.discount_amount = "";
+        },
+        changeStatus: (state) => {
+            state.orderPlaced = false;
         }
     },
     extraReducers: (builder) => {
@@ -235,14 +243,21 @@ const cartSlice = createSlice({
             state.couponStatus = 'failure';
             state.error = ""
         })
+
+        builder.addCase(placeOrder.pending, (state) => {
+            state.orderStatus == 'loading'
+        })
         builder.addCase(placeOrder.fulfilled, (state, action) => {
             if (action.payload.success) {
+                state.placed_order_id = action.payload.order_id
                 state.orderPlaced = true
+                state.orderStatus == 'success'
+
             }
         })
     }
 })
 
-export const { changeStep, updateSelectedAddress, removeCoupon } = cartSlice.actions;
+export const { changeStep, updateSelectedAddress, removeCoupon, changeStatus } = cartSlice.actions;
 
 export default cartSlice.reducer;

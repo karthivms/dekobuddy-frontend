@@ -14,6 +14,21 @@
     }
 }
 
+.breadcrumbs{
+    margin: 0 !important;
+    padding: 0 !important;
+
+    li:not(:last-child){
+        &::after{
+         content:'›';
+         margin: 0 10px;
+         
+        }
+    }
+
+ 
+}
+
 .product_grid {
     position: relative;
 

@@ -4,9 +4,31 @@ export interface navigationItem {
     id: number;
     name: string;
     slug?: string;
+    parent_category? : string
     link?: string,
     image: string;
     active: boolean
+}
+
+
+
+export interface categoryMenu{
+    
+        id: number,
+        name: string,
+        slug: string,
+        image: string,
+        active: boolean,
+        subcategories: [
+            {
+                id: number,
+                name: string,
+                slug: string,
+                image: null | string,
+                active: boolean
+            }
+        ]
+    
 }
 
 
@@ -36,14 +58,14 @@ export interface Product {
 
 export interface cartdata {
     id: number,
-    productid : number,
+    productid: number,
     product: cartProduct,
     user_id: number
 }
 
 export interface wishlistdata {
     id: number,
-    productid : number,
+    productid: number,
     product: wishListProduct,
     user_id: number
 }
@@ -53,7 +75,7 @@ export interface cartProduct {
     name: string,
     categories: string,
     size: string,
-    stock : number,
+    stock: number,
     regular_price: number,
     images: {
         id: number,
@@ -73,15 +95,15 @@ export interface wishListProduct {
     id: number,
     name: string,
     regular_price: number,
-    sale_price? : number,
+    sale_price?: number,
     images: productimage[]
 }
 
 export interface rating {
-    id : number,
-    user_name:string,
-    rating:number,
-    review:string
+    id: number,
+    user_name: string,
+    rating: number,
+    review: string
 }
 
 
@@ -110,7 +132,7 @@ export interface Attribute {
     values: string[];
 }
 
-export interface orderItem{
+export interface orderItem {
     id: number,
     product_id: number,
     product_name: string,
@@ -122,6 +144,19 @@ export interface orderItem{
 }
 
 
+export interface orderAddress {
+    first_name: string,
+    address: string,
+    email: string,
+    city: string,
+    state: string,
+    pincode: string,
+    country: string,
+    phone: string,
+    alternative_phone?: null | string,
+    address_type: "Billing"
+}
+
 export interface order {
     id: number,
     user_id: number,
@@ -130,8 +165,10 @@ export interface order {
     bill_amount: string,
     order_status: string,
     order_date: string,
+    order_confirmation_date? : string,
+    shipped_date? : string,
     order_items: orderItem[],
-    billing_address: address
+    billing_address: orderAddress
 }
 
 export interface profile {
@@ -147,7 +184,7 @@ export interface address {
     first_name: string,
     address_1: string,
     city: string,
-    email : string,
+    email: string,
     landmark: null | string,
     postcode: string,
     Country_Region: string,

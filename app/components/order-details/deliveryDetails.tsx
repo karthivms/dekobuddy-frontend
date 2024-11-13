@@ -1,9 +1,16 @@
+'use client'
+
 import { Col, Row } from "react-bootstrap";
 import ProgressBar from "./progressBar";
 import CancelOrder from "./cancelOrder";
 import { order } from "@/app/types/types";
+import MobileProgress from "./mobileProgress";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/redux/store";
+import { useEffect } from "react";
+import { changeStatus, changeStep } from "@/app/redux/checkoutslice";
 
-export const Delivery = ({ data, id }: { data : order,id: number }) => {
+export const Delivery = ({ data, id }: { data: order, id: string }) => {
     // function getDateTwoDaysFromToday() {
     //     const today = new Date();
     //     today.setDate(today.getDate() + 2);
@@ -14,36 +21,58 @@ export const Delivery = ({ data, id }: { data : order,id: number }) => {
     //     });
     // }
 
+    const order_status = useSelector((state: RootState) => state.checkout.orderPlaced);
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (order_status) {
+            dispatch(changeStatus());
+            dispatch(changeStep(3));
+        }
+    }, [dispatch, order_status])
+
     return (
         <>
-            <h3 className='font-secondary fw-4'># ORDER ID : {id}</h3>
             {/* <p className="mt-4 mb-0 font-secondary text-secondary">Estimated Delivery Date</p>
             <p className="font-h3 fw-4 mt-1 mb-0">{getDateTwoDaysFromToday()}</p> */}
-            <ProgressBar currentstatus={data.order_status}/>
+            <ProgressBar
+                order_date={data.order_date}
+                currentstatus={data.order_status}
+                confirm_date={data.order_confirmation_date}
+                shipped_date={data.shipped_date}
+            />
+            <MobileProgress
+                order_date={data.order_date}
+                currentstatus={data.order_status}
+                confirm_date={data.order_confirmation_date}
+                shipped_date={data.shipped_date}
+            />
             <Row className="align-items-end flex-wrap">
-            <Col lg={8}>
-                <h5 className="font-large text-black">Billing Address</h5>
-                <ul className="m-0 ps-3 ">
-                    <li className="fw-4 text-black mb-1">{data.billing_address.first_name}</li>
+                <Col lg={8}>
+                    <h5 className="font-large text-black my-2">Billing Address</h5>
+                    <ul className="m-0 ps-3 my-3 line-relaxed">
+                        <li className="fw-4 text-black mb-1">{data.billing_address.first_name}</li>
                         <li >
-                            {data.billing_address.address_1},
+                            {data.billing_address.address},
                         </li>
                         <li >
                             {data.billing_address.city},
                         </li>
                         <li >
-                            {data.billing_address.state_country},
+                            {data.billing_address.state},
                         </li>
                         <li >
-                            {data.billing_address.postcode}
+                            {data.billing_address.pincode}
                         </li>
-                    <li className="fw-4 text-black mt-2 mb-1">Phone Number</li>
-                    <li>{data.billing_address.phone}</li>
-                </ul>
-            </Col>
-            <Col >
-            <CancelOrder id={id}/>
-            </Col>
+                        <li className="fw-4 text-black mt-2 ">Phone Number</li>
+                        <li>{data.billing_address.phone}</li>
+                        {data.billing_address.alternative_phone && (<><li className="fw-4 text-black mt-2 ">Alternate Phone Number</li>
+                            <li>{data.billing_address.phone}</li></>)}
+                    </ul>
+                </Col>
+                <Col >
+                    <CancelOrder id={id} />
+                </Col>
             </Row>
         </>
     )

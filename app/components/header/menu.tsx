@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import CartIcon from "../icons/carticon";
 import Wishlisticon from "../icons/wishlisticon";
 import AccountIcon from "../icons/accounticon";
+import { NavDropdown } from "react-bootstrap";
+import { categoryMenu } from "@/app/types/types";
 
 
 
@@ -20,14 +22,16 @@ interface MenuProps {
     cart: number;
     wishlist: number;
     hideOffcanvas: () => void;
-    username:string
+    username: string
+    categoryMenu: categoryMenu[]
 }
 
-const Menu: React.FC<MenuProps> = ({ cart, wishlist, username, hideOffcanvas }) => {
 
- 
 
-    const getIcon =  (name: string) => {
+const Menu: React.FC<MenuProps> = ({ categoryMenu, cart, wishlist, username, hideOffcanvas }) => {
+
+
+    const getIcon = (name: string) => {
         switch (name) {
             case "cart":
                 return <CartIcon />
@@ -68,7 +72,21 @@ const Menu: React.FC<MenuProps> = ({ cart, wishlist, username, hideOffcanvas }) 
 
     return (
         <>
-            <ul className="d-flex p-0 m-0 ms-3">
+            <NavDropdown title="All Categories" id="basic-nav-dropdown" className="text-black font-primary fw-4 ms-3 categorymenu">
+                {categoryMenu.map((item) => (
+                    <div key={`category_menu_${item.name}`} className="catmenu">
+                        <Link href={`/category/${item.slug}`} className="w-100 d-block font-primary px-3 py-2 link1">{item.name}</Link>
+                        {item.subcategories.map((subcat) => (
+                            <div key={`category_menu_${item.name}_${subcat.slug}`} className="subcategorymenu">
+                                <Link href={`/category/${item.slug}/${subcat.slug}`} className="w-100 d-block font-primary px-3 py-2 link1">{subcat.name}</Link>
+                            </div>
+                        ))}
+
+                    </div>
+                ))}
+
+            </NavDropdown>
+            <ul className="d-flex p-0 m-0 ">
                 {menu.map((item: MenuItem) => (
                     <li key={`menu_${item.id}`} className="text-white ">
                         <Link

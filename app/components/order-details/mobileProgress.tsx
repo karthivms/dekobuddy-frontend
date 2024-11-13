@@ -5,7 +5,7 @@ interface orderstatus {
 }
 
 
-export default function ProgressBar({ order_date, currentstatus, confirm_date, shipped_date }: { order_date: string, currentstatus: string, confirm_date: string | undefined, shipped_date: string | undefined }) {
+export default function MobileProgress({ order_date, currentstatus, confirm_date, shipped_date }: { order_date: string, currentstatus: string, confirm_date: string | undefined, shipped_date: string | undefined }) {
 
     const orderstatus = [
         { status: 'processing', date: order_date },
@@ -45,7 +45,7 @@ export default function ProgressBar({ order_date, currentstatus, confirm_date, s
 
 
     return (
-        <div className="my-4 largeProgress">
+        <div className="my-4 mobileProgress">
             {currentstatus === 'Cancelled' ? (
                 <div className="shipmentTracking mt-4">
                     {cancelstatus.map((item: string, index) => (
