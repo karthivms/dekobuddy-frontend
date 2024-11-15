@@ -101,7 +101,7 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
 
             <QuanityHandler stock={actVariation.stock} variationId={actVariation.id} count={count} setCount={setCount} />
             <ActionButtons Apiinfo={cartAPiinfo} category={data.categories[0].name} productid={data.id} image={data.images[0]} variation={actVariation} name={data.name} setCount={setCount}/>
-            <Options handleMsg={SetWishmsg} handleToast={setShow} id={data.id} userid={Number(userid)} price={Number(data.regular_price)} images={data.images} title={data.name} />
+            <Options variations={data.variations} handleMsg={SetWishmsg} handleToast={setShow} id={data.id} userid={Number(userid)} price={Number(data.regular_price)} images={data.images} title={data.name} />
             <Toaster show={show} msg={wishmsg} handleClose={handleToastClose}/>
 
         </div>

@@ -3,12 +3,14 @@
 import { apiRequest } from "./apiConfig";
 
 interface reason {
-   reason : string,
-   comment : string
+    user_id: number,
+    reason: string,
+    comment: string
 }
 
-export async function cancelOrder(orderid : string, data : reason){
-
-    const response = await apiRequest('POST', `/orders/${orderid}/cancel/`, data);
+export async function cancelOrder(orderid: string, data: reason) {
+    console.log(data)
+    const response = await apiRequest('POST', `/order/${orderid}/cancel/`, data);
+    console.log(response)
     return response;
 }

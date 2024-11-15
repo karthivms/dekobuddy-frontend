@@ -8,10 +8,10 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { AddItem, addWishlistItems } from "@/app/redux/wishlistslice";
-import { productimage } from "@/app/types/types";
+import { productimage, variations } from "@/app/types/types";
 
 
-export default function Options({handleMsg, handleToast, id, userid, price, images, title }: {handleMsg: Dispatch<SetStateAction<boolean>>, handleToast : Dispatch<SetStateAction<boolean>>, id: number, userid : number, price : number, images : productimage[], title: string }) {
+export default function Options({variations, handleMsg, handleToast, id, userid, price, images, title }: {variations : variations[], handleMsg: Dispatch<SetStateAction<boolean>>, handleToast : Dispatch<SetStateAction<boolean>>, id: number, userid : number, price : number, images : productimage[], title: string }) {
 
     const pathname = usePathname();
     const params = useSearchParams();
@@ -39,7 +39,8 @@ export default function Options({handleMsg, handleToast, id, userid, price, imag
                 id: id,
                 name: title,
                 regular_price: price,
-                images: images
+                images: images,
+                variations :variations 
             },
             user_id: userid
         }

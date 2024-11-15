@@ -6,10 +6,18 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { AddItem, addWishlistItems } from "@/app/redux/wishlistslice";
-import { productimage } from "@/app/types/types";
+import { productimage, variations } from "@/app/types/types";
 import { Dispatch, SetStateAction } from "react";
 
-export default function Addtowishlist({ handleMsg, handleToast, name, userid, id, price, images }: { handleMsg: Dispatch<SetStateAction<boolean>>, handleToast: Dispatch<SetStateAction<boolean>>, name: string, userid: number, id: number, price: number, images: productimage[] }) {
+export default function Addtowishlist(
+    { variations, handleMsg, handleToast, name, userid, id, price, images }:
+        {
+            variations : variations[],
+            handleMsg: Dispatch<SetStateAction<boolean>>,
+            handleToast: Dispatch<SetStateAction<boolean>>,
+            name: string,
+            userid: number, id: number, price: number, images: productimage[]
+        }) {
     const wishlist = useSelector((state: RootState) => state.wishlist.wishlistItems);
     const dispatch: AppDispatch = useDispatch();
     const isWishlistItem = wishlist.some((item) => item.products.id === id)
@@ -23,7 +31,8 @@ export default function Addtowishlist({ handleMsg, handleToast, name, userid, id
                 id: id,
                 name: name,
                 regular_price: price,
-                images: images
+                images: images,
+                variations: variations
             },
             user_id: userid
         }

@@ -1,25 +1,30 @@
 'use client'
 
 import { cancelOrder } from "@/app/api/cancelOrder";
-import { RootState } from "@/app/redux/store";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { ModalProps } from 'react-bootstrap';
-import { useSelector } from "react-redux";
 
 
 interface MyVerticallyCenteredModalProps extends ModalProps {
     onHide: () => void;
-    id : string
+    id: string;
+    userid : string
+
 }
 
-export default function CancelOrder({id}:{id:string}) {
+export default function CancelOrder({userid, id }: { userid : string,id: string }) {
     const [modalShow, setModalShow] = useState(false);
-    const order_id = useSelector((state:RootState) => state.checkout.placed_order_id )
 
-    if(order_id === id){
+
+    const pathname = usePathname();
+
+    if (pathname.includes('order-success')) {
         return;
     }
+
+
     return (
         <>
             <button className="ms-auto d-block btn2 px-2 py-1 cancel_order_btn" onClick={() => setModalShow(true)}>
@@ -29,6 +34,7 @@ export default function CancelOrder({id}:{id:string}) {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 id={id}
+                userid={userid}
             />
         </>
     )
@@ -44,16 +50,30 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
     }
 
 
+    const handleRequest = () => {
+        setReason("");
+        setComments("")
+        setMsg("Your request has been sent. You will recieve an mail regarding the cancellation")
+    }
+
+
     const [reason, setReason] = useState('');
     const [comments, setComments] = useState('');
+    const [msg, setMsg] = useState('');
 
     const handleSubmit = async () => {
-        const data={
-            reason : reason,
-            comment : comments
+        const data = {
+            user_id : Number(props.userid),
+            reason: reason,
+            comment: comments
         }
+
+
         const response = await cancelOrder(props.id, data)
-        console.log(response)
+
+        if (response) {
+            handleRequest()
+        }
     }
 
     return (
@@ -69,7 +89,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
                     Request Cancellation
                 </Modal.Title>
             </Modal.Header>
-            <form action={handleSubmit}>
+            {msg ? (<p className="text-success p-3 text-center my-5">{msg}</p>) : ( <form action={handleSubmit}>
                 <Modal.Body className='pt-3 pb-0'>
                     <input type="text" value={reason} className='w-100 h-40 px-2' placeholder="Reason" onChange={(e) => setReason(e.target.value)} required />
                     <textarea className='w-100 h-150 mt-4 p-3' value={comments} placeholder="Comments" onChange={(e) => setComments(e.target.value)} required />
@@ -78,8 +98,9 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
                     <button className="btn1 px-2 fw-3 wc-46 h-40">Cancel</button>
                     <span className="btn2 p-2 fw-3 wc-46 h-40 text-center pointer" onClick={() => handlePopup()}>Close</span>
                 </Modal.Footer>
-            </form>
-
+            </form>)
+           
+}
         </Modal>
 
     );

@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { address } from '../types/types';
 import { apiRequest } from '../api/apiConfig';
 import { RootState } from './store';
-import { redirect } from 'next/navigation';
 
 interface couponResponse {
     discounted_total?: string,
@@ -178,7 +177,8 @@ export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue:
         if (response.error) {
             return response.error
         }
-        console.log(response.data)
+
+    
         return response.data;
 
     } catch (error) {
@@ -219,42 +219,39 @@ const cartSlice = createSlice({
             }
             state.status = "success"
         })
-        builder.addCase(ApplyCoupon.fulfilled, (state, action) => {
-            if (action.payload.error) {
-                state.error = action.payload.error;
-                state.couponStatus = 'success';
-            }
+            .addCase(ApplyCoupon.fulfilled, (state, action) => {
+                if (action.payload.error) {
+                    state.error = action.payload.error;
+                    state.couponStatus = 'success';
+                }
 
-            if (action.payload.discounted_total && action.payload.discount_amount && action.payload.coupon_code) {
-                state.discounted_total = action.payload.discounted_total;
-                state.discount_amount = action.payload.discount_amount;
-                state.coupon_code = action.payload.coupon_code;
-                state.error = '';
-                state.couponStatus = 'success';
+                if (action.payload.discounted_total && action.payload.discount_amount && action.payload.coupon_code) {
+                    state.discounted_total = action.payload.discounted_total;
+                    state.discount_amount = action.payload.discount_amount;
+                    state.coupon_code = action.payload.coupon_code;
+                    state.error = '';
+                    state.couponStatus = 'success';
 
-            }
+                }
+            })
+            .addCase(ApplyCoupon.pending, (state) => {
+                state.couponStatus = 'loading';
+            })
+            .addCase(ApplyCoupon.rejected, (state) => {
+                state.couponStatus = 'failure';
+                state.error = ""
+            })
+            .addCase(placeOrder.pending, (state) => {
+                state.orderStatus = 'loading'
+            })
+            .addCase(placeOrder.fulfilled, (state, action) => {
+                if (action.payload.success) {
+                    state.placed_order_id = action.payload.order_id
+                    state.orderPlaced = true
+                    state.orderStatus = 'success'
 
-
-        })
-        builder.addCase(ApplyCoupon.pending, (state) => {
-            state.couponStatus = 'loading';
-        })
-        builder.addCase(ApplyCoupon.rejected, (state) => {
-            state.couponStatus = 'failure';
-            state.error = ""
-        })
-
-        builder.addCase(placeOrder.pending, (state) => {
-            state.orderStatus == 'loading'
-        })
-        builder.addCase(placeOrder.fulfilled, (state, action) => {
-            if (action.payload.success) {
-                state.placed_order_id = action.payload.order_id
-                state.orderPlaced = true
-                state.orderStatus == 'success'
-
-            }
-        })
+                }
+            })
     }
 })
 

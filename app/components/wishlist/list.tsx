@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import CloseIcon from "../icons/closeicon";
 import Image from "next/image";
@@ -12,6 +12,8 @@ import ActionTab from "./actionTab";
 import ProductSkeleton from "../productCardSkeleton";
 import { wishlistItem } from "@/app/types/types";
 import formatPriceIndian from "@/app/utilis/formatPrice";
+import CartIcon2 from "../icons/carticon2";
+import Modal from "../category/Modal";
 
 
 
@@ -20,6 +22,10 @@ export default function Wishlist({ userid }: { userid: string }) {
     const wishlist = useSelector((state: RootState) => state.wishlist.wishlistItems);
     const status = useSelector((state: RootState) => state.wishlist.status);
     const selectedItems = useSelector((state: RootState) => state.wishlist.selectedItems);
+    const [attModal, setAttModal] = useState<number | null>(null);
+    const [selectedSize, setSelectedsize] = useState(0);
+
+
 
     const isProductSelected = (id: number): boolean => {
         return selectedItems.includes(id)
@@ -56,11 +62,25 @@ export default function Wishlist({ userid }: { userid: string }) {
         dispatch(removeWishlistItems(delbody))
     }
 
+    const handleQuickAddClick = (productId: number) => {
+        setAttModal(attModal === productId ? null : productId);
+    };
+
+    const handleSelected = (value: number) => {
+
+        setSelectedsize(value)
+
+    }
+    const cartAPiinfo = {
+        quantity: wishlist.length,
+        user_id: Number(userid)
+    }
+
     return (
         <Row className="my-4 row-gap-20">
             {status === 'loading' ? (<>
                 <h1 className="mt-3 font-h1  text-theme1 fw-4 pb-2">Wishlist</h1>
-                <ProductSkeleton grid={20} array={5}/>
+                <ProductSkeleton grid={20} array={5} />
             </>
             ) : (<>
                 {wishlist.length > 0 ? (<>
@@ -69,7 +89,7 @@ export default function Wishlist({ userid }: { userid: string }) {
                         wishlist.map((item: wishlistItem) => (
                             <Col lg={20} xs={6} className="p-1 mb-1 product_item " key={`productitem_${item.id}`}>
                                 <div className="bg-white br-8 p-3 pt-1">
-                                <div className="mb-2 d-flex justify-content-between align-items-center remove_wishlist">
+                                    <div className="mb-2 d-flex justify-content-between align-items-center remove_wishlist">
                                         <button className="font-small btn fw-3 d-flex align-items-center gap-1"
                                             onClick={() => deleteItem(item.id)}>
                                             <CloseIcon /> Remove
@@ -85,14 +105,20 @@ export default function Wishlist({ userid }: { userid: string }) {
                                     </div>
                                     <div className="product_grid">
                                         <div className="pro_btn_holder">
-                                            <Image alt="product-image" width={384} height={384} className="w-100 zoomimage h-auto br-10" src={item.products.images[0].image} loading="lazy" />
-                                            <Image alt="product-image" width={384} height={384} className="w-100 initialimage h-auto br-10" src={item.products.images[1].image} loading="lazy" />
+                                            <Image alt="product-image" width={384} height={384} className="w-100 zoomimage h-auto br-10" src={item.products.images[1].image} loading="lazy" />
+                                            <Image alt="product-image" width={384} height={384} className="w-100 initialimage h-auto br-10" src={item.products.images[2].image} loading="lazy" />
 
-
+                                            <button
+                                                className="border-transparent-solid font-primary text-white py-1  wc-100 justify-content-center fw-3 d-flex align-items-center gap-6 cart_btn"
+                                                onClick={() => handleQuickAddClick(item.id)}>
+                                                <CartIcon2 /> Select Size
+                                            </button>
+                                            {attModal === item.id && (
+                                                <Modal handleSelected={handleSelected} selectedSize={selectedSize} Apiinfo={cartAPiinfo} category={'living-area'} productid={item.products.id} image={item.products.images[0]} name={item.products.name} variations={item.products.variations} closeModal={() => setAttModal(null)} />)}
                                         </div>
                                         <h6 className="m-0 mt-3 font-primary"><Link href={`/product/${item.id}/${createSlug(item.products.name)}`}>{item.products.name}</Link></h6>
                                         {/* <p className="m-0 font-primary text-grey">{item.props}</p> */}
-                                     
+
                                         <div className="font-primary mt-1 fw-3 d-flex gap-10 text-black align-items-center">
                                             {item.products.sale_price ? (<>
                                                 <span>₹{item.products.sale_price}</span>
@@ -102,13 +128,21 @@ export default function Wishlist({ userid }: { userid: string }) {
                                                 </span>
                                             </>) : (
                                                 <span>
-                                                    {formatPriceIndian(item.products.regular_price)}
+                                                    {attModal === item.id ? (
+                                                        <>
+                                                            {item.products.variations[selectedSize] && formatPriceIndian(item.products.variations[selectedSize].regular_price)}
+                                                            <span className="ms-2 text-secondary fs-8 fw-3">({item.products.variations[selectedSize] && item.products.variations[selectedSize].size})</span>
+                                                        </>
+                                                    ) : (<>
+                                                        {item.products.variations[0] && formatPriceIndian(item.products.variations[0].regular_price)}
+                                                        {item.products.variations[0] && <span className="ms-2 text-secondary fs-8 fw-3">({item.products.variations[0].size})</span>}
+                                                    </>)}
                                                 </span>
                                             )}
-    
+
                                         </div>
                                     </div>
-    
+
                                 </div>
                             </Col>
                         ))

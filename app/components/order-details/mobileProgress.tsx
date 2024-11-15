@@ -5,7 +5,7 @@ interface orderstatus {
 }
 
 
-export default function MobileProgress({ order_date, currentstatus, confirm_date, shipped_date }: { order_date: string, currentstatus: string, confirm_date: string | undefined, shipped_date: string | undefined }) {
+export default function MobileProgress({ order_date, currentstatus, confirm_date, shipped_date, cancel_date }: { order_date: string, currentstatus: string, confirm_date: string | undefined, shipped_date: string | undefined, cancel_date : string | undefined }) {
 
     const orderstatus = [
         { status: 'processing', date: order_date },
@@ -14,7 +14,9 @@ export default function MobileProgress({ order_date, currentstatus, confirm_date
         { status: 'Delivered', date: '' },
 
     ];
-    const cancelstatus = ['Ordered', 'Cancelled'];
+    const cancelstatus = [
+        { status: 'Ordered', date: order_date },
+        { status: 'Cancelled', date: cancel_date }];
 
 
     const setWidth = (status: string) => {
@@ -35,7 +37,7 @@ export default function MobileProgress({ order_date, currentstatus, confirm_date
         return index
     }
 
-    function getDateTwoDaysFromToday(date: Date) {
+    function getDate(date: Date) {
         return date.toLocaleDateString('en-US', {
             weekday: 'short',
             month: 'short',
@@ -48,13 +50,17 @@ export default function MobileProgress({ order_date, currentstatus, confirm_date
         <div className="my-4 mobileProgress">
             {currentstatus === 'Cancelled' ? (
                 <div className="shipmentTracking mt-4">
-                    {cancelstatus.map((item: string, index) => (
+                    {cancelstatus.map((item: orderstatus, index) => (
                         <div key={`status_${index}`} className={`statusBar activestatus`}>
-                            <div className="text-white d-flex justify-content-center align-items-center">
+                            <div className="text-white d-flex justify-content-center align-items-center statusCheck">
                                 <Tick color="white" />
                             </div>
-                            <h6 className="mt-3 text-capitalize">{item}</h6>
-                        </div>
+                            <div>
+                                <h6 className="mt-3 mb-0 text-capitalize">{item.status}</h6>
+                                {item.date && (<span className="font-primary fw-3 text-secondary">
+                                    {getDate(new Date(item.date))}
+                                </span>)}
+                            </div>                        </div>
                     ))}
                     <div className="progress-line wc-90 br-20 m-auto h-8">
                         <div className={'w-100'}></div>
@@ -70,7 +76,7 @@ export default function MobileProgress({ order_date, currentstatus, confirm_date
                             <div>
                                 <h6 className="mt-3 mb-0 text-capitalize">{item.status}</h6>
                                 {item.date && (<span className="font-primary fw-3 text-secondary">
-                                    {getDateTwoDaysFromToday(new Date(item.date))}
+                                    {getDate(new Date(item.date))}
                                 </span>)}
                             </div>
                         </div>

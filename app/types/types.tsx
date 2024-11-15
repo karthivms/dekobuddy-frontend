@@ -96,7 +96,8 @@ export interface wishListProduct {
     name: string,
     regular_price: number,
     sale_price?: number,
-    images: productimage[]
+    images: productimage[],
+    variations : variations[]
 }
 
 export interface rating {
@@ -166,6 +167,7 @@ export interface order {
     order_status: string,
     order_date: string,
     order_confirmation_date? : string,
+    cancelled_date? : string,
     shipped_date? : string,
     order_items: orderItem[],
     billing_address: orderAddress

@@ -39,7 +39,7 @@ export default async function OrderDetail({ params }: { params: Params }) {
 
                     <Image src={'/images/check.png'} width={256} height={256} className="wp-50 h-auto m-auto d-block" alt="confirmed" />
                         <h1 className="font-h2 text-center text-success mt-3 mb-5">Thank You, Your Order has been placed successfully</h1>
-                        <Delivery data={order[0]} id={params.id} />
+                        <Delivery userid={userid} data={order[0]} id={params.id} />
                     </Col>
                     <Col className="bg-theme2 br-10 p-4 order_summary">
 

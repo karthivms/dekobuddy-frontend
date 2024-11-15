@@ -9,8 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import { useEffect } from "react";
 import { changeStatus, changeStep } from "@/app/redux/checkoutslice";
+import { clearCart } from "@/app/redux/cartSlice";
 
-export const Delivery = ({ data, id }: { data: order, id: string }) => {
+export const Delivery = ({ userid, data, id }: {userid:string, data: order, id: string }) => {
     // function getDateTwoDaysFromToday() {
     //     const today = new Date();
     //     today.setDate(today.getDate() + 2);
@@ -26,6 +27,7 @@ export const Delivery = ({ data, id }: { data: order, id: string }) => {
 
     useEffect(() => {
         if (order_status) {
+            dispatch(clearCart())
             dispatch(changeStatus());
             dispatch(changeStep(3));
         }
@@ -40,12 +42,15 @@ export const Delivery = ({ data, id }: { data: order, id: string }) => {
                 currentstatus={data.order_status}
                 confirm_date={data.order_confirmation_date}
                 shipped_date={data.shipped_date}
+                cancel_date={data.cancelled_date}
             />
             <MobileProgress
                 order_date={data.order_date}
                 currentstatus={data.order_status}
                 confirm_date={data.order_confirmation_date}
                 shipped_date={data.shipped_date}
+                cancel_date={data.cancelled_date}
+
             />
             <Row className="align-items-end flex-wrap">
                 <Col lg={8}>
@@ -71,7 +76,7 @@ export const Delivery = ({ data, id }: { data: order, id: string }) => {
                     </ul>
                 </Col>
                 <Col >
-                    <CancelOrder id={id} />
+                {data.order_status !== 'Shipped' && data.order_status !== 'Cancelled' &&   (<CancelOrder userid={userid} id={id}/>) }
                 </Col>
             </Row>
         </>

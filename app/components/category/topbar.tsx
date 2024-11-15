@@ -27,10 +27,18 @@ export default function Topbar() {
         dispatch(updateSort(params?.get('sort')))
     }, [params, dispatch])
 
+
+    function deslugger(slug: string) {
+        return slug
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    }
+
     return (
         <div >
             {products.count !== 0 && (<Row className="align-items-center">
-                <Col><h3 className="font-h2 text-black font-sm-secondary line-normal">Showing {products.count} Products for {products.currentSubCategory === '' ? products.currentCategory : products.currentSubCategory}</h3></Col>
+                <Col><h3 className="font-h2 text-black font-sm-secondary line-normal">Showing {products.count} Products for {deslugger(products.currentSubCategory === '' ? products.currentCategory : products.currentSubCategory)}</h3></Col>
                 <Col className="d-flex justify-content-end align-items-center ">
                     <select className="ms-2 p-2 br-5 border-theme1-solid bg-transparent text-theme1 fw-4 font-primary" value={products.sort} onChange={handleSort}>
                         <option value="" disabled={disabled}>Sort by</option>

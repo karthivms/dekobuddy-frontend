@@ -63,6 +63,7 @@ export const fetchCartItems = createAsyncThunk<cartItem[], string, { rejectValue
 export const AddCartItems = createAsyncThunk<addResponse, cartdata, { rejectValue: string }>(
     "cart/additems",
     async (cartdata, { rejectWithValue, getState }) => {
+        console.log(cartdata)
 
         if (cartdata.user_id) {
             try {
@@ -187,6 +188,9 @@ const cartSlice = createSlice({
         updateUrl : (state) => {
             const {url} = getDomainUrl();
             state.url = url;
+        },
+        clearCart : (state) => {
+            state.cartItems = [];
         }
     },
 
@@ -211,5 +215,5 @@ const cartSlice = createSlice({
     }
 })
 
-export const { AddtoCart, gettotal, removeCartItem, incrementQuantity, decrementQuantity, updateUrl } = cartSlice.actions
+export const { AddtoCart, gettotal, removeCartItem, incrementQuantity, decrementQuantity, updateUrl, clearCart } = cartSlice.actions
 export default cartSlice.reducer;

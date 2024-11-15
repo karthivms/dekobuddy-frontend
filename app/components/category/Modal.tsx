@@ -13,17 +13,18 @@ interface ApiInfo {
     user_id: number
 }
 
-export default function Modal({handleSelected, selectedSize, Apiinfo, category, productid, image, closeModal, variations, name }: {handleSelected : (value:number) => void, selectedSize: number, Apiinfo: ApiInfo, category: string, productid: number, image: productimage, name: string, closeModal: () => void, variations: variations[] }) {
+export default function Modal({ handleSelected, selectedSize, Apiinfo, category, productid, image, closeModal, variations, name }: { handleSelected: (value: number) => void, selectedSize: number, Apiinfo: ApiInfo, category: string, productid: number, image: productimage, name: string, closeModal: () => void, variations: variations[] }) {
 
     const cartproducts = useSelector((state: RootState) => state.cart.cartItems);
     const dispatch: AppDispatch = useDispatch()
 
 
-    
+
 
     const [showsidebar, setShowSidebar] = useState(false);
 
     const handleCartUpdate = () => {
+
         const cartAPiData = {
             id: cartproducts[cartproducts.length - 1]?.id + 1,
             productid: productid,
@@ -32,7 +33,7 @@ export default function Modal({handleSelected, selectedSize, Apiinfo, category, 
                 name: name,
                 regular_price: Number(variations[selectedSize].regular_price),
                 size: variations[selectedSize].size,
-                stock : variations[selectedSize].stock,
+                stock: variations[selectedSize].stock,
                 categories: category,
                 images: image,
                 quantity: 1
@@ -59,11 +60,13 @@ export default function Modal({handleSelected, selectedSize, Apiinfo, category, 
                             <option key={`variation_sizes_${item.size}`} value={index}>{item.size}</option>
                         ))}
                     </select>
-                    <button className="btn1 w-100  font-primary mt-3 br-0 py-1" onClick={handleCartUpdate}>Add to cart</button>
+                    {variations[selectedSize].stock > 0 ? (<button className="btn1 w-100  font-primary mt-3 br-0 py-1" onClick={handleCartUpdate}>Add to cart</button>
+                    ) : (<p className="w-100 text-center fw-3 font-primary mb-0 my-2 br-0 text-danger" >out of stock</p>
+                    )}
                 </div>
-            </div>
+            </div >
 
-<CartSidebar showsidebar={showsidebar} handleClose={handleClose}/>
+            <CartSidebar showsidebar={showsidebar} handleClose={handleClose} />
         </>
 
     )

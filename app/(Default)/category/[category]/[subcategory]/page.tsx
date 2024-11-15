@@ -4,7 +4,7 @@ import Topbar from "@/app/components/category/topbar";
 import Filter from "@/app/components/category/filterbox";
 import "@/app/sass/components/category.scss";
 import { apiRequest } from "@/app/api/apiConfig";
-import { navigationItem } from "@/app/types/types";
+import { categoryMenu } from "@/app/types/types";
 import { getUser } from "@/app/utilis/auth";
 import Link from "next/link";
 
@@ -16,16 +16,20 @@ type Params = {
 
 
 export async function generateStaticParams() {
-    const categories = await getCategories();
-    return categories.map((item: navigationItem) => ({
-        category: item.slug,
-    }));
-}
+    const categories = await apiRequest('GET', '/menus/');
+    const params : Params[] = [];
 
-async function getCategories() {
-    const url = `/subcategory/`;
-    const response = await apiRequest('GET', url);
-    return response;
+    categories.forEach((category: categoryMenu) => {
+
+        category.subcategories.forEach((subcategory: { slug: string }) => {
+            params.push({
+                category: category.slug,
+                subcategory: subcategory.slug,
+            });
+        });
+    });
+
+    return params;
 }
 
 

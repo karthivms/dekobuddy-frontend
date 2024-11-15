@@ -38,7 +38,7 @@ export default async function OrderDetail({ params }: { params: Params }) {
                     <Col lg={8} className="bg-grey3 br-10 p-4">
                     <h3 className='font-secondary fw-4 mb-5'># ORDER ID : {params.id}</h3>
 
-                        <Delivery data={order[0]} id={params.id} />
+                        <Delivery data={order[0]} id={params.id} userid={userid}/>
                     </Col>
                     <Col className="bg-theme2 br-10 p-4 order_summary">
 

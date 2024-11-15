@@ -94,10 +94,10 @@ export default function ProductGrid({ grid, userid, category, subcategory }: { g
     const [wishmsg, SetWishmsg] = useState(true)
 
     const handleSelected = (value: number) => {
-
         setSelectedsize(value)
-
     }
+
+    
 
     return (
         <>
@@ -119,7 +119,7 @@ export default function ProductGrid({ grid, userid, category, subcategory }: { g
                                                 <div className="pro_btn_holder">
                                                     <Image alt="product-image" width={384} height={384} className="w-100 zoomimage h-auto br-10" src={item.images[1].image} loading="lazy" />
                                                     <Image alt="product-image" width={384} height={384} className="w-100 initialimage h-auto br-10" src={item.images[2].image} loading="lazy" />
-                                                    <Addtowishlist handleMsg={SetWishmsg} handleToast={setShow} name={item.name} userid={Number(userid)} id={item.id} price={Number(item.regular_price)} images={item.images} />
+                                                    <Addtowishlist variations={item.variations} handleMsg={SetWishmsg} handleToast={setShow} name={item.name} userid={Number(userid)} id={item.id} price={Number(item.regular_price)} images={item.images} />
                                                     <button
                                                         className="border-transparent-solid font-primary text-white py-1  wc-100 justify-content-center fw-3 d-flex align-items-center gap-6 cart_btn"
                                                         onClick={() => handleQuickAddClick(item.id)}>
@@ -151,11 +151,11 @@ export default function ProductGrid({ grid, userid, category, subcategory }: { g
                                                             {attModal === item.id ? (
                                                                 <>
                                                                     {item.variations[selectedSize] && formatPriceIndian(item.variations[selectedSize].regular_price)}
-                                                                    <span className="ms-2 text-secondary fs-8 fw-3">{item.variations[selectedSize] && item.variations[selectedSize].size}</span>
+                                                                    <span className="ms-2 text-secondary fs-8 fw-3">({item.variations[selectedSize] && item.variations[selectedSize].size})</span>
                                                                 </>
                                                             ) : (<>
                                                                 {item.variations[0] && formatPriceIndian(item.variations[0].regular_price)}
-                                                                {item.variations[0] && <span className="ms-2 text-secondary fs-8 fw-3">( {item.variations[0].size})</span>}
+                                                                {item.variations[0] && <span className="ms-2 text-secondary fs-8 fw-3">({item.variations[0].size})</span>}
                                                             </>)}
                                                         </span>
                                                     )}
