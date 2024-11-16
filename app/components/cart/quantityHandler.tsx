@@ -19,6 +19,8 @@ export default function QuanityHandler({  stock, cartid, userid, count }: { stoc
             }  
     
             dispatch(UpdateQuantity(cartData));
+        }else{
+            alert('Product out of stock, Cannot add more of this item.')
         }
        
     }

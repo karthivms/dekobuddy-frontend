@@ -61,7 +61,7 @@ export default function Modal({ handleSelected, selectedSize, Apiinfo, category,
                         ))}
                     </select>
                     {variations[selectedSize].stock > 0 ? (<button className="btn1 w-100  font-primary mt-3 br-0 py-1" onClick={handleCartUpdate}>Add to cart</button>
-                    ) : (<p className="w-100 text-center fw-3 font-primary mb-0 my-2 br-0 text-danger" >out of stock</p>
+                    ) : (<button disabled={true} className="btn2 w-100 out-of-stock text-danger fw-3 font-primary mt-3 br-0 py-1" >out of stock</button>
                     )}
                 </div>
             </div >

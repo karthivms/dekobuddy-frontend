@@ -1,24 +1,28 @@
 'use client'
 
 import { RootState } from "@/app/redux/store"
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useSelector } from "react-redux"
 
 
-export default function QuanityHandler({ stock, variationId, count, setCount }: { stock: number, variationId : number, count: number, setCount: React.Dispatch<React.SetStateAction<number>> }) {
-    const cartproducts = useSelector((state: RootState) => state.cart.cartItems)
+export default function QuanityHandler({ errorMsg, setErrormsg, stock, variationId, count, setCount }: {errorMsg : string, setErrormsg : Dispatch<SetStateAction<string>>,  stock: number, variationId: number, count: number, setCount: React.Dispatch<React.SetStateAction<number>> }) {
+    const cartproducts = useSelector((state: RootState) => state.cart.cartItems);
     const handleIncrementQuantity = () => {
         const isProduct = cartproducts.find((item) => item.product.id === variationId)
 
-        console.log(isProduct)
 
         if (isProduct) {
-            if (isProduct.product.quantity + count + 1> isProduct.product.stock) {
-                alert(`stock not available`);
+            if (isProduct.product.quantity + count + 1 > isProduct.product.stock) {
+                setErrormsg(`Product out of stock, Cannot add more of this item.`);
                 return;
             }
         }
         if (count < stock) {
             setCount(count + 1);
+            setErrormsg(``);
+
+        } else {
+            setErrormsg(`Product out of stock, Cannot add more of this item.`);
         }
     }
 
@@ -27,6 +31,10 @@ export default function QuanityHandler({ stock, variationId, count, setCount }: 
             setCount(count - 1);
         }
     }
+
+    useEffect(() => {
+        setErrormsg('');
+    }, [variationId])
 
 
     return (
@@ -42,6 +50,8 @@ export default function QuanityHandler({ stock, variationId, count, setCount }: 
                 onClick={handleIncrementQuantity}>
                 +
             </button>
+
+            {errorMsg && <span className="ms-3 text-danger">{errorMsg}</span>}
         </div>
     )
 }

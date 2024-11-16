@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CartIcon2 from "../icons/carticon2";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { AddCartItems, AddtoCart } from "@/app/redux/cartSlice";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import CartSidebar from "../cartSidebar";
 import { productimage, variations } from "@/app/types/types";
 import { useRouter } from "next/navigation";
@@ -14,7 +14,7 @@ interface ApiInfo {
     user_id: number
 }
 
-export default function ActionButtons({ Apiinfo, category, productid, image, variation, name, setCount }: { Apiinfo: ApiInfo, category: string, productid: number, image: productimage, variation: variations, name: string, setCount :  React.Dispatch<React.SetStateAction<number>> }) {
+export default function ActionButtons({  setErrormsg, Apiinfo, category, productid, image, variation, name, setCount }: {  setErrormsg: Dispatch<SetStateAction<string>>, Apiinfo: ApiInfo, category: string, productid: number, image: productimage, variation: variations, name: string, setCount: React.Dispatch<React.SetStateAction<number>> }) {
     const dispatch: AppDispatch = useDispatch();
     const cartproducts = useSelector((state: RootState) => state.cart.cartItems);
     const router = useRouter()
@@ -47,14 +47,16 @@ export default function ActionButtons({ Apiinfo, category, productid, image, var
 
         if (isProduct) {
             if (isProduct.product.quantity + Apiinfo.quantity > isProduct.product.stock) {
-                alert(`stock not available`);
+                setErrormsg(`Product out of stock, Cannot add more of this item.`);
                 return;
             }
         }
+
         dispatch(AddtoCart(cartAPiData));
         dispatch(AddCartItems(cartAPiData));
         setShowSidebar(true);
         setCount(1)
+        setErrormsg('')
     }
 
     const handleBuyNow = () => {
@@ -76,7 +78,7 @@ export default function ActionButtons({ Apiinfo, category, productid, image, var
 
         if (isProduct) {
             if (isProduct.product.quantity + Apiinfo.quantity > isProduct.product.stock) {
-                alert(`stock not available`);
+                setErrormsg(`Product out of stock, Cannot add more of this item.`);
                 return;
             }
         }
@@ -84,6 +86,8 @@ export default function ActionButtons({ Apiinfo, category, productid, image, var
         dispatch(AddtoCart(cartAPiData));
         dispatch(AddCartItems(cartAPiData));
         setCount(1)
+        setErrormsg('')
+
         router.push('/checkout')
     }
 

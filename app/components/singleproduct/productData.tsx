@@ -17,6 +17,8 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
     const params = useSearchParams();
     const [actVariation, setActVariation] = useState<variations>(data.variations[0]);
     const [count, setCount] = useState(1);
+    const [errorMsg, setErrormsg] = useState('')
+
 
     useEffect(() => {
         const currentVariation = params.get('variation');
@@ -31,6 +33,7 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
         currentParams.set('variation', item.sku);
         router.replace(`?${currentParams.toString()}`);
         setActVariation(item)
+        setCount(1);
     };
 
     const getDiscount = useCallback((price: number, salePrice: number) => {
@@ -52,7 +55,7 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
     }
 
     const [show, setShow] = useState(false);
-    const [wishmsg, SetWishmsg] = useState(true)
+    const [wishmsg, SetWishmsg] = useState(true);
 
     return (
         <div className="ps-5 product_details">
@@ -63,21 +66,21 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
                 </span>
                 <span className="font-large text-black fw-3">{data.rating_count} Ratings & {data.review_count} Reviews</span>
             </div>)}
-            <div className="my-4 font-primary des_list fw-3" dangerouslySetInnerHTML={{__html : data.short_description}}></div>
+            <div className="my-4 font-primary des_list fw-3" dangerouslySetInnerHTML={{ __html: data.short_description }}></div>
 
             {data.variations.length > 0 && (
                 <div className="d-flex gap-20  mt-3">
                     <p className="mb-0 fw-3 font-large" style={{ color: "#494642" }}>Size:</p>
                     <div className="d-flex flex-wrap row-gap-14 gap-14 align-items-center">
-                    {data.variations.map((item) => (
-                        <div key={`Attname_${item.id}`} >
-                            <span
-                                onClick={() => handleVariationChange(item)}
-                                className={`fw-4 font-primary border-border2-solid py-1 px-2 pointer br-5 ${actVariation.sku === item.sku ? 'bg-theme2 text-theme1' : ''}`}>
-                                {item.size}
-                            </span>
-                        </div>
-                    ))}
+                        {data.variations.map((item) => (
+                            <div key={`Attname_${item.id}`} >
+                                <span
+                                    onClick={() => handleVariationChange(item)}
+                                    className={`fw-4 font-primary border-border2-solid py-1 px-2 pointer br-5 ${actVariation.sku === item.sku ? 'bg-theme2 text-theme1' : ''}`}>
+                                    {item.size}
+                                </span>
+                            </div>
+                        ))}
                     </div>
                 </div>
             )}
@@ -98,11 +101,15 @@ export default function ProductData({ data, userid }: { data: Product, userid: s
                 </>
                 )}
             </div>
+            {actVariation.stock === 0 ? (
+                <p className="mb-0 text-danger mt-4 fw-3 font-large">Out of Stock</p>
+            ) : (<>
 
-            <QuanityHandler stock={actVariation.stock} variationId={actVariation.id} count={count} setCount={setCount} />
-            <ActionButtons Apiinfo={cartAPiinfo} category={data.categories[0].name} productid={data.id} image={data.images[0]} variation={actVariation} name={data.name} setCount={setCount}/>
+                <QuanityHandler errorMsg={errorMsg} setErrormsg={setErrormsg} stock={actVariation.stock} variationId={actVariation.id} count={count} setCount={setCount} />
+                <ActionButtons  setErrormsg={setErrormsg} Apiinfo={cartAPiinfo} category={data.categories[0].name} productid={data.id} image={data.images[0]} variation={actVariation} name={data.name} setCount={setCount} /></>)}
+
             <Options variations={data.variations} handleMsg={SetWishmsg} handleToast={setShow} id={data.id} userid={Number(userid)} price={Number(data.regular_price)} images={data.images} title={data.name} />
-            <Toaster show={show} msg={wishmsg} handleClose={handleToastClose}/>
+            <Toaster show={show} msg={wishmsg} handleClose={handleToastClose} />
 
         </div>
     );

@@ -18,10 +18,10 @@ export default function MobileFilter({ categories, attributes }: { categories: n
     return (
         <>
             <button className="d-lg-none mb-3 btn2 py-1 wp-80 text-start px-2 font-primary" onClick={handleShow}>
-              <span><FilterIcon/> </span><span>Filter</span>
+                <span><FilterIcon /> </span><span>Filter</span>
             </button>
 
-            <Offcanvas show={show} onHide={handleClose}>
+            <Offcanvas show={show} onHide={handleClose} >
                 <div className="bg-theme2 br-10 py-3 px-4 filterbox custom-scrollbar">
                     <div className="d-flex align-items-center justify-content-between">
                         <h5 className="font-secondary fw-4 text-black m-0">Filter</h5>
@@ -29,14 +29,14 @@ export default function MobileFilter({ categories, attributes }: { categories: n
                     </div>
                     <Selected />
                     <div className="attributes-section">
-                    <CategoryListing category={categories} />
-                    {attributes.map((item) => (
-                        <div key={`attributes_item_item.id`}>
-                            <Attributes attribute={item} />
-                        </div>
-                    ))}
-                    <PriceRangeSlider />
-                </div>
+                        <CategoryListing category={categories} />
+                        {attributes.map((item) => (
+                            <div key={`attributes_item_item.id`}>
+                                <Attributes attribute={item} />
+                            </div>
+                        ))}
+                        <PriceRangeSlider />
+                    </div>
                 </div>
             </Offcanvas>
 
