@@ -43,6 +43,7 @@ export const Delivery = ({ userid, data, id }: {userid:string, data: order, id: 
                 confirm_date={data.order_confirmation_date}
                 shipped_date={data.shipped_date}
                 cancel_date={data.cancelled_date}
+                deliver_date={data.delivered_date}
             />
             <MobileProgress
                 order_date={data.order_date}
@@ -50,6 +51,7 @@ export const Delivery = ({ userid, data, id }: {userid:string, data: order, id: 
                 confirm_date={data.order_confirmation_date}
                 shipped_date={data.shipped_date}
                 cancel_date={data.cancelled_date}
+                deliver_date={data.delivered_date}
 
             />
             <Row className="align-items-end flex-wrap">
@@ -76,7 +78,7 @@ export const Delivery = ({ userid, data, id }: {userid:string, data: order, id: 
                     </ul>
                 </Col>
                 <Col >
-                {data.order_status !== 'Shipped' && data.order_status !== 'Cancelled' &&   (<CancelOrder userid={userid} id={id}/>) }
+                {data.order_status !== 'Shipped' && data.order_status !== 'Cancelled' && data.order_status !== 'Delivered' &&   (<CancelOrder userid={userid} id={id}/>) }
                 </Col>
             </Row>
         </>

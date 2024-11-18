@@ -14,7 +14,9 @@ interface testimonial {
 }
 
 
-export default function Testimonials({reviews}:{reviews : testimonial[]}) {
+export default function Testimonials({ reviews }: { reviews: testimonial[] }) {
+
+
     return (
         <div className="py-4 bg-theme2">
             <Container className="wc-77 w-sm-97">

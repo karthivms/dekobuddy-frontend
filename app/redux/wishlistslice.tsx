@@ -23,7 +23,8 @@ interface addResponse {
     wishlist_item_id: number,
     success: boolean,
     added_to_wishlist: boolean,
-    wishlist_count: number
+    wishlist_count: number,
+    user?: string
 }
 
 
@@ -76,12 +77,12 @@ export const addWishlistItems = createAsyncThunk<addResponse, wishlistdata, { re
             }
         } else {
             const state = getState() as RootState;
-            localStorage.setItem("wishlist", JSON.stringify(state.wishlist.wishlistItems));
             const isFirstitem = state.wishlist.wishlistItems.length === 1;
             return {
                 success: true,
                 wishlist_item_id: isFirstitem ? 1 : state.wishlist.wishlistItems[state.wishlist.wishlistItems.length - 1].id,
-                added_to_wishlist: state.wishlist.added_to_wishlist
+                added_to_wishlist: state.wishlist.added_to_wishlist,
+                user: 'guest'
             }
         }
     })
@@ -197,11 +198,16 @@ const wishlistSlice = createSlice({
             state.status = 'failure';
         });
         builder.addCase(addWishlistItems.fulfilled, (state, action) => {
-            const isProduct = state.wishlistItems.some((item) => item.id === action.payload.wishlist_item_id)
+            const isProduct = state.wishlistItems.some((item) => item.id === action.payload.wishlist_item_id);
+            console.log(action.payload);
+
             if (!isProduct && action.payload.added_to_wishlist) {
                 state.wishlistItems[state.wishlistItems.length - 1].id = action.payload.wishlist_item_id;
             }
 
+            if (action.payload.user === 'guest') {
+                localStorage.setItem("wishlist", JSON.stringify(state.wishlistItems));
+            }
         })
     }
 })

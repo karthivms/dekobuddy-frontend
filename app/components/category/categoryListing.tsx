@@ -18,9 +18,10 @@ export default function CategoryListing({ category }: { category: navigationItem
 
     const [open, setOpen] = useState(true);
     const subcategory = useSelector((state: RootState) => state.product.currentSubCategory)
+    const currentCategory = useSelector((state: RootState) => state.product.currentCategory)
 
     const createSlug = useCallback((input: string | undefined) => {
-        if(input){
+        if (input) {
             return input.trim().replace(/\s+/g, '-').toLowerCase();
 
         }
@@ -36,7 +37,7 @@ export default function CategoryListing({ category }: { category: navigationItem
                         aria-expanded={open}
                         className="mt-4 w-100 bg-transparent text-capitalize border-transparent-solid text-black font-primary d-flex align-items-center fw-4 justify-content-between p-0"
                     >
-                        Sub Categories
+                        {currentCategory === '' ? (<>Categories</>) : (<>Sub Categories</>)}
                         <ArrowIcon open={open} />
                     </Button>
                     <Collapse in={open}>

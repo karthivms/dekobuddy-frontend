@@ -14,12 +14,7 @@ type Params = {
 };
 
 
-export async function generateStaticParams() {
-    const categories = await getCategories();
-    return categories.map((item: navigationItem) => ({
-        category: item.slug,
-    }));
-}
+
 
 async function getCategories() {
     const url = `/parentcategory/`;
@@ -28,14 +23,8 @@ async function getCategories() {
 }
 
 
-async function getSubCategories(category: string) {
-    const url = `/subcategory/?category=${category}`;
-    const response = await apiRequest('GET', url);
-    return response;
-}
-
-async function getAttributes(category: string) {
-    const url = `/attribute/?category=${category}`;
+async function getAttributes() {
+    const url = `/attribute/`;
     const response = await apiRequest('GET', url);
     return response;
 }
@@ -43,14 +32,11 @@ async function getAttributes(category: string) {
 
 export default async function page() {
 
-    function deslugger(slug: string) {
-        return slug
-            .split('-')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
-    }
 
+    const categoriesPromise = getCategories();
+    const attributesPromise = getAttributes()
 
+    const [categories, attributes] = await Promise.all([categoriesPromise, attributesPromise]);
 
 
     const user = await getUser();
@@ -65,23 +51,23 @@ export default async function page() {
         <>
             <Container fluid className="banner2">
                 <Container className="d-flex h-100 align-items-center">
-                    <h1 className="font-big font-sm-h1 text-theme3 fw-6"></h1>
+                    <h1 className="font-big font-sm-h1 text-theme3 fw-6">STYLE OF YOUR <br/>HOME</h1>
                 </Container>
             </Container>
             <Container className="mt-3">
                 <ul className="breadcrumbs">
                     <li className="d-inline font-primary  fw-4"><Link href="/" className="text-theme1">Home</Link></li>
-                    <li className="d-inline text-black font-primary"></li>
+                    <li className="d-inline text-black font-primary">Shop</li>
                 </ul>
             </Container>
             <Container>
                 <Row className="mt-3 mb-4">
                     <Col lg={3} >
-                        {/* <Filter categories={subcategories} attributes={attributes} /> */}
+                        <Filter categories={categories} attributes={attributes} />
                     </Col>
                     <Col className="">
                         <Topbar />
-                        {/* <ProductGrid grid={3} userid={userid} category={params.category} subcategory="" /> */}
+                        <ProductGrid seller="" grid={3} userid={userid} category={''} subcategory="" />
                     </Col>
                 </Row>
             </Container>

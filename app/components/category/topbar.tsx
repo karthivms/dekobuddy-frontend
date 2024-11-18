@@ -19,7 +19,6 @@ export default function Topbar() {
     const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value;
         dispatch(updateSort(value))
-
         setDisabled(true)
     }
 
@@ -38,7 +37,13 @@ export default function Topbar() {
     return (
         <div >
             {products.count !== 0 && (<Row className="align-items-center">
-                <Col><h3 className="font-h2 text-black font-sm-secondary line-normal">Showing {products.count} Products for {deslugger(products.currentSubCategory === '' ? products.currentCategory : products.currentSubCategory)}</h3></Col>
+
+                <Col>
+                    <h3 className="font-h2 text-black font-sm-secondary line-normal">
+                        Showing {products.count} Products
+                        { products.currentCategory !== "" ?
+                            (<> for {deslugger(products.currentSubCategory === '' ? products.currentCategory : products.currentSubCategory)}</>) : <></>}
+                    </h3></Col>
                 <Col className="d-flex justify-content-end align-items-center ">
                     <select className="ms-2 p-2 br-5 border-theme1-solid bg-transparent text-theme1 fw-4 font-primary" value={products.sort} onChange={handleSort}>
                         <option value="" disabled={disabled}>Sort by</option>

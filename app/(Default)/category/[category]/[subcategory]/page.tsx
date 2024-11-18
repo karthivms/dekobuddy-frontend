@@ -92,7 +92,7 @@ export default async function page({ params }: { params: Params }) {
                     </Col>
                     <Col className="">
                         <Topbar />
-                        <ProductGrid grid={3} userid={userid} category={params.category} subcategory={params.subcategory} />
+                        <ProductGrid seller="" grid={3} userid={userid} category={params.category} subcategory={params.subcategory} />
                     </Col>
                 </Row>
             </Container>

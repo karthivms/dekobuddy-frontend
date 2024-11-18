@@ -13,9 +13,8 @@ export default function ActionTab({ userid }: { userid: string }) {
     const dispatch: AppDispatch = useDispatch();
 
     const deleteItems = () => {
-
-        dispatch(removeSelectedWishlistItems(Number(userid)));
         dispatch(removeSelectedItems());
+        dispatch(removeSelectedWishlistItems(Number(userid)));
     }
 
     return (

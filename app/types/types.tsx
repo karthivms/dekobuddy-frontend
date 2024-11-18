@@ -169,6 +169,7 @@ export interface order {
     order_confirmation_date? : string,
     cancelled_date? : string,
     shipped_date? : string,
+    delivered_date? : string,
     order_items: orderItem[],
     billing_address: orderAddress
 }

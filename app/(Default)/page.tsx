@@ -28,6 +28,26 @@ export default async function Home() {
 
   const homedata = await getHomeData();
 
+  const videos = [
+    {
+        id: 1,
+        video: "http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/media/videos_uploaded/D1_rh7dcJm.mp4"
+    },
+    {
+        id: 2,
+        video: "http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/media/videos_uploaded/D1_rh7dcJm.mp4"
+    },
+    {
+        id: 3,
+        video: "http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/media/videos_uploaded/D1_rh7dcJm.mp4"
+    },
+    {
+      id: 4,
+      video: "http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/media/videos_uploaded/D1_rh7dcJm.mp4"
+  }
+]
+
+
   return (
     <>
       <Banner data={homedata.main_banners[0]}/>
@@ -36,7 +56,7 @@ export default async function Home() {
       <PromotionMenu data={homedata.promotionsmenu}/>
       {/* </ScrollWrapper> */}
 
-      <Videoplayer url={homedata.videos_uploaded[0].video} thumbnail={"/images/thumbnail1.png"}/>
+      <Videoplayer videos={videos} thumbnail={"/images/thumbnail1.png"}/>
       <CategoryMenu category={homedata.categories} />
 
       <ScrollWrapper direction={20}>

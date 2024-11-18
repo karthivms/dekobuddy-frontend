@@ -1,49 +1,110 @@
 'use client';
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore from "swiper";
+import CloseIcon from "../icons/closeicon";
 
-export default function VideoPlayer({ url, thumbnail }: { url: string; thumbnail: string }) {
-    const videoRef = useRef<HTMLVideoElement | null>(null);
+
+interface Video {
+    id: number;
+    video: string;
+}
+
+export default function VideoPlayer({ videos, thumbnail }: { videos: Video[]; thumbnail: string }) {
+    const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [playingvideo, setPlayingvideo] = useState(0);
+    const [popup, setPopup] = useState(false);
+
 
     useEffect(() => {
-        const videoElement = videoRef.current;
-
-        const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) {
-                    videoElement?.pause();
-                }
-            });
-        };
-
-        const observer = new IntersectionObserver(handleIntersection, {
-            threshold: 0.1,
+        videoRefs.current.forEach((video) => {
+            if (video) video.pause();
         });
+    }, [activeIndex]);
 
-        if (videoElement) {
-            observer.observe(videoElement);
+    const handleMouseEnter = (index: number) => {
+        if (index === activeIndex && videoRefs.current[index]) {
+            videoRefs.current[index]?.play();
         }
+    };
 
-        return () => {
-            if (videoElement) {
-                observer.unobserve(videoElement);
-            }
-        };
-    }, []);
+    const handleMouseLeave = (index: number) => {
+        if (videoRefs.current[index]) {
+            videoRefs.current[index]?.pause();
+        }
+    };
+
+    const playVideo = (index: number) => {
+        console.log(index === activeIndex)
+        if (index === activeIndex && videoRefs.current[index]) {
+
+            setPopup(true)
+            setPlayingvideo(index)
+        }
+    };
 
     return (
-        <video
-            ref={videoRef}
-            width="100%"
-            height="900"
-            muted
-            preload="none"
-            className="mt-4 pt-3 videoplayer"
-            poster={thumbnail}
-            onMouseEnter={() => videoRef.current?.play()}
-            onMouseLeave={() => videoRef.current?.pause()}
-        >
-            <source src={url} type="video/mp4" />
-        </video>
+        <div className="px-4">
+            <Swiper
+                spaceBetween={30}
+                slidesPerView={1}
+                className="py-5 video-slider"
+                centeredSlides={true}
+                slideToClickedSlide={true}
+                breakpoints={{
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: -10,
+                    },
+                }}
+
+                onSlideChange={(swiper) => {
+                    setActiveIndex(swiper.realIndex);
+                }}
+                autoplay={{
+                    delay: 4000,
+                    disableOnInteraction: false,
+                }}
+                modules={[Autoplay]}
+            >
+                {videos.map((item, index) => (
+                    <SwiperSlide className="pb-5" key={`video_player_${item.id}`}>
+                        <video
+                            ref={(el) => {
+                                videoRefs.current[index] = el;
+                            }}
+                            width="100%"
+                            muted
+                            preload="none"
+                            className="videoplayer"
+                            poster={thumbnail}
+                            onClick={() => playVideo(index)}
+                            onMouseEnter={() => handleMouseEnter(index)}
+                            onMouseLeave={() => handleMouseLeave(index)}
+                        >
+                            <source src={item.video} type="video/mp4" />
+                        </video>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+
+
+            {popup && (<div className="videoPopup " onClick={() => setPopup(false)}>
+                <div className="d-flex justify-content-center align-items-center h-100" >
+                    <video controls
+                        autoPlay
+                        onClick={(e) => e.stopPropagation()}
+                        width="80%">
+                        <source src={videos[playingvideo].video} type="video/mp4" />
+                    </video>
+                    <span className="close" onClick={() => setPopup(false)}><CloseIcon /></span>
+
+                </div>
+            </div>)}
+
+        </div>
     );
 }
