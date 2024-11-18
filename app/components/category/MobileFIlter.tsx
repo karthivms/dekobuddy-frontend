@@ -16,8 +16,8 @@ export default function MobileFilter({ categories, attributes }: { categories: n
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     return (
-        <>
-            <button className="d-lg-none mb-3 btn2 py-1 wp-80 text-start px-2 font-primary" onClick={handleShow}>
+        <div className="mobile-filter">
+            <button className="d-lg-none mb-3 btn2 py-1 wp-80 text-start px-2 font-primary filter-icon" onClick={handleShow}>
                 <span><FilterIcon /> </span><span>Filter</span>
             </button>
 
@@ -40,6 +40,6 @@ export default function MobileFilter({ categories, attributes }: { categories: n
                 </div>
             </Offcanvas>
 
-        </>
+        </div>
     )
 }

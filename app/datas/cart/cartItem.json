@@ -1,0 +1,16 @@
+[{
+    "id": 188,
+    "product": {
+        "id": 2,
+        "name": "Sharafi Indian Hand Knotted",
+        "regular_price": 180000,
+        "size": "5x8ft",
+        "stock": 8,
+        "categories": "Living area",
+        "images": {
+            "id": 1,
+            "image": "http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/media/product_images/B0D3DC2HMS01/CLOSE-UP.jpg"
+        },
+        "quantity": 1
+    }
+}]

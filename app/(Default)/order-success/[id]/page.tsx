@@ -6,6 +6,7 @@ import { apiRequest } from "@/app/api/apiConfig";
 import { getUser } from "@/app/utilis/auth";
 import { order, orderItem } from "@/app/types/types";
 import formatPriceIndian from "@/app/utilis/formatPrice";
+import { redirect } from "next/navigation";
 
 
 type Params = {
@@ -27,6 +28,10 @@ export default async function OrderDetail({ params }: { params: Params }) {
     }
 
     const order: order[] = await getorder(userid, params.id)
+
+    if(order.length === 0){
+        redirect('/404')
+    }
 
     return (
         <>

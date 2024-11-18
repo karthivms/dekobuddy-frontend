@@ -8,11 +8,12 @@ import "@/app/sass/components/product.scss";
 import GallerySlider from "@/app/components/singleproduct/gallerySlider";
 import { apiRequest } from "@/app/api/apiConfig";
 import { getUser } from "@/app/utilis/auth";
+import { redirect } from "next/navigation";
 
 
 interface params {
     id: number,
-
+    product: string
 }
 
 
@@ -40,7 +41,7 @@ async function getReviews(id: number) {
 export default async function page({ params }: { params: params }) {
 
 
-    const { id } = params;
+    const { id, product } = params;
 
     const data = await getProduct(id);
 
@@ -50,6 +51,18 @@ export default async function page({ params }: { params: params }) {
 
     if (userData) {
         userid = userData.user_id;
+    }
+
+    function deslugger(slug: string) {
+        return slug
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    }
+
+
+    if (data.name !== deslugger(product) || data.length === 0) {
+        redirect('404')
     }
 
     return (
@@ -68,9 +81,9 @@ export default async function page({ params }: { params: params }) {
                 </Row>
             </Container>
 
-            <Description data={data.description} /> 
+            <Description data={data.description} />
             <Ratings userid={Number(userid)} productid={id} reviews={reviews} average={data.average_rating} rat_count={data.rating_count} rev_count={data.review_count} />
-            
+
             <SimilarProducts userid={userid} data={simproducts} />
         </>
 

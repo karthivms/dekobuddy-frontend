@@ -5,30 +5,30 @@ interface orderstatus {
 }
 
 
-export default function MobileProgress({ order_date, currentstatus, confirm_date, shipped_date, cancel_date, deliver_date }: { order_date: string, currentstatus: string, confirm_date: string | undefined, shipped_date: string | undefined, cancel_date : string | undefined, deliver_date : string | undefined }) {
+export default function MobileProgress({ order_date, currentstatus, confirm_date, shipped_date, cancel_date, deliver_date }: { order_date: string, currentstatus: string, confirm_date: string | undefined, shipped_date: string | undefined, cancel_date: string | undefined, deliver_date: string | undefined }) {
 
     const orderstatus = [
         { status: 'processing', date: order_date },
         { status: 'Confirmed', date: confirm_date },
         { status: 'Shipped', date: shipped_date },
-        { status: 'Delivered', date: '' },
-
+        { status: 'Delivered', date: deliver_date }
     ];
+
     const cancelstatus = [
         { status: 'Ordered', date: order_date },
         { status: 'Cancelled', date: cancel_date }];
 
 
-    const setWidth = (status: string) => {
+    const setHeight = (status: string) => {
         switch (status) {
             case 'processing':
-                return 'wc-0';
+                return '0%';
             case 'Confirmed':
-                return 'wc-33';
+                return '33%';
             case 'Shipped':
-                return 'wc-66';
+                return '66%';
             case 'Delivered':
-                return 'wc-100';
+                return '100%';
         }
     }
 
@@ -62,8 +62,8 @@ export default function MobileProgress({ order_date, currentstatus, confirm_date
                                 </span>)}
                             </div>                        </div>
                     ))}
-                    <div className="progress-line wc-90 br-20 m-auto h-8">
-                        <div className={'w-100'}></div>
+                    <div className="progress-line h-90 br-20 m-auto wp-8">
+                        <div className={'h-100'}></div>
                     </div>
                 </div>
             ) : (
@@ -81,8 +81,8 @@ export default function MobileProgress({ order_date, currentstatus, confirm_date
                             </div>
                         </div>
                     ))}
-                    <div className="progress-line wc-90 br-20 m-auto h-8">
-                        <div className={setWidth(currentstatus)}></div>
+                    <div className="progress-line  br-20 m-auto wp-8">
+                        <div style={{height:setHeight(currentstatus)}}></div>
                     </div>
                 </div>
             )}

@@ -63,7 +63,7 @@ export default function ProgressBar({ order_date, currentstatus, confirm_date, s
                             </div>                        </div>
                     ))}
                     <div className="progress-line wc-90 br-20 m-auto h-8">
-                        <div className={'w-100'}></div>
+                        <div className={' progress-line-fill w-100'}></div>
                     </div>
                 </div>
             ) : (
@@ -82,7 +82,7 @@ export default function ProgressBar({ order_date, currentstatus, confirm_date, s
                         </div>
                     ))}
                     <div className="progress-line wc-90 br-20 m-auto h-8">
-                        <div className={setWidth(currentstatus)}></div>
+                        <div className={`progress-line-fill ${setWidth(currentstatus)}`}></div>
                     </div>
                 </div>
             )}

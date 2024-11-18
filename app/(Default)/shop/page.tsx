@@ -4,7 +4,6 @@ import Topbar from "@/app/components/category/topbar";
 import Filter from "@/app/components/category/filterbox";
 import "@/app/sass/components/category.scss";
 import { apiRequest } from "@/app/api/apiConfig";
-import { navigationItem } from "@/app/types/types";
 import { getUser } from "@/app/utilis/auth";
 import Link from "next/link";
 
@@ -67,7 +66,7 @@ export default async function page() {
                     </Col>
                     <Col className="">
                         <Topbar />
-                        <ProductGrid seller="" grid={3} userid={userid} category={''} subcategory="" />
+                        <ProductGrid  grid={3} userid={userid} category={''} subcategory="" />
                     </Col>
                 </Row>
             </Container>

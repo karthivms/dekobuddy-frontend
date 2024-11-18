@@ -18,7 +18,7 @@ import Toaster from "../toaster";
 import formatPriceIndian from "@/app/utilis/formatPrice";
 
 
-export default function ProductGrid({ seller ,grid, userid, category, subcategory }: { seller : string,grid: number, userid: string, category: string, subcategory : string }) {
+export default function ProductGrid({ grid, userid, category, subcategory }: { grid: number, userid: string, category: string, subcategory : string }) {
 
     const products = useSelector((state: RootState) => state.product.products);
     const state = useSelector((state: RootState) => state.product);

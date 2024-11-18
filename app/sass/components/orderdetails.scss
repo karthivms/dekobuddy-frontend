@@ -47,7 +47,7 @@
         z-index: 1;
         box-shadow: rgba(50, 50, 93, 0.15) 0px 10px 5px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -28px inset;
 
-        div {
+        .progress-line-fill {
             position: absolute;
             content: "";
             top: 0;
@@ -76,6 +76,41 @@
 @media screen and (max-width:600px) {
     .mobileProgress {
         display: block;
+    }
+
+    .shipmentTracking {
+        flex-direction: column !important;
+        gap: 80px;
+
+    }
+
+    .statusBar {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+
+        h6 {
+            margin-top: 0 !important;
+        }
+
+        .statusCheck {
+            margin: 0 !important;
+        }
+    }
+
+    .mobileProgress .progress-line {
+        height: 90% !important;
+        top: 50% !important;
+        transform: translate(0, -50%) !important;
+        left: 12px !important;
+
+        div{
+            position: absolute;
+            content: "";
+            top: 0;
+            width: 100%;
+            background-color: $primary-color;
+            z-index: 999;        }
     }
 
     .largeProgress {

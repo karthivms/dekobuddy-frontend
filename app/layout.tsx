@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.scss';
 import 'swiper/css';
+import 'swiper/css/navigation';
+
 
 import { Barlow } from 'next/font/google';
 import ReduxProvider from "./redux/provider";

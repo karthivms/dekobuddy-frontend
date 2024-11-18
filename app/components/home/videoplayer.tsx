@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from "react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore from "swiper";
 import CloseIcon from "../icons/closeicon";
+import SwiperCore from "swiper";
+
+
 
 
 interface Video {
@@ -14,6 +16,10 @@ interface Video {
 
 export default function VideoPlayer({ videos, thumbnail }: { videos: Video[]; thumbnail: string }) {
     const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+    const swiperRef = useRef<SwiperCore | null>(null)
+
+
+
     const [activeIndex, setActiveIndex] = useState(0);
     const [playingvideo, setPlayingvideo] = useState(0);
     const [popup, setPopup] = useState(false);
@@ -29,12 +35,16 @@ export default function VideoPlayer({ videos, thumbnail }: { videos: Video[]; th
         if (index === activeIndex && videoRefs.current[index]) {
             videoRefs.current[index]?.play();
         }
+
+
     };
 
     const handleMouseLeave = (index: number) => {
         if (videoRefs.current[index]) {
             videoRefs.current[index]?.pause();
         }
+
+
     };
 
     const playVideo = (index: number) => {
@@ -46,14 +56,24 @@ export default function VideoPlayer({ videos, thumbnail }: { videos: Video[]; th
         }
     };
 
+    const handlePopup = () => {
+        setPopup(false)
+        swiperRef.current?.autoplay.start()
+    }
+
     return (
-        <div className="px-4">
+        <div className="px-4 mt-5">
             <Swiper
                 spaceBetween={30}
                 slidesPerView={1}
-                className="py-5 video-slider"
+                className=" video-slider"
                 centeredSlides={true}
+                onSwiper={(swiper) => {
+                    swiperRef.current = swiper; // Store the Swiper instance in the ref
+                }}
+                navigation={true}
                 slideToClickedSlide={true}
+                onClick={() => swiperRef.current?.autoplay.stop()}
                 breakpoints={{
                     1024: {
                         slidesPerView: 3,
@@ -67,11 +87,13 @@ export default function VideoPlayer({ videos, thumbnail }: { videos: Video[]; th
                 autoplay={{
                     delay: 4000,
                     disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+
                 }}
-                modules={[Autoplay]}
+                modules={[Autoplay, Navigation]}
             >
                 {videos.map((item, index) => (
-                    <SwiperSlide className="pb-5" key={`video_player_${item.id}`}>
+                    <SwiperSlide className="py-5" key={`video_player_${item.id}`}>
                         <video
                             ref={(el) => {
                                 videoRefs.current[index] = el;
@@ -92,7 +114,7 @@ export default function VideoPlayer({ videos, thumbnail }: { videos: Video[]; th
             </Swiper>
 
 
-            {popup && (<div className="videoPopup " onClick={() => setPopup(false)}>
+            {popup && (<div className="videoPopup d-none d-lg-block" onClick={handlePopup}>
                 <div className="d-flex justify-content-center align-items-center h-100" >
                     <video controls
                         autoPlay
@@ -100,7 +122,7 @@ export default function VideoPlayer({ videos, thumbnail }: { videos: Video[]; th
                         width="80%">
                         <source src={videos[playingvideo].video} type="video/mp4" />
                     </video>
-                    <span className="close" onClick={() => setPopup(false)}><CloseIcon /></span>
+                    <span className="close" onClick={handlePopup}><CloseIcon /></span>
 
                 </div>
             </div>)}

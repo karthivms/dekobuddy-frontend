@@ -140,6 +140,7 @@ export default function Menubar({ categoryMenu, username, userid }: { categoryMe
                                         {isFocused && (<>{
                                             results.length !== 0 ? (
                                                 <div onMouseLeave={() => setIsFocused(false)}
+                                                    onClick={() => setIsFocused(false) }
                                                     className="search-result w-100  max-h-300 overflow-auto custom-scrollbar">
                                                     {results.map((item: search, index) => (
                                                         <div key={`search_item_${index}`} className={index === selectedIndex ? 'active-item' : 'bg-white'} onMouseOver={() => setSelectedIndex(index)}>
@@ -147,7 +148,7 @@ export default function Menubar({ categoryMenu, username, userid }: { categoryMe
                                                                 <div className='d-flex align-items-center  gap-20 search-item' >
                                                                     <Image alt="cart_images" width={20} height={20} src={''} className="br-5" />
                                                                     <div>
-                                                                        <Link href={`/category/${item.slug}`} className="mb-1 fw-3 d-block">{item.name}</Link>
+                                                                        <Link href={`/category/${item.slug}`} className="mb-1 fw-3 d-block" >{item.name}</Link>
                                                                     </div>
                                                                 </div>
                                                             ) : (
@@ -169,7 +170,7 @@ export default function Menubar({ categoryMenu, username, userid }: { categoryMe
                                             )
                                         }</>)}
                                     </form>
-                                    <Menu categoryMenu={categoryMenu} cart={cart.length} username={username} wishlist={wishlist.length} hideOffcanvas={hideOffcanvas} />
+                                    <Menu categoryMenu={categoryMenu} cart={cart.length} setshow={setShow} username={username} wishlist={wishlist.length} hideOffcanvas={hideOffcanvas} />
                                 </Nav>
 
                             </Offcanvas.Body>
