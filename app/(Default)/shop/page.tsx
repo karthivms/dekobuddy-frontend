@@ -7,14 +7,6 @@ import { apiRequest } from "@/app/api/apiConfig";
 import { getUser } from "@/app/utilis/auth";
 import Link from "next/link";
 
-
-type Params = {
-    category: string;
-};
-
-
-
-
 async function getCategories() {
     const url = `/parentcategory/`;
     const response = await apiRequest('GET', url);

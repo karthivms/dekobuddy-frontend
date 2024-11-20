@@ -1,7 +1,7 @@
 'use client'
 
 import { RootState } from "@/app/redux/store"
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useSelector } from "react-redux"
 
 
@@ -34,7 +34,7 @@ export default function QuanityHandler({ errorMsg, setErrormsg, stock, variation
 
     useEffect(() => {
         setErrormsg('');
-    }, [variationId])
+    }, [variationId, setErrormsg])
 
 
     return (

@@ -5,9 +5,6 @@ import services from "@/app/datas/footer/services.json"
 import Links from "./links";
 
 
-
-
-
 export default function Grid2() {
 
     return (

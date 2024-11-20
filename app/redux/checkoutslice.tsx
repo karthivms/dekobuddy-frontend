@@ -73,7 +73,7 @@ const initialState: initialState = {
         alternative_phone: null,
         user: 0
     },
-    activeStep: 3,
+    activeStep: 1,
     discounted_total: '',
     discount_amount: '',
     coupon_code: '',

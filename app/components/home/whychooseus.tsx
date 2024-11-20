@@ -7,7 +7,6 @@ interface feature {
 }
 
 
-
 export default function Whychooseus({features}:{features:feature[]}) {
     return (
         <Container className="mt-4 pt-2 mb-5 wc-70 w-sm-100">

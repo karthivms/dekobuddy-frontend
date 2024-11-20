@@ -2,26 +2,26 @@
     {
         "id":1,
         "name": "About Us",
-        "link": "#"
+        "link": "/about-us"
     },
     {
         "id":2,
         "name": "Contact Us",
-        "link": "#"
+        "link": "/contact-us"
     },
     {
         "id":3,
         "name": "Products",
-        "link": "#"
+        "link": "/shop"
     },
     {
         "id":4,
         "name": "Cart",
-        "link": "#"
+        "link": "/cart"
     },
     {
         "id":5,
         "name": "Wishlist",
-        "link": "#"
+        "link": "/wishlist"
     }
 ]

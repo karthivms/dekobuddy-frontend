@@ -18,12 +18,9 @@ export default function VideoPlayer({ videos, thumbnail }: { videos: Video[]; th
     const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
     const swiperRef = useRef<SwiperCore | null>(null)
 
-
-
     const [activeIndex, setActiveIndex] = useState(0);
     const [playingvideo, setPlayingvideo] = useState(0);
     const [popup, setPopup] = useState(false);
-
 
     useEffect(() => {
         videoRefs.current.forEach((video) => {
@@ -35,16 +32,12 @@ export default function VideoPlayer({ videos, thumbnail }: { videos: Video[]; th
         if (index === activeIndex && videoRefs.current[index]) {
             videoRefs.current[index]?.play();
         }
-
-
     };
 
     const handleMouseLeave = (index: number) => {
         if (videoRefs.current[index]) {
             videoRefs.current[index]?.pause();
         }
-
-
     };
 
     const playVideo = (index: number) => {
@@ -93,7 +86,7 @@ export default function VideoPlayer({ videos, thumbnail }: { videos: Video[]; th
                 modules={[Autoplay, Navigation]}
             >
                 {videos.map((item, index) => (
-                    <SwiperSlide className="py-5" key={`video_player_${item.id}`}>
+                    <SwiperSlide className="py-4" key={`video_player_${item.id}`}>
                         <video
                             ref={(el) => {
                                 videoRefs.current[index] = el;
@@ -123,7 +116,6 @@ export default function VideoPlayer({ videos, thumbnail }: { videos: Video[]; th
                         <source src={videos[playingvideo].video} type="video/mp4" />
                     </video>
                     <span className="close" onClick={handlePopup}><CloseIcon /></span>
-
                 </div>
             </div>)}
 

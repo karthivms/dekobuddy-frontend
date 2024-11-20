@@ -7,6 +7,7 @@ export async function DELETE(request: Request) {
 
     try {
         const body = await request.json();
+        console.log(body)
 
 
         const res = await fetch(`${baseUrl}/remove-selected-wishlist-items/`, {

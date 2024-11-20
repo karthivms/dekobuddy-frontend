@@ -69,10 +69,12 @@ export default function OrderSummary({ userid, profiledata }: { userid: string, 
                                                     <div>
                                                         <Image alt="cart_images" width={60} height={60} src={item.product.images.image} className="br-5" />
                                                     </div>
-                                                    <div className="d-grid align-items-between">
-                                                        <p className="mb-0 fw-3">{item.product.name}</p>
-                                                        <div className="font-primary fw-3 d-flex gap-10 text-black align-items-center">
-                                                            <span>{formatPriceIndian(item.product.quantity * Number(item.product.regular_price))}</span>
+                                                    <div className="d-grid align-items-between justify-content-start">
+                                                        <p className="mb-0 fw-3">{item.product.name} - {item.product.size}</p>
+                                                        <div className="d-flex gap-10 align-items-center">
+                                                            <span className="font-small text-theme1 fw-4 bg-theme2 p-1 br-3 w-auto line-tight">{item.product.categories}</span>                                                        <div className="font-primary fw-3 d-flex gap-10 text-black align-items-center">
+                                                                <span>{formatPriceIndian(item.product.quantity * Number(item.product.regular_price))}</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

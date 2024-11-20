@@ -19,8 +19,6 @@ function ChangeAddress({
   
     const [editState, setEditState] = useState(addresses[0]);
 
-
-
     const changeState = () => {
         setEdit(false)
     }

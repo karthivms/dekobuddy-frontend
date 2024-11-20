@@ -286,3 +286,33 @@
         cursor: pointer;
     }
 }
+
+.category-slider{
+    .swiper-button-prev{
+        color: white;
+        background-color: $primary-color ;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    
+        &::after{
+            font-size: 10px !important;
+            font-weight: bold !important;
+    
+        }
+    }
+    
+    .swiper-button-next{
+        color: white;
+        background-color: $primary-color ;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    
+        &::after{
+            font-size: 10px !important;
+            font-weight: bold !important;
+    
+        }
+    } 
+}

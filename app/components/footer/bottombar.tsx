@@ -7,7 +7,7 @@ export default function BottomBar() {
             <Container>
                 <Row>
                     <Col xs={12} md={6} lg={6}>
-                        <span className="font-primary fw-3">Copyright © 2024 All rights reserved.</span>
+                        <span className="font-primary fw-3">Copyright © {new Date().getFullYear()} All rights reserved.</span>
                     </Col>
                     <Col className="text-start text-lg-end text-md-end" xs={12} md={6} lg={6}>
                         <span className="font-primary fw-3">

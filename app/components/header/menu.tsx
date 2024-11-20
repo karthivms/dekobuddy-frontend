@@ -2,11 +2,11 @@
 import menu from "@/app/datas/header/menu.json";
 import Link from 'next/link';
 import usermenu from "@/app/datas/header/usermenu.json";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import CartIcon from "../icons/carticon";
 import Wishlisticon from "../icons/wishlisticon";
 import AccountIcon from "../icons/accounticon";
-import { Dropdown, NavDropdown } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import { categoryMenu } from "@/app/types/types";
 
 
@@ -21,7 +21,7 @@ interface MenuItem {
 interface MenuProps {
     cart: number;
     wishlist: number;
-    setshow : Dispatch<SetStateAction<boolean>>,
+    setshow: Dispatch<SetStateAction<boolean>>,
     hideOffcanvas: () => void;
     username: string
     categoryMenu: categoryMenu[]
@@ -31,6 +31,8 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = ({ categoryMenu, cart, setshow, wishlist, username, hideOffcanvas }) => {
 
+    const [showMenu, setShowMenu] = useState(false);
+
 
     const getIcon = (name: string) => {
         switch (name) {
@@ -39,7 +41,6 @@ const Menu: React.FC<MenuProps> = ({ categoryMenu, cart, setshow, wishlist, user
             case "wishlist":
                 return <Wishlisticon />
             case "account":
-
                 if (username) {
                     return <AccountIcon />
                 }
@@ -49,7 +50,6 @@ const Menu: React.FC<MenuProps> = ({ categoryMenu, cart, setshow, wishlist, user
         }
 
     };
-
 
     const getItems = (name: string) => {
         switch (name) {
@@ -73,21 +73,22 @@ const Menu: React.FC<MenuProps> = ({ categoryMenu, cart, setshow, wishlist, user
 
     return (
         <>
-            <Dropdown>
+            <Dropdown show={showMenu} >
                 <Dropdown.Toggle
                     as="button"
                     id="basic-nav-dropdown"
                     className="text-black font-primary bg-transparent border-transparent-solid fw-4 ms-3 px-2"
+                    onMouseOver={() => setShowMenu(true)}
                 >
                     All Categories
                 </Dropdown.Toggle>
-                <Dropdown.Menu className="categorymenu">    
+                <Dropdown.Menu className="categorymenu" onMouseLeave={() => setShowMenu(false)}>
                     {categoryMenu.map((item) => (
                         <div key={`category_menu_${item.name}`} className="catmenu">
-                            <Link href={`/category/${item.slug}`} className="w-100 d-block font-primary px-3 py-2 link1" onClick={() => setshow(false)}>{item.name}</Link>
+                            <Link href={`/category/${item.slug}`} className="w-100 d-block font-primary px-3 py-2 link1" onClick={ () => setshow(false)}>{item.name}</Link>
                             {item.subcategories.map((subcat) => (
                                 <div key={`category_menu_${item.name}_${subcat.slug}`} className="subcategorymenu">
-                                    <Link href={`/category/${item.slug}/${subcat.slug}`} className="w-100 d-block font-primary px-3 py-2 link1" onClick={() => setshow(false)}>{subcat.name}</Link>
+                                    <Link href={`/category/${item.slug}/${subcat.slug}`} className="w-100 d-block font-primary px-3 py-2 link1" onClick={ () => setshow(false)}>{subcat.name}</Link>
                                 </div>
                             ))}
 
