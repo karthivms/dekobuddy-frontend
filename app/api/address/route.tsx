@@ -4,13 +4,11 @@ export async function GET(request: Request) {
     const password = process.env.API_PASSWORD;
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const basicAuth = 'Basic ' + btoa(username + ':' + password);
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
 
     try {
        
-        const { searchParams } = new URL(request.url);
-        const id = searchParams.get('id');
-
-
         const res = await fetch( `${baseUrl}/address/${id}/`, {
             method: 'GET',
             headers: {

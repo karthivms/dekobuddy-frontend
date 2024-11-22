@@ -16,9 +16,10 @@ type Params = {
 
 export async function generateStaticParams() {
     const categories = await getCategories();
-    return categories.map((item: navigationItem) => ({
+    const staticParams = categories.map((item: navigationItem) => ({
         category: item.slug,
     }));
+    return staticParams;
 }
 
 async function getCategories() {
