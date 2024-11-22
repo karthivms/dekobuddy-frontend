@@ -162,6 +162,7 @@ export interface order {
     id: number,
     user_id: number,
     order_id: string,
+    total_coupon_discount : number,
     amount: string,
     bill_amount: string,
     order_status: string,

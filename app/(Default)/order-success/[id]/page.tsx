@@ -29,7 +29,7 @@ export default async function OrderDetail({ params }: { params: Params }) {
 
     const order: order[] = await getorder(userid, params.id)
 
-    if(order.length === 0){
+    if (order.length === 0) {
         redirect('/404')
     }
 
@@ -39,10 +39,10 @@ export default async function OrderDetail({ params }: { params: Params }) {
 
                 <Row className="gap-40 align-items-start px-3 row-gap-40">
                     <Col lg={8} className="bg-grey3 br-10 p-4">
-                    
-                    <h3 className='font-secondary fw-4 mb-5'># ORDER ID : {params.id}</h3>
 
-                    <Image src={'/images/check.png'} width={256} height={256} className="wp-50 h-auto m-auto d-block" alt="confirmed" />
+                        <h3 className='font-secondary fw-4 mb-5'># ORDER ID : {params.id}</h3>
+
+                        <Image src={'/images/check.png'} width={256} height={256} className="wp-50 h-auto m-auto d-block" alt="confirmed" />
                         <h1 className="font-h2 text-center text-success mt-3 mb-5">Thank You, Your Order has been placed successfully</h1>
                         <Delivery userid={userid} data={order[0]} id={params.id} />
                     </Col>
@@ -73,11 +73,16 @@ export default async function OrderDetail({ params }: { params: Params }) {
                             ))}
                         </Row>
 
-                        <div className="d-flex pt-2 pb-3 mt-4  d-flex justify-content-between align-items-center bb-border3-1">
+                        <div className="d-flex pt-2  mt-4  d-flex justify-content-between align-items-center ">
                             <h5 className="font-large text-theme1">Subtotal</h5>
                             <span className="text-black fw-3">{formatPriceIndian(order[0].amount)}</span>
                         </div>
-                        <div className="d-flex pt-2 pb-3 mt-3 justify-content-between align-items-center">
+                        {order[0].total_coupon_discount === 0 ? (<></>) : (<div className="d-flex pt-2  mt-4  d-flex justify-content-between align-items-center ">
+                            <h5 className="font-large text-theme1">Coupon Discount</h5>
+                            <span className="text-success fw-3">- {formatPriceIndian(order[0].total_coupon_discount)}</span>
+                        </div>)}
+
+                        <div className="d-flex pt-4 pb-3 mt-3 justify-content-between align-items-center bt-border3-1">
                             <h5 className="font-h3 fw-4 text-theme1">Total</h5>
                             <span className="text-black fw-4 font-large">{formatPriceIndian(order[0].bill_amount)}</span>
                         </div>

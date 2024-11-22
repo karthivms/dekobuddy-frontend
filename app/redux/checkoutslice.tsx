@@ -143,9 +143,8 @@ export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue:
         const body = {
             user_id: id,
             cartItems: state.cart.cartItems.map((item) => ({
-                id: item.product.id,
+                cart_item_id: item.id,
                 quantity: item.product.quantity,
-                total_amount: `${item.product.quantity * item.product.regular_price}`
             }
             )),
             billing_info: {
@@ -161,11 +160,9 @@ export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue:
                 alternative_phone: address.alternative_phone,
                 landmark: address.landmark
             },
-            total_amount: `${state.cart.total}`,
             tax_amount: "0.00",
             amount: state.checkout.discounted_total !== '' ? `${state.checkout.discounted_total}` : `${state.cart.total}`,
             shipping_cost: "0.00",
-            discount: state.checkout.discount_amount === '' ? '0' : `${state.checkout.discount_amount}`,
             coupon_code: state.checkout.coupon_code !== '' ? state.checkout.coupon_code : ''
 
         }

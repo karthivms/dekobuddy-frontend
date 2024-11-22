@@ -61,75 +61,67 @@ export default function Profile({ userid, data }: { userid: string, data: userDa
         })
 
     }
-
     const validateForm = (field: string) => {
-
-
-        const errors: ErrorObject = {
-            email: '',
-            new_password: '',
-            confirm_password: '',
-            old_password: '',
-            phone: ''
-        };
-
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const phoneRegex = /^\+?(\d{1,3})?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
-
-
-        if (field === "new_password") {
+      
+        setError((prevError) => {
+          const errors = { ...prevError }; // Start with previous errors
+      
+          if (field === "new_password") {
             if (!passwordRegex.test(formData.new_password) && formData.old_password.length > 0) {
-                errors.new_password = "password must be at least 8 characters, including uppercase, lowercase, number, and special character.";
+              errors.new_password = "Password must be at least 8 characters, including uppercase, lowercase, number, and special character.";
             } else {
-                errors.new_password = "";
+              errors.new_password = ""; // Clear error if valid
             }
-        }
-
-        if (field === 'email') {
-            if (!formData.email) {
-                errors.email = "email is required";
+          }
+      
+          if (field === "email") {
+            if (formData.email === "") {
+              errors.email = "Email is required.";
             } else if (!emailRegex.test(formData.email)) {
-                errors.email = "email is not valid";
+              errors.email = "Email is not valid.";
             } else {
-                errors.email = "";
+              errors.email = ""; // Clear error if valid
             }
-        }
-
-        if (field === 'phone') {
+          }
+      
+          if (field === "phone") {
             if (!formData.phone) {
-                errors.phone = "phone Number is required";
+              errors.phone = "Phone Number is required.";
             } else if (!phoneRegex.test(formData.phone)) {
-                errors.phone = "phone Number is not valid";
+              errors.phone = "Phone Number is not valid.";
             } else {
-                errors.phone = "";
+              errors.phone = ""; // Clear error if valid
             }
-        }
-
-        if (field === 'confirm_password') {
+          }
+      
+          if (field === "confirm_password") {
             if (formData.old_password.length > 0 && !formData.confirm_password) {
-                errors.confirm_password = "confirm password is required"
+              errors.confirm_password = "Confirm password is required.";
             } else if (formData.new_password !== formData.confirm_password) {
-                errors.confirm_password = 'confirm password does not match'
+              errors.confirm_password = "Confirm password does not match.";
             } else {
-                errors.confirm_password = ''
+              errors.confirm_password = ""; // Clear error if valid
             }
-        }
-
-        if (field === 'old_password') {
+          }
+      
+          if (field === "old_password") {
             if (formData.new_password.length > 0 && !formData.old_password) {
-                errors.old_password = 'current password is required';
+              errors.old_password = "Current password is required.";
             } else {
-                errors.old_password = '';
+              errors.old_password = ""; // Clear error if valid
             }
-        }
-
-        setError((prevError) => ({ ...prevError, ...errors }));
-    }
+          }
+      
+          return errors; // Return the updated errors
+        });
+      };
+      
 
 
     const handleSubmit = async () => {
-        console.log(formData)
         validateForm("new_password");
         validateForm("email");
         validateForm("confirm_password");
@@ -139,7 +131,6 @@ export default function Profile({ userid, data }: { userid: string, data: userDa
         if (error.email === "" && error.new_password === "" && error.confirm_password === "" && error.old_password === "" && error.phone === "") {
 
             const response = await updateProfile(userid, formData);
-            console.log(response)
             if (!response.error) {
                 setShowToast(true);
                 setShowMsg(true);
@@ -156,7 +147,7 @@ export default function Profile({ userid, data }: { userid: string, data: userDa
                 setShowMsg(false);
                 setReserror(response.error)
                 setShowToast(true);
-                
+
             }
 
         }
