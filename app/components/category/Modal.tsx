@@ -18,9 +18,6 @@ export default function Modal({ handleSelected, selectedSize, Apiinfo, category,
     const cartproducts = useSelector((state: RootState) => state.cart.cartItems);
     const dispatch: AppDispatch = useDispatch()
 
-
-
-
     const [showsidebar, setShowSidebar] = useState(false);
 
     const handleCartUpdate = () => {

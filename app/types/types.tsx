@@ -94,6 +94,7 @@ export interface cartItem {
 export interface wishListProduct {
     id: number,
     name: string,
+    category : string,
     regular_price: number,
     sale_price?: number,
     images: productimage[],

@@ -114,9 +114,10 @@ export default function Wishlist({ userid }: { userid: string }) {
                                                 <CartIcon2 /> Select Size
                                             </button>
                                             {attModal === item.id && (
-                                                <Modal handleSelected={handleSelected} selectedSize={selectedSize} Apiinfo={cartAPiinfo} category={'living-area'} productid={item.products.id} image={item.products.images[0]} name={item.products.name} variations={item.products.variations} closeModal={() => setAttModal(null)} />)}
+                                                <Modal handleSelected={handleSelected} selectedSize={selectedSize} Apiinfo={cartAPiinfo} category={item.products.category} productid={item.products.id} image={item.products.images[0]} name={item.products.name} variations={item.products.variations} closeModal={() => setAttModal(null)} />)}
                                         </div>
                                         <h6 className="m-0 mt-3 font-primary"><Link href={`/product/${item.id}/${createSlug(item.products.name)}`}>{item.products.name}</Link></h6>
+                                        <p className="my-1 font-small text-theme1 fw-4">{item.products.category}</p>
                                         {/* <p className="m-0 font-primary text-grey">{item.props}</p> */}
 
                                         <div className="font-primary mt-1 fw-3 d-flex gap-10 text-black align-items-center">

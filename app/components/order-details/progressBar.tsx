@@ -9,11 +9,12 @@ export default function ProgressBar({ order_date, currentstatus, confirm_date, s
 
     const orderstatus = [
         { status: 'processing', date: order_date },
-        { status: 'Confirmed', date: confirm_date },
         { status: 'Shipped', date: shipped_date },
         { status: 'Delivered', date: deliver_date },
 
     ];
+
+    
     const cancelstatus = [
         { status: 'Ordered', date: order_date },
         { status: 'Cancelled', date: cancel_date }];
@@ -23,18 +24,21 @@ export default function ProgressBar({ order_date, currentstatus, confirm_date, s
         switch (status) {
             case 'processing':
                 return 'wc-0';
-            case 'Confirmed':
-                return 'wc-33';
             case 'Shipped':
-                return 'wc-66';
+                return 'wc-50';
             case 'Delivered':
                 return 'wc-100';
         }
     }
 
     const getIndex = () => {
-        const index = orderstatus.findIndex((item) => item.status === currentstatus)
-        return index
+        if(currentstatus === 'Confirmed'){
+            return 0
+        }else{
+            const index = orderstatus.findIndex((item) => item.status === currentstatus)
+            return index
+        }
+    
     }
 
     function getDate(date: Date) {

@@ -25,7 +25,7 @@ export default function OrderSummary({ orderproducts, status }: { orderproducts:
         <div className="px-4 py-3 mt-4 border-border-solid order-listing">
             <div className='d-flex flex-wrap gap-10 row-gap-10 justify-content-between'>
                 <Link href={`/order-detail/${orderproducts.order_id}`} className='font-secondary fw-4 '># ORDER ID : {orderproducts.order_id}</Link>
-                <span className={`font-primary text-capitalize fw-3 bg-grey3 pt-1 br-5 px-2 ${getColor(status)}`}>{status}</span>
+                <span className={`font-primary text-capitalize fw-3 bg-grey3 pt-1 br-5 px-2 ${getColor(status)}`}>{status === 'Confirmed' ? (<>Processing</>):(status)}</span>
             </div>
             {orderproducts.order_items.map((item: orderItem) => (
                 <Row key={`checkout_item_${item.id}`} className='mt-4'>

@@ -123,6 +123,7 @@ export const ApplyCoupon = createAsyncThunk<couponResponse, dataType, { rejectVa
             'POST', `${state.cart.url}/api/coupon`,
             body,
         );
+        console.log(response)
         if (response.error) {
             console.log(response.error)
             return response.error
@@ -161,7 +162,7 @@ export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue:
                 landmark: address.landmark
             },
             tax_amount: "0.00",
-            amount: state.checkout.discounted_total !== '' ? `${state.checkout.discounted_total}` : `${state.cart.total}`,
+            amount: state.cart.total,
             shipping_cost: "0.00",
             coupon_code: state.checkout.coupon_code !== '' ? state.checkout.coupon_code : ''
 

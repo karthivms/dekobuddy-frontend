@@ -146,14 +146,14 @@ export default function Menubar({ categoryMenu, username, userid }: { categoryMe
                                                         <div key={`search_item_${index}`} className={index === selectedIndex ? 'active-item' : 'bg-white'} onMouseOver={() => setSelectedIndex(index)}>
                                                             {item.slug ? (
                                                                 <div className='d-flex align-items-center  gap-20 search-item' >
-                                                                    <Image alt="cart_images" width={20} height={20} src={''} className="br-5" />
+                                                                    <Image alt="cart_images" width={40} height={40} src={item.image} className="br-5" />
                                                                     <div>
                                                                         <Link href={`/category/${item.slug}`} className="mb-1 fw-3 d-block" >{item.name}</Link>
                                                                     </div>
                                                                 </div>
                                                             ) : (
                                                                 <div className='d-flex align-items-center gap-20  search-item'>
-                                                                    <Image alt="cart_images" width={20} height={20} src={''} className="br-5" />
+                                                                    <Image alt="cart_images" width={40} height={40} src={item.image} className="br-5" />
                                                                     <div>
                                                                         <Link href={`/product/${item.id}/${createSlug(item.name)}/?variation=${item.sku}`} className="mb-0 d-block fw-4 font-primary ">{item.name} - {item.size}</Link>
                                                                         <span className="font-small d-block text-theme1 fw-4  br-3">in {item.category}</span>
@@ -164,7 +164,6 @@ export default function Menubar({ categoryMenu, username, userid }: { categoryMe
                                                     ))}
                                                 </div>) : (
                                                 <div className="search-result p-3  w-100 fw-3 text-theme1" onMouseLeave={() => setIsFocused(false)}>
-
                                                     No results Found
                                                 </div>
                                             )

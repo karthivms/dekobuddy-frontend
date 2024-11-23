@@ -20,7 +20,8 @@ export default function NavigationMenu({ links, source, height, id }: { links: n
                             <div style={{ backgroundImage: `url(${item.image})`, height: `${height}` }}
                                 className="br-7 nav-grid d-flex justify-content-center align-items-end">
                                 <h3 className="font-h3 text-white fw-3"><Link href={`${source === "category" ? `/category/${item.slug}` : item.link}`} >{item.name}</Link></h3>
-                                <Link className="nav-cat-btn" href={`${source === "category" ? `/category/${item.slug}` : item.link}`}>Shop Now</Link>
+                                <Link className="nav-cat-btn" href={`${source === "category" ? `/category/${item.slug}` : item.link}`}>
+                                {source === "category" ? (<>Shop Now</>) : (<>View More</>)}</Link>
                             </div>
                         </Col>
                     ))}
