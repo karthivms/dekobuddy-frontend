@@ -40,7 +40,6 @@ export const Delivery = ({ userid, data, id }: {userid:string, data: order, id: 
             <ProgressBar
                 order_date={data.order_date}
                 currentstatus={data.order_status}
-                confirm_date={data.order_confirmation_date}
                 shipped_date={data.shipped_date}
                 cancel_date={data.cancelled_date}
                 deliver_date={data.delivered_date}
@@ -48,7 +47,6 @@ export const Delivery = ({ userid, data, id }: {userid:string, data: order, id: 
             <MobileProgress
                 order_date={data.order_date}
                 currentstatus={data.order_status}
-                confirm_date={data.order_confirmation_date}
                 shipped_date={data.shipped_date}
                 cancel_date={data.cancelled_date}
                 deliver_date={data.delivered_date}

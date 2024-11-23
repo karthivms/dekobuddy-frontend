@@ -3,8 +3,7 @@
 import { navigationItem } from "@/app/types/types";
 import Link from "next/link";
 import { Col, Container, Row } from "react-bootstrap";
-import { Autoplay, Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+
 
 
 export default function NavigationMenu({ links, source, height, id }: { links: navigationItem[], source: string, height: string, id: string }) {

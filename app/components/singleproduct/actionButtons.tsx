@@ -7,7 +7,7 @@ import { AddCartItems, AddtoCart } from "@/app/redux/cartSlice";
 import { Dispatch, SetStateAction, useState } from "react";
 import CartSidebar from "../cartSidebar";
 import { productimage, variations } from "@/app/types/types";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 interface ApiInfo {
     quantity: number,
@@ -17,7 +17,7 @@ interface ApiInfo {
 export default function ActionButtons({  setErrormsg, Apiinfo, category, productid, image, variation, name, setCount }: {  setErrormsg: Dispatch<SetStateAction<string>>, Apiinfo: ApiInfo, category: string, productid: number, image: productimage, variation: variations, name: string, setCount: React.Dispatch<React.SetStateAction<number>> }) {
     const dispatch: AppDispatch = useDispatch();
     const cartproducts = useSelector((state: RootState) => state.cart.cartItems);
-    const router = useRouter()
+    // const router = useRouter()
 
     const [showsidebar, setShowSidebar] = useState(false);
 

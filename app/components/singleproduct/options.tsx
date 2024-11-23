@@ -11,7 +11,7 @@ import { AddItem, addWishlistItems } from "@/app/redux/wishlistslice";
 import { productimage, variations } from "@/app/types/types";
 
 
-export default function Options({variations, handleMsg, handleToast, id, userid, price, images, title }: {variations : variations[], handleMsg: Dispatch<SetStateAction<boolean>>, handleToast : Dispatch<SetStateAction<boolean>>, id: number, userid : number, price : number, images : productimage[], title: string }) {
+export default function Options({category , variations, handleMsg, handleToast, id, userid, price, images, title }: {category : string, variations : variations[], handleMsg: Dispatch<SetStateAction<boolean>>, handleToast : Dispatch<SetStateAction<boolean>>, id: number, userid : number, price : number, images : productimage[], title: string }) {
 
     const pathname = usePathname();
     const params = useSearchParams();
@@ -38,6 +38,7 @@ export default function Options({variations, handleMsg, handleToast, id, userid,
             {
                 id: id,
                 name: title,
+                category : category,
                 regular_price: price,
                 images: images,
                 variations :variations 

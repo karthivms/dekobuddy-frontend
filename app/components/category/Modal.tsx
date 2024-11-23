@@ -17,6 +17,7 @@ export default function Modal({ handleSelected, selectedSize, Apiinfo, category,
 
     const cartproducts = useSelector((state: RootState) => state.cart.cartItems);
     const dispatch: AppDispatch = useDispatch()
+    const isProduct = cartproducts.find((item) => item.product.id === variations[selectedSize].id)
 
     const [showsidebar, setShowSidebar] = useState(false);
 
@@ -36,6 +37,14 @@ export default function Modal({ handleSelected, selectedSize, Apiinfo, category,
                 quantity: 1
             },
             user_id: Apiinfo.user_id
+        }
+
+
+        if (isProduct) {
+            if (isProduct.product.quantity + Apiinfo.quantity > isProduct.product.stock) {
+                alert(`Product out of stock, Cannot add more of this item.`);
+                return;
+            }
         }
 
         dispatch(AddtoCart(cartAPiData));

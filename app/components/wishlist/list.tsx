@@ -72,7 +72,7 @@ export default function Wishlist({ userid }: { userid: string }) {
 
     }
     const cartAPiinfo = {
-        quantity: wishlist.length,
+        quantity: 1,
         user_id: Number(userid)
     }
 

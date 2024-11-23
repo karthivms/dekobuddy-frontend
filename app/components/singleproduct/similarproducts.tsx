@@ -10,8 +10,7 @@ import CartIcon2 from '../icons/carticon2';
 import Modal from '../category/Modal';
 import Link from 'next/link';
 import Star from '../icons/star';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/redux/store';
+
 import { useCallback, useState } from 'react';
 import Toaster from '../toaster';
 import formatPriceIndian from '@/app/utilis/formatPrice';
@@ -19,8 +18,6 @@ import formatPriceIndian from '@/app/utilis/formatPrice';
 
 export default function SimilarProducts({ userid, data }: { userid: string, data: Product[] }) {
 
-    const state = useSelector((state: RootState) => state.product);
-    const count = state.count;
     const [attModal, setAttModal] = useState<number | null>(null);
     const [selectedSize, setSelectedsize] = useState(0);
 
@@ -39,7 +36,7 @@ export default function SimilarProducts({ userid, data }: { userid: string, data
     }, []);
 
     const cartAPiinfo = {
-        quantity: count,
+        quantity: 1,
         user_id: Number(userid)
     }
 
@@ -87,7 +84,7 @@ export default function SimilarProducts({ userid, data }: { userid: string, data
                                                 <div className="pro_btn_holder">
                                                     <Image alt="product-image" width={384} height={384} className="w-100 zoomimage h-auto br-10" src={item.images[1].image} loading="lazy" />
                                                     <Image alt="product-image" width={384} height={384} className="w-100 initialimage h-auto br-10" src={item.images[2].image} loading="lazy" />
-                                                    <Addtowishlist variations={item.variations} handleMsg={SetWishmsg} handleToast={setShow} name={item.name} userid={Number(userid)} id={item.id} price={Number(item.regular_price)} images={item.images} />
+                                                    <Addtowishlist category={item.categories[0].name} variations={item.variations} handleMsg={SetWishmsg} handleToast={setShow} name={item.name} userid={Number(userid)} id={item.id} price={Number(item.regular_price)} images={item.images} />
                                                     <button
                                                         className="border-transparent-solid font-primary text-white py-1  wc-100 justify-content-center fw-3 d-flex align-items-center gap-6 cart_btn"
                                                         onClick={() => handleQuickAddClick(item.id)}>

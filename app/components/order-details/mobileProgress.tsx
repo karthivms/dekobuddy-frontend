@@ -5,11 +5,10 @@ interface orderstatus {
 }
 
 
-export default function MobileProgress({ order_date, currentstatus, confirm_date, shipped_date, cancel_date, deliver_date }: { order_date: string, currentstatus: string, confirm_date: string | undefined, shipped_date: string | undefined, cancel_date: string | undefined, deliver_date: string | undefined }) {
+export default function MobileProgress({ order_date, currentstatus, shipped_date, cancel_date, deliver_date }: { order_date: string, currentstatus: string,  shipped_date: string | undefined, cancel_date: string | undefined, deliver_date: string | undefined }) {
 
     const orderstatus = [
         { status: 'processing', date: order_date },
-        { status: 'Confirmed', date: confirm_date },
         { status: 'Shipped', date: shipped_date },
         { status: 'Delivered', date: deliver_date }
     ];
@@ -23,18 +22,20 @@ export default function MobileProgress({ order_date, currentstatus, confirm_date
         switch (status) {
             case 'processing':
                 return '0%';
-            case 'Confirmed':
-                return '33%';
             case 'Shipped':
-                return '66%';
+                return '50%';
             case 'Delivered':
                 return '100%';
         }
     }
 
     const getIndex = () => {
+        if(currentstatus === 'Confirmed'){
+            return 0
+        }else{
         const index = orderstatus.findIndex((item) => item.status === currentstatus)
         return index
+        }
     }
 
     function getDate(date: Date) {
