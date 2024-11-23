@@ -19,7 +19,7 @@ export const LoginUser = async (data: User) => {
         const encryptedSessionData = response.access;
         cookies().set('_acdkb', encryptedSessionData, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: false,
             maxAge: 60 * 60 * 24 * 7,
             path: '/',
         })
