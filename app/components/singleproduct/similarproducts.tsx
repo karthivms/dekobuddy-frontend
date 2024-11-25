@@ -46,14 +46,11 @@ export default function SimilarProducts({ userid, data }: { userid: string, data
 
     const [show, setShow] = useState(false);
     const [wishmsg, SetWishmsg] = useState(true);
-
-
     
     const handleSelected = (value: number) => {
-
-        setSelectedsize(value)
-
+        setSelectedsize(value);
     }
+
     return (
         <Container className='mt-5 mb-4'>
             <h2 className="mt-3 text-uppercase font-h2 text-center text-theme1 fw-4 pb-2">Similar Products</h2>
@@ -130,8 +127,6 @@ export default function SimilarProducts({ userid, data }: { userid: string, data
 
                                         </div>
                         </div>
-
-
                     </SwiperSlide>
                 ))}
             </Swiper>

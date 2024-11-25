@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import CartIcon2 from "../icons/carticon2";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { AddCartItems, AddtoCart } from "@/app/redux/cartSlice";
+import { AddtoBuy } from "@/app/redux/checkoutslice";
 import { Dispatch, SetStateAction, useState } from "react";
 import CartSidebar from "../cartSidebar";
 import { productimage, variations } from "@/app/types/types";
+import { useRouter } from "next/navigation";
 // import { useRouter } from "next/navigation";
 
 interface ApiInfo {
@@ -22,6 +24,7 @@ export default function ActionButtons({  setErrormsg, Apiinfo, category, product
     const [showsidebar, setShowSidebar] = useState(false);
 
     const handleClose = () => setShowSidebar(false);
+    const router = useRouter()
 
     const isProduct = cartproducts.find((item) => item.product.id === variation.id)
 
@@ -59,37 +62,36 @@ export default function ActionButtons({  setErrormsg, Apiinfo, category, product
         setErrormsg('')
     }
 
-    // const handleBuyNow = () => {
-    //     const cartAPiData = {
-    //         id: cartproducts[cartproducts.length - 1]?.id + 1,
-    //         productid: productid,
-    //         product: {
-    //             id: variation.id,
-    //             name: name,
-    //             regular_price: Number(variation.regular_price),
-    //             size: variation.size,
-    //             stock: variation.stock,
-    //             categories: category,
-    //             images: image,
-    //             quantity: Apiinfo.quantity
-    //         },
-    //         user_id: Apiinfo.user_id
-    //     }
+    const handleBuyNow = () => {
+        const cartAPiData = {
+            id: 1,
+            productid: productid,
+            product: {
+                id: variation.id,
+                name: name,
+                regular_price: Number(variation.regular_price),
+                size: variation.size,
+                stock: variation.stock,
+                categories: category,
+                images: image,
+                quantity: Apiinfo.quantity
+            },
+            user_id: Apiinfo.user_id
+        }
 
-    //     if (isProduct) {
-    //         if (isProduct.product.quantity + Apiinfo.quantity > isProduct.product.stock) {
-    //             setErrormsg(`Product out of stock, Cannot add more of this item.`);
-    //             return;
-    //         }
-    //     }
+      
+            if ( Apiinfo.quantity > variation.stock) {
+                setErrormsg(`Product out of stock, Cannot add more of this item.`);
+                return;
+            }
+        
 
-    //     dispatch(AddtoCart(cartAPiData));
-    //     dispatch(AddCartItems(cartAPiData));
-    //     setCount(1)
-    //     setErrormsg('')
+        dispatch(AddtoBuy(cartAPiData));
+        setCount(1)
+        setErrormsg('')
 
-    //     router.push('/checkout')
-    // }
+        router.push('/checkout')
+    }
 
     return (
         <div className="mt-4 d-flex align-items-center gap-20 actionbuttons">
@@ -99,10 +101,10 @@ export default function ActionButtons({  setErrormsg, Apiinfo, category, product
             >
                 <CartIcon2 /> Add to Cart
             </button>
-            {/* <button
+            <button
                 className="border-theme1-solid text-theme1 bg-transparent wp-130 py-1 br-5 fw-3" onClick={handleBuyNow}>
                 Buy Now
-            </button> */}
+            </button>
             <CartSidebar showsidebar={showsidebar} handleClose={handleClose} />
         </div>
     )

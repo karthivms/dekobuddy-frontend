@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { address } from '../types/types';
+import { address, cartItem } from '../types/types';
 import { apiRequest } from '../api/apiConfig';
 import { RootState } from './store';
 
@@ -23,9 +23,14 @@ interface dataType {
     userid: string
 }
 
+
+
+
 interface initialState {
     addresses: address[]
     orderPlaced: boolean,
+    buy_now: cartItem[],
+    buy_total: number,
     status: "loading" | "success" | "failure",
     couponStatus: "loading" | "success" | "failure",
     orderStatus: "loading" | "success" | "failure",
@@ -56,6 +61,8 @@ const initialState: initialState = {
     addresses: [],
     orderPlaced: false,
     status: "loading",
+    buy_now: [],
+    buy_total: 0,
     couponStatus: "success",
     orderStatus: "success",
     selectedAddress: {
@@ -104,20 +111,40 @@ export const fetchAddress = createAsyncThunk<address[], number, { rejectValue: s
 export const ApplyCoupon = createAsyncThunk<couponResponse, dataType, { rejectValue: string }>('/checkout/applycoupon', async (data, { rejectWithValue, getState }) => {
     try {
         const state = getState() as RootState;
-        const body = {
-            coupon_code: data.coupon,
-            cart_total: state.cart.total,
-            ship_cost: 0.00,
-            cart_items: state.cart.cartItems.map((item) => ({
-                id: item.id,
-                quantity: item.product.quantity,
-                name: item.product.name,
-                total: item.product.quantity * item.product.regular_price
+        let body = {}
+        if (state.checkout.buy_now.length === 0) {
+            body = {
+                coupon_code: data.coupon,
+                cart_total: state.checkout.buy_total,
+                ship_cost: 0.00,
+                cart_items: state.checkout.buy_now.map((item) => ({
+                    id: item.id,
+                    quantity: item.product.quantity,
+                    name: item.product.name,
+                    total: item.product.quantity * item.product.regular_price
+                }
+                )),
+                user: data.userid
+    
             }
-            )),
-            user: data.userid
+        } else {
+            body = {
+                coupon_code: data.coupon,
+                cart_total: state.cart.total,
+                ship_cost: 0.00,
+                cart_items: state.cart.cartItems.map((item) => ({
+                    id: item.id,
+                    quantity: item.product.quantity,
+                    name: item.product.name,
+                    total: item.product.quantity * item.product.regular_price
+                }
+                )),
+                user: data.userid
 
+            }
         }
+
+console.log(body)
 
         const response = await apiRequest(
             'POST', `${state.cart.url}/api/coupon`,
@@ -141,30 +168,60 @@ export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue:
     try {
         const state = getState() as RootState;
         const address = state.checkout.selectedAddress
-        const body = {
-            user_id: id,
-            cartItems: state.cart.cartItems.map((item) => ({
-                cart_item_id: item.id,
-                quantity: item.product.quantity,
+        let body = {}
+        if (state.checkout.buy_now.length === 0) {
+            body = {
+                user_id: id,
+                cartItems: state.cart.cartItems.map((item) => ({
+                    cart_item_id: item.id,
+                    quantity: item.product.quantity,
+                }
+                )),
+                billing_info: {
+                    address_id: address.id,
+                    first_name: address.first_name,
+                    address_1: address.address_1,
+                    city: address.city,
+                    postcode: address.postcode,
+                    Country_Region: address.Country_Region,
+                    state_country: address.state_country,
+                    email: address.email,
+                    phone: address.phone,
+                    alternative_phone: address.alternative_phone,
+                    landmark: address.landmark
+                },
+                tax_amount: "0.00",
+                amount: state.cart.total,
+                shipping_cost: "0.00",
+                coupon_code: state.checkout.coupon_code !== '' ? state.checkout.coupon_code : ''
+
             }
-            )),
-            billing_info: {
-                address_id: address.id,
-                first_name: address.first_name,
-                address_1: address.address_1,
-                city: address.city,
-                postcode: address.postcode,
-                Country_Region: address.Country_Region,
-                state_country: address.state_country,
-                email: address.email,
-                phone: address.phone,
-                alternative_phone: address.alternative_phone,
-                landmark: address.landmark
-            },
-            tax_amount: "0.00",
-            amount: state.cart.total,
-            shipping_cost: "0.00",
-            coupon_code: state.checkout.coupon_code !== '' ? state.checkout.coupon_code : ''
+        } else {
+            body = {
+                user_id: id,
+                buy_now_data: state.checkout.buy_now.map((item) => ({
+                    variation_id: item.product.id,
+                    quantity: item.product.quantity,
+                }
+                )),
+                billing_info: {
+                    address_id: address.id,
+                    first_name: address.first_name,
+                    address_1: address.address_1,
+                    city: address.city,
+                    postcode: address.postcode,
+                    Country_Region: address.Country_Region,
+                    state_country: address.state_country,
+                    email: address.email,
+                    phone: address.phone,
+                    alternative_phone: address.alternative_phone,
+                    landmark: address.landmark
+                },
+                amount: "108000.00",
+                tax_amount: "0.00",
+                shipping_cost: "0.00",
+                coupon_code: state.checkout.coupon_code !== '' ? state.checkout.coupon_code : ''
+            }
 
         }
 
@@ -176,7 +233,6 @@ export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue:
             return response.error
         }
 
-    
         return response.data;
 
     } catch (error) {
@@ -199,6 +255,53 @@ const cartSlice = createSlice({
             if (selected) {
                 state.selectedAddress = selected;
             }
+        },
+        AddtoBuy: (state, { payload }) => {
+
+            state.buy_now = [];
+            const item = {
+                id: payload.id,
+                product: payload.product,
+            }
+
+
+            state.buy_now.push(item);
+
+        },
+
+        removeBuyItem: (state, { payload }) => {
+            const removeItem = state.buy_now.filter((item) => item.id !== payload);
+            state.buy_now = removeItem;
+        },
+        incrementBuyQuantity: (state, { payload }) => {
+            const isItem = state.buy_now.find((item) => item.id === payload);
+
+            if (isItem) {
+                isItem.product.quantity++;
+            }
+
+        },
+        decrementBuyQuantity: (state, { payload }) => {
+            const isItem = state.buy_now.find((item) => item.id === payload);
+
+            if (isItem) {
+                if (isItem.product.quantity === 1) {
+                    isItem.product.quantity = 1
+                } else {
+                    isItem.product.quantity--;
+                }
+            }
+        },
+        getBuytotal: (state) => {
+
+            let total = 0;
+
+            state.buy_now.forEach((item) => {
+
+                total = total + item.product.quantity * Number(item.product.regular_price);
+            })
+
+            state.buy_total = total;
         },
         removeCoupon: (state) => {
             state.coupon_code = "";
@@ -243,16 +346,16 @@ const cartSlice = createSlice({
                 state.orderStatus = 'loading'
             })
             .addCase(placeOrder.fulfilled, (state, action) => {
+                state.buy_now = [];
                 if (action.payload.success) {
                     state.placed_order_id = action.payload.order_id
                     state.orderPlaced = true
                     state.orderStatus = 'success'
-
                 }
             })
     }
 })
 
-export const { changeStep, updateSelectedAddress, removeCoupon, changeStatus } = cartSlice.actions;
+export const { changeStep, updateSelectedAddress, removeCoupon, changeStatus, AddtoBuy, removeBuyItem, incrementBuyQuantity, decrementBuyQuantity, getBuytotal } = cartSlice.actions;
 
 export default cartSlice.reducer;

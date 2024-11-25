@@ -11,10 +11,10 @@
     }
 }
 
-.about-image-div{
+.about-image-div {
     position: relative;
 
-    .experience{
+    .experience {
         position: absolute;
         top: -40px;
         right: -35px;
@@ -24,4 +24,52 @@
             right: -5px;
         }
     }
+}
+
+.story-1 {
+    position: relative;
+
+
+    .story-1-image {
+        background-image: url('/images/our-story-image.webp');
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        height: 460px;
+        background-repeat: no-repeat;
+        position: relative;
+        overflow: hidden;
+
+        h6 {
+            position: relative;
+            z-index: 2;
+            font-size: 130px;
+        }
+
+
+        &::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            top: 0;
+            left: 0;
+        }
+    }
+
+    .story-1-content {
+        position: absolute;
+        top: 50%;
+        width: 55%;
+        right: 0;
+        transform: translateY(-50%);
+
+        @media screen and (max-width : 768px) {
+            position: static;
+            transform: initial;
+            width: 100%;
+        }
+    }
+
 }
