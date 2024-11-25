@@ -14,6 +14,7 @@ import formatPriceIndian from "@/app/utilis/formatPrice";
 import { useEffect } from "react";
 import { DeleteCartItem, gettotal, removeCartItem } from "@/app/redux/cartSlice";
 import CartSkeleton from "../cartSkeleton";
+import { removeBuyItem, removeCoupon } from "@/app/redux/checkoutslice";
 
 
 export default function CartTable({ userid }: { userid: string }) {
@@ -41,6 +42,9 @@ export default function CartTable({ userid }: { userid: string }) {
         if (!userid) {
             alert("login to continue")
         }
+
+        dispatch(removeCoupon())
+        dispatch(removeBuyItem(1))
     }
 
     return (

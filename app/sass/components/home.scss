@@ -1,10 +1,15 @@
 @import "./../variables";
 
+.banner-wrapper{
+    overflow: hidden;
+}
+
 .banner {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 90vh;
+    overflow: hidden;
+    height: calc(100vh - 112px);
     animation: zoomBackground 20s ease-in-out infinite;
 
     @media screen and (max-width:768px) {
@@ -64,15 +69,15 @@
 
 @keyframes zoomBackground {
     0% {
-        background-size: 100%;
+        transform: scale(1);
     }
 
     50% {
-        background-size: 103%;
+        transform: scale(1.03);
     }
 
     100% {
-        background-size: 100%;
+        transform: scale(1);
     }
 }
 

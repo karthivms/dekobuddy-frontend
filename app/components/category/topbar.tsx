@@ -1,6 +1,6 @@
 'use client'
 
-import { updateSort } from "@/app/redux/Filterslice";
+import { updateBestsellers, updateSort } from "@/app/redux/Filterslice";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -22,8 +22,13 @@ export default function Topbar() {
         setDisabled(true)
     }
 
+
+
     useEffect(() => {
         dispatch(updateSort(params?.get('sort')))
+        if(params?.get('best_sellers')){
+            dispatch(updateBestsellers(true))
+        }
     }, [params, dispatch])
 
 

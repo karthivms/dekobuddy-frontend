@@ -1,0 +1,45 @@
+@import '../variables';
+
+.banner3 {
+    background-image: url("/images/about-banner.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+
+    @media screen and (max-width:600px) {
+        height: 200px;
+        background-position: right;
+    }
+}
+
+.artisans-div {
+    position: relative;
+
+    .row{
+        position: relative;
+        z-index: 1;
+    }
+
+        &::before {
+            content: '';
+            position: absolute;
+            width: 35%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: $secondary-color;
+        }
+    
+
+}
+
+
+.artisans-div.right-div{
+    &::before {
+    
+        top: 0;
+        left: auto !important;
+        right: 0 !important;
+    } 
+}

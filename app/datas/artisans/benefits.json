@@ -1,0 +1,18 @@
+[
+    {
+      "name": "Unique",
+      "image": "/images/artisan_benefit_1.png",
+      "content": "Lorem ipsum dolor sit amet consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsumdolor sit amet consectetur."
+    },
+    {
+      "name": "Eco-Friendly",
+      "image": "/images/artisan_benefit_2.png",
+      "content": "Lorem ipsum dolor sit amet consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsumdolor sit amet consectetur."
+    },
+    {
+      "name": "Authenticity",
+      "image": "/images/artisan_benefit_3.png",
+      "content": "Lorem ipsum dolor sit amet consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsumdolor sit amet consectetur."
+    }
+  ]
+  

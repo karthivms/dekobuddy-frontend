@@ -23,7 +23,7 @@ export function PriceDetail() {
                         {state.coupon_code && (
                             <div className="d-flex pt-2 pb-3 d-flex justify-content-between align-items-center">
                                 <h5 className="font-large text-theme1">Coupon Applied</h5>
-                                <span className="text-black fw-3">{formatPriceIndian(state.discount_amount)}</span>
+                                <span className="text-success fw-3">- {formatPriceIndian(state.discount_amount)}</span>
                             </div>
                         )}
 

@@ -112,7 +112,7 @@ export const ApplyCoupon = createAsyncThunk<couponResponse, dataType, { rejectVa
     try {
         const state = getState() as RootState;
         let body = {}
-        if (state.checkout.buy_now.length === 0) {
+        if (state.checkout.buy_now.length !== 0) {
             body = {
                 coupon_code: data.coupon,
                 cart_total: state.checkout.buy_total,
@@ -125,7 +125,7 @@ export const ApplyCoupon = createAsyncThunk<couponResponse, dataType, { rejectVa
                 }
                 )),
                 user: data.userid
-    
+
             }
         } else {
             body = {
@@ -144,7 +144,7 @@ export const ApplyCoupon = createAsyncThunk<couponResponse, dataType, { rejectVa
             }
         }
 
-console.log(body)
+        console.log(body)
 
         const response = await apiRequest(
             'POST', `${state.cart.url}/api/coupon`,
@@ -199,11 +199,11 @@ export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue:
         } else {
             body = {
                 user_id: id,
-                buy_now_data: state.checkout.buy_now.map((item) => ({
-                    variation_id: item.product.id,
-                    quantity: item.product.quantity,
+                buy_now_data: {
+                    variation_id: state.checkout.buy_now[0].product.id,
+                    quantity: state.checkout.buy_now[0].product.quantity,
                 }
-                )),
+                ,
                 billing_info: {
                     address_id: address.id,
                     first_name: address.first_name,
@@ -217,7 +217,7 @@ export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue:
                     alternative_phone: address.alternative_phone,
                     landmark: address.landmark
                 },
-                amount: "108000.00",
+                amount: state.checkout.buy_total,
                 tax_amount: "0.00",
                 shipping_cost: "0.00",
                 coupon_code: state.checkout.coupon_code !== '' ? state.checkout.coupon_code : ''
@@ -259,6 +259,9 @@ const cartSlice = createSlice({
         AddtoBuy: (state, { payload }) => {
 
             state.buy_now = [];
+            state.coupon_code = "";
+            state.discounted_total = "";
+            state.discount_amount = "";
             const item = {
                 id: payload.id,
                 product: payload.product,
@@ -350,7 +353,10 @@ const cartSlice = createSlice({
                 if (action.payload.success) {
                     state.placed_order_id = action.payload.order_id
                     state.orderPlaced = true
-                    state.orderStatus = 'success'
+                    state.orderStatus = 'success';
+                    state.discounted_total = "";
+                    state.discount_amount ="";
+                    state.coupon_code = "";
                 }
             })
     }

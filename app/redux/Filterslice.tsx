@@ -10,6 +10,7 @@ interface initialState {
     products: Product[]
     status: "loading" | "success" | "failure",
     error: undefined,
+    best_sellers : boolean,
     count: number,
     limit: number,
     offset: number,
@@ -26,6 +27,7 @@ const initialState: initialState = {
     products: [],
     status: "loading",
     error: undefined,
+    best_sellers : false,
     count: 0,
     limit: 20,
     offset: 0,
@@ -55,6 +57,7 @@ export const getProducts = createAsyncThunk<APIResponse, string, { rejectValue: 
         const min_price = state.product.minprice;
         const max_price = state.product.maxprice;
         const subcategory = state.product.currentSubCategory;
+        const bestsellers = state.product.best_sellers;
 
         try {
             const response = await apiRequest(
@@ -68,7 +71,9 @@ export const getProducts = createAsyncThunk<APIResponse, string, { rejectValue: 
                     sort_by: sort,
                     min_price: min_price,
                     max_price: max_price,
-                    subcategories__slug : subcategory
+                    subcategories__slug : subcategory,
+                    ...(bestsellers && { bestsellers: true })
+
                 });
             return response.data;
 
@@ -110,6 +115,9 @@ const filterSlice = createSlice({
         },
         updateSubCategory: (state, { payload }) => {
             state.currentSubCategory = payload;
+        },
+        updateBestsellers: (state, { payload }) => {
+            state.best_sellers = payload;
         }
     },
     extraReducers: (builder) => {
@@ -136,7 +144,8 @@ export const {
     updateMinPrice,
     updateCurrentCategory,
     updateSubCategory,
-    updateMaxPrice }
+    updateMaxPrice,
+    updateBestsellers }
     = filterSlice.actions;
 
 export default filterSlice.reducer;

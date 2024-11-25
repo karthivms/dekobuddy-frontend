@@ -11,7 +11,6 @@ export default function RootLayout({
         <div>
             <CheckoutHeader />
             {children}
-            <BottomBar />
         </div>
 
     );
