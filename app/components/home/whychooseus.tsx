@@ -9,7 +9,7 @@ interface feature {
 
 export default function Whychooseus({features}:{features:feature[]}) {
     return (
-        <Container className="mt-4 pt-2 mb-5 wc-70 w-sm-100">
+        <Container className="mt-5 pt-2 mb-5 wc-70 w-sm-100">
             <Row className="row-gap-40">
                 {
                     features.map((item: feature) => (

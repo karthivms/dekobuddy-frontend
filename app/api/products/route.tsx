@@ -12,21 +12,32 @@ export async function GET(request: Request) {
     const offset = searchParams.get('offset');
     const size = searchParams.get('size');
     const sort_by = searchParams.get('sort_by');
-    const min_price = searchParams.get('min_price');
-    const max_price = searchParams.get('max_price');
+    const min_price = Number(searchParams.get('min_price'));
+    const max_price = Number(searchParams.get('max_price'));
     const subcategories__slug = searchParams.get('subcategories__slug');
     const bestsellers = searchParams.get('bestsellers');
 
 
 
     try {
-        let url = '';
-        if (Number(min_price) !== 0 && Number(max_price) !== 0) {
-            url = `${baseUrl}/products/?category=${category}&subcategories__slug=${subcategories__slug}&limit=${limit}&offset=${offset}&size=${size}&sort_by=${sort_by}&min_price=${min_price}&max_price=${max_price}&bestsellers=${bestsellers}`;
-        } else {
-            url = `${baseUrl}/products/?category=${category}&subcategories__slug=${subcategories__slug}&limit=${limit}&offset=${offset}&size=${size}&sort_by=${sort_by}&bestsellers=${bestsellers}`;
+        const params = new URLSearchParams();
+        if (category) params.append('category', category);
+        if (subcategories__slug) params.append('subcategories__slug', subcategories__slug);
+        if (limit) params.append('limit', limit);
+        if (offset) params.append('offset', offset);
+        if (size) params.append('size', size);
+        if (sort_by) params.append('sort_by', sort_by);
+      
+        if (bestsellers) params.append('bestsellers', bestsellers);
+
+
+        if (min_price !== 0 || max_price !== 0) {
+            if (min_price) params.append('min_price', String(min_price));
+            if (max_price) params.append('max_price', String(max_price));
         }
 
+        const url = `${baseUrl}/products/?${params.toString()}`;
+        console.log('Fetching URL:', url);
 
         const res = await fetch(url, {
             headers: {

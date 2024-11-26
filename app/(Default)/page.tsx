@@ -10,6 +10,11 @@ import '../sass/components/home.scss';
 import { apiRequest } from "../api/apiConfig";
 
 
+interface Video {
+  id: number;
+  video: string;
+  thumbnail : string;
+}
 
 
 const getHomeData = async () => {
@@ -29,7 +34,14 @@ export default async function Home() {
   const homedata = await getHomeData();
 
   
+  function splitArrayIntoHalves(array: Video[]) {
+    const middleIndex = Math.ceil(array.length / 2); 
+    const firstHalf = array.slice(0, middleIndex);  
+    const secondHalf = array.slice(middleIndex);   
+    return [firstHalf, secondHalf];
+}
 
+const [firstHalf, secondHalf] = splitArrayIntoHalves(homedata.videos_uploaded);
 
   return (
     <>
@@ -39,8 +51,9 @@ export default async function Home() {
       <PromotionMenu data={homedata.promotionsmenu}/>
       {/* </ScrollWrapper> */}
 
-      <Videoplayer videos={homedata.videos_uploaded} thumbnail={"/images/thumbnail1.png"}/>
+      <Videoplayer videos={firstHalf} />
       <CategoryMenu category={homedata.categories} />
+      <Videoplayer videos={secondHalf} />
 
       <ScrollWrapper direction={20}>
         <Whychooseus features={homedata.why_choose}/>

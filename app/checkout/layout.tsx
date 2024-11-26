@@ -1,4 +1,3 @@
-import BottomBar from "@/app/components/footer/bottombar";
 import CheckoutHeader from "@/app/components/header2";
 
 

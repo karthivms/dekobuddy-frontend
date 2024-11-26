@@ -12,9 +12,10 @@ import SwiperCore from "swiper";
 interface Video {
     id: number;
     video: string;
+    thumbnail : string;
 }
 
-export default function VideoPlayer({ videos, thumbnail }: { videos: Video[]; thumbnail: string }) {
+export default function VideoPlayer({ videos }: { videos: Video[] }) {
     const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
     const swiperRef = useRef<SwiperCore | null>(null)
 
@@ -95,7 +96,7 @@ export default function VideoPlayer({ videos, thumbnail }: { videos: Video[]; th
                             muted
                             preload="none"
                             className="videoplayer"
-                            poster={thumbnail}
+                            poster={item.thumbnail}
                             onClick={() => playVideo(index)}
                             onMouseEnter={() => handleMouseEnter(index)}
                             onMouseLeave={() => handleMouseLeave(index)}

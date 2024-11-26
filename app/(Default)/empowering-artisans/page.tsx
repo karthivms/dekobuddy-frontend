@@ -21,7 +21,7 @@ export default function Page() {
                         </Col>
                         <Col lg={{ order: 2 }} xs={{ order: 1 }} className="ps-lg-5 text-center" >
                             <h2 className="text-uppercase font-2 font-h2 text-theme1 fw-4">Supporting Artisans</h2>
-                            <h3 className="font-h3 text-theme1 fw-4 my-3">"A Journey Toward Empowerment"</h3>
+                            <h3 className="font-h3 text-theme1 fw-4 my-3">&quot;A Journey Toward Empowerment&quot;</h3>
                             <p className=" line-relaxed text-black">Lorem ipsum dolor sit amet consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsum dolor
                                 sit amet consectetur. Consequat feugiat lacus nisi malesuada alique Lorem ipsum dolor sit amet
                                 consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsum dolor sit amet consectetur.
@@ -47,7 +47,7 @@ export default function Page() {
 
                         <Col className="pe-lg-5 text-center" >
                             <h2 className="text-uppercase font-2 font-h2 text-theme1 fw-4">Bridging Tradition and Modernity</h2>
-                            <h3 className="font-h3 text-theme1 fw-4 my-3">"Unique Artifacts Crafted with Love"</h3>
+                            <h3 className="font-h3 text-theme1 fw-4 my-3">&quot;Unique Artifacts Crafted with Love&quot;</h3>
                             <p className=" line-relaxed text-black">Lorem ipsum dolor sit amet consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsum dolor
                                 sit amet consectetur. Consequat feugiat lacus nisi malesuada alique Lorem ipsum dolor sit amet
                                 consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsum dolor sit amet consectetur.
@@ -72,8 +72,8 @@ export default function Page() {
 
             <Container className="my-5 text-center" >
 
-                <h2 className="text-uppercase font-2 font-h2 text-theme1 fw-4">Benefits of Our Products</h2>
-                <h3 className="font-h3 text-theme1 fw-4 my-3">"Masterpieces of Tradition and Talent"</h3>
+                <h2 className="text-uppercase font-2 font-h2 text-theme1 fw-4">Features of Our Products</h2>
+                <h3 className="font-h3 text-theme1 fw-4 my-3">&quot;Masterpieces of Tradition and Talent&quot;</h3>
                 <Row className="mt-4 py-3">
                     {benefits.map((item, index) => (
                         <Col key={`benefits_${index}`} className="py-0">

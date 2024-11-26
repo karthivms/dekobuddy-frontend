@@ -1,0 +1,104 @@
+@import '../variables';
+
+
+.banner3 {
+    background-image: url("/images/about-banner.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+
+    @media screen and (max-width:600px) {
+        height: 200px;
+        background-position: right;
+    }
+}
+
+
+.dekolux-image-div {
+    position: relative;
+    z-index: 1;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 80%;
+        z-index: -1;
+        height: 100%;
+        top: -50px;
+        left: -50px;
+        background-color: $secondary-color;
+
+        @media screen and (max-width:768px){
+            display: none;
+        }
+    }
+}
+
+
+.lux-faq {
+    font-size: 14px !important;
+    margin-bottom: 25px !important;
+    border: none !important;
+
+
+    .accordion-button.collapsed {
+        &::after {
+            content: '-';
+        }
+    }
+
+    .accordion-button {
+        background: $primary-color;
+        color: white !important;
+        font-size: 14px !important;
+
+
+
+        &::after {
+            content: '+';
+            background-image: none !important;
+            transform: none !important;
+            font-size: 20px;
+            display: flex;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            color: $primary-color;
+            justify-content: center;
+            padding-bottom: 3px;
+            align-items: center;
+        }
+
+        &:focus {
+            box-shadow: none !important;
+        }
+    }
+}
+
+.deko-gallery {
+    div {
+        overflow: hidden;
+        padding: 0;
+
+        @media screen and (max-width:768px){
+            width: 100%;
+        }
+    }
+
+    img {
+        transition: all 0.5s ease;
+
+
+        @media screen and (max-width:600px){
+            display: block;
+            margin: auto;
+        }
+    
+    }
+
+    img:hover {
+        transform: scale(1.1);
+    }
+}

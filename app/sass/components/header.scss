@@ -19,7 +19,7 @@ header {
         color: $primary-color !important;
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 768px) {
         padding: 15px !important;
         margin-left: 0 !important;
         width: 100% !important;
@@ -89,7 +89,7 @@ header {
         top: 0;
         width: 100%;
 
-        @media screen and (max-width:600px) {
+        @media screen and (max-width:768px) {
             position: static !important;
             border: none !important;
 
@@ -106,7 +106,7 @@ header {
     .catmenu {
         position: relative;
 
-        @media screen and (max-width:600px) {
+        @media screen and (max-width:768px) {
             border: none !important;
             background-color: $body-color !important;
             padding: 15px !important;
@@ -157,6 +157,7 @@ header {
 
 .search-form {
     position: relative;
+    flex: 1;
 
     @media screen and (max-width:768px) {
         padding: 0 10px !important;

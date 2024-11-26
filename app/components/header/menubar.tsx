@@ -127,7 +127,7 @@ export default function Menubar({ categoryMenu, username, userid }: { categoryMe
                             </Offcanvas.Header>
                             <Offcanvas.Body  >
                                 <Nav className="justify-content-end flex-grow-1 align-items-lg-center">
-                                    <form className="search-form " onSubmit={(e) => e.preventDefault()}>
+                                    <form className="search-form ms-lg-5" onSubmit={(e) => e.preventDefault()}>
                                         <Search />
                                         <input
                                             type="text"
@@ -136,7 +136,7 @@ export default function Menubar({ categoryMenu, username, userid }: { categoryMe
                                             onChange={handleChange}
                                             onFocus={() => setIsFocused(true)}
                                             placeholder='Search for Products...'
-                                            className="bg-theme1 border-transparent-solid br-3 wp-450 h-30 text-white font-primary pe-4" />
+                                            className="bg-theme1 border-transparent-solid br-3 w-100  h-30 text-white font-primary pe-4" />
                                         {isFocused && (<>{
                                             results.length !== 0 ? (
                                                 <div onMouseLeave={() => setIsFocused(false)}

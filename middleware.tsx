@@ -41,9 +41,6 @@ export function middleware(request: NextRequest, response : NextResponse) {
       if (accessToken && request.nextUrl.pathname.startsWith('/login')) {
         return NextResponse.redirect(new URL('/', request.url));
       }
-
- 
-
 }
 
 export const config = {

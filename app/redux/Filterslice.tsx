@@ -97,6 +97,8 @@ const filterSlice = createSlice({
         },
         clearAttributes: (state) => {
             state.attributes = [];
+            state.minprice = 0;
+            state.maxprice = 0;
         },
         updateOffset: (state, { payload }) => {
             state.offset = payload;
