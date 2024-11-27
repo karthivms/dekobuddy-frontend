@@ -10,7 +10,7 @@
     background-size: cover;
     overflow: hidden;
     height: calc(100vh - 112px);
-    animation: zoomBackground 20s ease-in-out infinite;
+    // animation: zoomBackground 20s ease-in-out infinite;
 
     @media screen and (max-width:768px) {
         height: 350px;
@@ -61,10 +61,6 @@
 
 
 }
-
-
-
-
 
 
 @keyframes zoomBackground {

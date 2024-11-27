@@ -156,7 +156,7 @@ export interface orderAddress {
     country: string,
     phone: string,
     alternative_phone?: null | string,
-    address_type: "Billing"
+    address_type: string
 }
 
 export interface order {
@@ -164,8 +164,8 @@ export interface order {
     user_id: number,
     order_id: string,
     total_coupon_discount : number,
-    amount: string,
-    bill_amount: string,
+    amount: number,
+    bill_amount: number,
     order_status: string,
     order_date: string,
     order_confirmation_date? : string,
