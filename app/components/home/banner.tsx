@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Container } from "react-bootstrap";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import 'swiper/css/effect-fade';
 
 export interface banner {
     id: number,
@@ -21,9 +22,10 @@ export default function Banner({ data }: { data: banner[] }) {
             
                 className=""
                 effect={'fade'}
+                speed = {1500}
                 spaceBetween={30}
                 autoplay={{
-                    delay: 6000,
+                    delay: 4000,
                     disableOnInteraction: false,
                     pauseOnMouseEnter: true,
 
