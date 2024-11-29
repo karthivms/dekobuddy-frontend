@@ -17,8 +17,6 @@ export async function GET(request: Request) {
     const subcategories__slug = searchParams.get('subcategories__slug');
     const bestsellers = searchParams.get('bestsellers');
 
-
-
     try {
         const params = new URLSearchParams();
         if (category) params.append('category', category);
@@ -37,7 +35,6 @@ export async function GET(request: Request) {
         }
 
         const url = `${baseUrl}/products/?${params.toString()}`;
-        console.log('Fetching URL:', url);
 
         const res = await fetch(url, {
             headers: {

@@ -85,7 +85,7 @@ export default function OrderSummary({ userid, profiledata }: { userid: string, 
                                             </div>
                                         </div>
                                         <div className="d-flex align-items-center gap-20">
-                                            <BuyQuantity stock={item.product.stock} buyId={item.id} count={item.product.quantity} />
+                                            <BuyQuantity userid={userid} stock={item.product.stock} buyId={item.id} count={item.product.quantity} />
                                             <button className="btn mt-4  fw-3 text-theme1" onClick={() => dispatch(removeBuyItem(item.id))}>Remove</button>
                                         </div>
                                     </div>
@@ -123,7 +123,7 @@ export default function OrderSummary({ userid, profiledata }: { userid: string, 
                                                         </div>
                                                     </div>
                                                     <div className="d-flex align-items-center gap-20">
-                                                        <QuanityHandler stock={item.product.stock} cartid={item.id} userid={Number(userid)} count={item.product.quantity} />
+                                                        <QuanityHandler page={'checkout'} stock={item.product.stock} cartid={item.id} userid={Number(userid)} count={item.product.quantity} />
                                                         <button className="btn mt-4  fw-3 text-theme1" onClick={() => deleteItem(item.id)}>Remove</button>
                                                     </div>
                                                 </div>

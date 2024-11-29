@@ -129,6 +129,7 @@ const handleModal = () => {
         if (error.username === "" && error.password === "" && error.email === "" && error.confirmpassword === "" && error.acceptterms === "") {
             setError({})
             const response = await RegisterUser(formData);
+            localStorage.setItem('email', formData.email)
             if (response === "successfully registered") {
                 setResponseError("")
                 setModalShow(true)

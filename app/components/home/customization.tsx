@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Col, Container, Row } from "react-bootstrap";
 
 export default function Customization() {
@@ -14,7 +15,7 @@ export default function Customization() {
                             consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsum dolor sit amet consectetur.
                             Consequat feugiat lacus nisi malesuada alique.
                         </p>
-                        <button className="btn1 px-3 py-1 mt-3">Enquire Now</button>
+                        <Link className="btn1 px-3 py-1 mt-3 d-inline-block" href={'/contact-us'}>Enquire Now</Link>
                     </div>
                 </Col>
                 <Col >

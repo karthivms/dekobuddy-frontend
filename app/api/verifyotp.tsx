@@ -8,9 +8,16 @@ interface response {
     error: string
 }
 
-export const RegisterUser = async (data: User) => {
+
+interface otpdata{
+    email : string,
+    otp? : string
+}
+
+export const verifyOtp = async (data: User | otpdata) => {
 
     const response: response = await apiRequest('POST', '/register/', data);
+    console.log(data)
     console.log(response)
     if (response.error) {
         return response.error;

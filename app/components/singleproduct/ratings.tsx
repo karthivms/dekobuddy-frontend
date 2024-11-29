@@ -1,8 +1,14 @@
+'use client'
+
 import { Col, Container, Row } from "react-bootstrap";
 import Star from "../icons/star";
 import Reviews from "./reviews";
 import RatingPopup from "./ratingPopup";
 import { rating } from "@/app/types/types";
+import { AppDispatch, RootState } from "@/app/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getReviews } from "@/app/redux/reviewSlice";
 
 
 
@@ -11,9 +17,16 @@ interface ratingData {
     no_of_ratings: number
 }
 
-export default function Ratings({ userid, productid, reviews, average, rat_count, rev_count }: { userid: number, productid: number, reviews: rating[], average: number, rat_count: number, rev_count: number }) {
+export default function Ratings({ userid, productid, average, rat_count, rev_count }: { userid: number, productid: number, average: number, rat_count: number, rev_count: number }) {
 
     const groupedRatings: { [key: number]: number } = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+    const dispatch : AppDispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getReviews(productid))
+    },[dispatch, productid])
+
+    const reviews = useSelector((state: RootState) => state.reviews.reviews)
 
     if (Array.isArray(reviews) && reviews.length > 0) {
         reviews.forEach((item: rating) => {

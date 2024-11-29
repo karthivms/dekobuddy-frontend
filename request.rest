@@ -286,6 +286,29 @@ Content-Type: application/json
 "message" : "it is a dekobuddy site"
 }
 
+###
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/register/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
+
+{
+        "username": "Testuser",
+        "email": "test@test.in",
+        "password": "Test@1234",
+        "confirm_password": "Test@1234"
+}
+
+
+###
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/resend/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
+
+{
+    "email": "anushazinavo99@gmail.com",
+    "otp": "325107"  
+}
+
 
 
 

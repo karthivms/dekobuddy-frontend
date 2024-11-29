@@ -1,29 +1,51 @@
 'use client'
 
 
-import { decrementBuyQuantity, incrementBuyQuantity } from "@/app/redux/checkoutslice";
-import { AppDispatch } from "@/app/redux/store";
-import { useDispatch } from "react-redux";
+import { ApplyCoupon, decrementBuyQuantity, incrementBuyQuantity } from "@/app/redux/checkoutslice";
+import { AppDispatch, RootState } from "@/app/redux/store";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function BuyQuantity({  stock, buyId, count }: { stock : number, buyId: number, count: number }) {
+export default function BuyQuantity({ userid, stock, buyId, count }: { userid: string, stock: number, buyId: number, count: number }) {
 
     const dispatch: AppDispatch = useDispatch();
+    const coupon = useSelector((state: RootState) => state.checkout.coupon_code);
 
     const handleIncrementQuantity = () => {
-        if(count < stock){
+        if (count < stock) {
             dispatch(incrementBuyQuantity(buyId));
-           
-        }else{
+
+            const data = {
+                coupon: coupon,
+                userid: userid
+            }
+
+            if (coupon) {
+                setTimeout(() => {
+                    dispatch(ApplyCoupon(data))
+
+                }, 1000)
+            }
+        } else {
             alert('Product out of stock, Cannot add more of this item.')
         }
-       
+
     }
 
     const handleDecrementQuantity = () => {
-        if (count != 1){
-        dispatch(decrementBuyQuantity(buyId));
+        if (count != 1) {
+            dispatch(decrementBuyQuantity(buyId));
+            const data = {
+                coupon: coupon,
+                userid: userid
+            }
+            if (coupon) {
 
-    }
+                setTimeout(() => {
+                    dispatch(ApplyCoupon(data))
+
+                }, 1000)
+            }
+        }
     }
     return (
         <div className="mt-4 d-flex align-items-center text-theme1 fw-4 gap-1 quanity-handler">

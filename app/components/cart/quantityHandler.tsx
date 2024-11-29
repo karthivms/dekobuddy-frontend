@@ -1,41 +1,71 @@
 'use client'
 
 
-import {  decrementQuantity, incrementQuantity, UpdateQuantity } from "@/app/redux/cartSlice";
-import { AppDispatch } from "@/app/redux/store";
-import { useDispatch } from "react-redux";
+import { decrementQuantity, incrementQuantity, UpdateQuantity } from "@/app/redux/cartSlice";
+import { ApplyCoupon } from "@/app/redux/checkoutslice";
+import { AppDispatch, RootState } from "@/app/redux/store";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function QuanityHandler({  stock, cartid, userid, count }: { stock : number, cartid: number, userid: number, count: number }) {
+export default function QuanityHandler({ page, stock, cartid, userid, count }: { page: string, stock: number, cartid: number, userid: number, count: number }) {
 
     const dispatch: AppDispatch = useDispatch();
+    const coupon = useSelector((state: RootState) => state.checkout.coupon_code)
 
     const handleIncrementQuantity = () => {
-        if(count < stock){
+        if (count < stock) {
             dispatch(incrementQuantity(cartid));
             const cartData = {
                 cart_id: cartid,
-                quantity:1,
-                user_id:userid
-            }  
-    
+                quantity: 1,
+                user_id: userid
+            }
+
+
             dispatch(UpdateQuantity(cartData));
-        }else{
+
+
+            const data = {
+                coupon: coupon,
+                userid: `${userid}`
+            }
+
+
+            setTimeout(() => {
+                if (page === 'checkout' && coupon) {
+                    dispatch(ApplyCoupon(data))
+                }
+            }, 1000)
+
+        } else {
             alert('Product out of stock, Cannot add more of this item.')
         }
-       
+
     }
 
     const handleDecrementQuantity = () => {
-        if (count != 1){
-        dispatch(decrementQuantity(cartid));
-        const cartData = {
-            cart_id: cartid,
-            quantity:-1,
-            user_id:userid
-        }  
+        if (count != 1) {
+            dispatch(decrementQuantity(cartid));
+            const cartData = {
+                cart_id: cartid,
+                quantity: -1,
+                user_id: userid
+            }
 
-        dispatch(UpdateQuantity(cartData));
-    }
+            dispatch(UpdateQuantity(cartData));
+
+
+            const data = {
+                coupon: coupon,
+                userid: `${userid}`
+            }
+
+
+            setTimeout(() => {
+                if (page === 'checkout' && coupon) {
+                    dispatch(ApplyCoupon(data))
+                }
+            }, 1000)
+        }
     }
     return (
         <div className="mt-4 d-flex align-items-center text-theme1 fw-4 gap-1 quanity-handler">

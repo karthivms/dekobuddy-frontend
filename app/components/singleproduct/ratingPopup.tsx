@@ -5,6 +5,9 @@ import Modal from 'react-bootstrap/Modal';
 import Star from '../icons/star';
 import { ModalProps } from 'react-bootstrap';
 import rateProduct from '@/app/api/rateProduct';
+import { AppDispatch } from '@/app/redux/store';
+import { useDispatch } from 'react-redux';
+import { getReviews } from '@/app/redux/reviewSlice';
 
 
 interface MyVerticallyCenteredModalProps extends ModalProps {
@@ -17,6 +20,8 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
     const [rate, setRate] = useState(0);
     const [comment, setComment] = useState("");
     const [error, setError] = useState('');
+    const dispatch : AppDispatch = useDispatch()
+
 
     const handlePopup = async (e: FormEvent) => {
         e.preventDefault();
@@ -36,6 +41,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
             setComment("");
             setError("");
             props.onHide();
+            dispatch(getReviews(props.productid))
 
             if (response.error) {
                 window.alert(response.error);

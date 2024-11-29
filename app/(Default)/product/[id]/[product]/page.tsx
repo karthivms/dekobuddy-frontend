@@ -9,7 +9,6 @@ import GallerySlider from "@/app/components/singleproduct/gallerySlider";
 import { apiRequest } from "@/app/api/apiConfig";
 import { getUser } from "@/app/utilis/auth";
 import { redirect } from "next/navigation";
-import { getReviews } from "@/app/api/reviews";
 
 
 interface params {
@@ -40,7 +39,7 @@ export default async function page({ params }: { params: params }) {
 
     const data = await getProduct(id);
 
-    const [simproducts, userData, reviews] = await Promise.all([getSimilarProducts(data.categories[0].slug), getUser(), getReviews(id)])
+    const [simproducts, userData] = await Promise.all([getSimilarProducts(data.categories[0].slug), getUser()])
 
     let userid: string = "";
 
@@ -77,7 +76,7 @@ export default async function page({ params }: { params: params }) {
             </Container>
 
             <Description data={data.description} />
-            <Ratings userid={Number(userid)} productid={id} reviews={reviews} average={data.average_rating} rat_count={data.rating_count} rev_count={data.review_count} />
+            <Ratings userid={Number(userid)} productid={id}  average={data.average_rating} rat_count={data.rating_count} rev_count={data.review_count} />
 
             <SimilarProducts userid={userid} data={simproducts} />
         </>
