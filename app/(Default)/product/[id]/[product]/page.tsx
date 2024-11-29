@@ -9,6 +9,7 @@ import GallerySlider from "@/app/components/singleproduct/gallerySlider";
 import { apiRequest } from "@/app/api/apiConfig";
 import { getUser } from "@/app/utilis/auth";
 import { redirect } from "next/navigation";
+import { getReviews } from "@/app/api/reviews";
 
 
 interface params {
@@ -30,12 +31,6 @@ async function getSimilarProducts(category: string) {
     return response.results;
 }
 
-async function getReviews(id: number) {
-    const url = `/rating/`;
-    const body = { product_id: id }
-    const response = await apiRequest('GET', url, body);
-    return response;
-}
 
 
 export default async function page({ params }: { params: params }) {

@@ -33,7 +33,7 @@ export default function Banner({ data }: { data: banner[] }) {
                 modules={[EffectFade, Autoplay]}
             >
                 {data.map((item: banner) => (
-                    <SwiperSlide className="pb-5" key={`banner_${item.id}`}>
+                    <SwiperSlide key={`banner_${item.id}`}>
                         <Container fluid className="banner text-center pt-5" style={{ backgroundImage: `url(${item.banner_image})` }}>
                             <h1 className="font-2 font-h1 text-white font-sm-h2">&quot;{item.banner_name}&quot;</h1>
                             <div className="btn-banner mx-auto mt-5">
