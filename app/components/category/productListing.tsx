@@ -103,7 +103,7 @@ export default function ProductGrid({ grid, userid, category, subcategory }: { g
     return (
         <>
             <Toaster show={show} msg={wishmsg} handleClose={handleToastClose} />
-            <Row className="mt-4">
+            <Row className="mt-2">
 
                 {status === 'loading' ? (<ProductSkeleton grid={3} array={20} />) : (<>
                     {products.length === 0 ? (<div className="mt-3">

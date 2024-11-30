@@ -8,10 +8,23 @@ interface response {
     error: string
 }
 
-export const RegisterUser = async (data: User) => {
 
-    const response: response = await apiRequest('POST', '/register/', data);
-    console.log(response)
+interface body {
+    username: string,
+    email: string,
+    password: string
+}
+
+export const RegisterUser = async (data: body) => {
+    const body = {
+        username: data.username,
+        email: data.email,
+        password: data.password
+    }
+
+    console.log(`fromregister : ${JSON.stringify(body)}`)
+    const response: response = await apiRequest('POST', '/register/', body);
+    console.log(`fromregister : ${JSON.stringify(response)}`)
     if (response.error) {
         return response.error;
     } else {

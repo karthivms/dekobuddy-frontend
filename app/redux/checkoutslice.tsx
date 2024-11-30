@@ -191,7 +191,9 @@ export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue:
                     landmark: address.landmark
                 },
                 tax_amount: "0.00",
-                amount: state.cart.total,
+                amount: `${state.cart.total}`,
+                total_amount: state.checkout.discounted_total,
+                discount : `${(Number(state.checkout.discounted_total) + Number(state.checkout.discount_amount)) / Number(state.checkout.discount_amount)}%`,
                 shipping_cost: "0.00",
                 coupon_code: state.checkout.coupon_code !== '' ? state.checkout.coupon_code : ''
 
@@ -217,8 +219,10 @@ export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue:
                     alternative_phone: address.alternative_phone,
                     landmark: address.landmark
                 },
-                amount: state.checkout.buy_total,
+                amount: `${state.checkout.buy_total}`,
                 tax_amount: "0.00",
+                total_amount: state.checkout.discounted_total,
+                discount : `${(Number(state.checkout.discounted_total) + Number(state.checkout.discount_amount)) / Number(state.checkout.discount_amount)}%`,
                 shipping_cost: "0.00",
                 coupon_code: state.checkout.coupon_code !== '' ? state.checkout.coupon_code : ''
             }

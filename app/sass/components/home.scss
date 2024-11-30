@@ -1,6 +1,6 @@
 @import "./../variables";
 
-.banner-wrapper{
+.banner-wrapper {
     overflow: hidden;
 }
 
@@ -100,8 +100,8 @@
         font-weight: 600;
         opacity: 0;
 
-        &:hover{
-            background-color:white;
+        &:hover {
+            background-color: white;
             color: $primary-color;
         }
     }
@@ -149,7 +149,7 @@
         a {
             position: static;
 
-           
+
         }
     }
 
@@ -170,6 +170,10 @@
 .testimonial-slider {
     .swiper-slide>div {
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+
+    .swiper-wrapper {
+        align-items: end;
     }
 
     .quote {

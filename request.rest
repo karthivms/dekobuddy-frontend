@@ -85,7 +85,7 @@ Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
 
 
 {
-    "product_id" : 1
+    "product_id" : 11
 }
 
 ###
@@ -292,10 +292,8 @@ Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
 Content-Type: application/json
 
 {
-        "username": "Testuser",
-        "email": "test@test.in",
-        "password": "Test@1234",
-        "confirm_password": "Test@1234"
+        "email": "arunmozhivarman.dev@gmail.com",
+        "otp": "870822"
 }
 
 

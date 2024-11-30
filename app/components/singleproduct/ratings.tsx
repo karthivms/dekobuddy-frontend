@@ -64,7 +64,7 @@ export default function Ratings({ userid, productid, average, rat_count, rev_cou
                         <Row className="align-items-center gap-20">
                             <Col lg={2} className="d-flex d-lg-block align-items-center gap-10">
                                 <div className="font-h1 font-sm-h3 fw-5 text-black d-flex gap-6 align-items-center justify-content-center rating_star">
-                                    <span>{average.toFixed(1)}</span> <Star fill={"currentcolor"} size={"28"} />
+                                    <span>{average === null ? 0 : average.toFixed(1)}</span> <Star fill={"currentcolor"} size={"28"} />
                                 </div>
                                 <p className="mb-0 font-secondary fw-3 text-black text-center">
                                     {rat_count} {rat_count > 1 ? (<>Ratings</>) : (<>Rating</>)} & {rev_count} {rev_count > 1 ? (<>Reviews</>) : (<>Review</>)}</p>

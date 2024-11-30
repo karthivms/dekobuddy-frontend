@@ -1,6 +1,5 @@
 'use server'
 
-import { User } from "../types/types";
 import { apiRequest } from "./apiConfig";
 
 interface response {
@@ -11,14 +10,14 @@ interface response {
 
 interface otpdata{
     email : string,
-    otp? : string
+    otp : string
 }
 
-export const verifyOtp = async (data: User | otpdata) => {
+export const verifyOtp = async (data: otpdata) => {
 
     const response: response = await apiRequest('POST', '/register/', data);
-    console.log(data)
-    console.log(response)
+    console.log(`fromverify : ${JSON.stringify(data)}`)
+    console.log(`fromverify : ${JSON.stringify(response)}`)
     if (response.error) {
         return response.error;
     } else {

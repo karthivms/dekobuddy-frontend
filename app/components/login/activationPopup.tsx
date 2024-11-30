@@ -55,8 +55,8 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
     };
 
 
-    const [countdown, setCountdown] = useState(300); // Countdown starts from 30 seconds
-    const [isDisabled, setIsDisabled] = useState(true);
+    const [countdown, setCountdown] = useState(300); 
+    const [isDisabled, setIsDisabled] = useState(false);
 
     useEffect(() => {
         let timer: NodeJS.Timeout | null = null;
