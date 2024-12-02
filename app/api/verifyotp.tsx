@@ -21,7 +21,7 @@ export const verifyOtp = async (data: otpdata) => {
     if (response.error) {
         return response.error;
     } else {
-        return 'successfully registered';
+        return 'verified successfully';
     }
 
 

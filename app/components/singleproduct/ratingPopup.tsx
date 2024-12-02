@@ -20,7 +20,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
     const [rate, setRate] = useState(0);
     const [comment, setComment] = useState("");
     const [error, setError] = useState('');
-    const dispatch : AppDispatch = useDispatch()
+    const dispatch: AppDispatch = useDispatch()
 
 
     const handlePopup = async (e: FormEvent) => {
@@ -28,7 +28,11 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
 
         if (rate === 0) {
             setError('Please select a rating before submitting.')
-        } else {
+        } else if (props.userid === 0) {
+            setError('Please Login to review a product.')
+
+        }
+        else {
             const data = {
                 rating: rate,
                 review: comment,
@@ -36,17 +40,16 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
                 user_id: props.userid
             }
             const response = await rateProduct(data);
-
             setRate(0);
             setComment("");
             setError("");
             props.onHide();
-            dispatch(getReviews(props.productid))
+            dispatch(getReviews(props.productid));
 
             if (response.error) {
                 window.alert(response.error);
             }
-           
+
         }
 
 

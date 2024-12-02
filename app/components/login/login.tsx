@@ -9,6 +9,7 @@ import { LoginUser } from "@/app/api/login";
 import { useFormStatus } from "react-dom";
 import ForgotPassword from "./forgotpassword";
 import Toaster from "./toaster";
+import { cartItem, wishlistItem } from "@/app/types/types";
 
 
 
@@ -75,14 +76,26 @@ export default function Login() {
 
         if (error.username === "" && error.password === "") {
 
-            setError({})
+            setError({});
+            const cartdata = localStorage.getItem('cart') || "";
+            const Wishlistdata = localStorage.getItem('wishlist') || "";
 
-            const response = await LoginUser(formData);
-             if (!response) {
+            const cartbody = cartdata !== "" && JSON.parse(cartdata).map((item: cartItem) => ({ variation_id: item.product.id, quantity: item.product.quantity }));
+            const wishlistbody = Wishlistdata !== "" && JSON.parse(Wishlistdata).map((item: wishlistItem) => (item.products.id));
+
+            const body = {
+                username: formData.username,
+                password: formData.password,
+                ...(cartbody && { cart_item: cartbody }),
+                ...(wishlistbody && { wishlist_item: wishlistbody })
+            }
+
+            const response = await LoginUser(body);
+            if (!response) {
                 setShowToast(true)
             }
             setResponseError(response)
-           
+
             setFormData({
                 username: "",
                 password: ""

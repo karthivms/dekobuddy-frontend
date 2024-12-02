@@ -2,10 +2,7 @@ import { NextResponse } from 'next/server';
 import { apiRequest } from '../apiConfig';
 
 export async function GET(request: Request) {
-    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const username = process.env.API_USERNAME;
-    const password = process.env.API_PASSWORD;
-    const basicAuth = 'Basic ' + btoa(username + ':' + password);
+
 
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');

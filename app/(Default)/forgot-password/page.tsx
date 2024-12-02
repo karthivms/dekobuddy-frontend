@@ -28,13 +28,13 @@ export default function Page() {
     const token = params.get('token');
 
     useEffect(() => {
-        if(!token){
+        if (!token) {
             setResponseError("The link to reset your password is not valid");
             setColor("danger");
-                }
-    
+        }
+
     }, [params, token])
-   
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
@@ -80,10 +80,11 @@ export default function Page() {
         validateForm("password");
         validateForm("confirmpassword");
 
-
         if (error.password === "" && error.confirmpassword === "") {
+            const body = {new_password : formData.password}
+
             setError({})
-            const response = await ForgotPasswordApi(formData);
+            const response = await ForgotPasswordApi(body);
             setFormData({
                 password: "",
                 confirm_password: "",

@@ -5,8 +5,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import OrderSummary from './orderSummary';
 import { order } from '@/app/types/types';
-
-
+import Image from 'next/image';
 
 
 export default function OrderTabs({ All, Delivered, Processing, Cancelled }: { All: order[], Delivered: order[], Processing: order[], Cancelled: order[] }) {
@@ -51,7 +50,10 @@ export default function OrderTabs({ All, Delivered, Processing, Cancelled }: { A
                                 </div>
                             ))}
                         </>) : (
-                            <p className='my-5 text-center text-theme1 fw-4'>No Orders Found</p>
+                            <>
+                                <Image src={'/images/no-orders.png'} width={485} height={380} className='wp-350 mt-3 d-block m-auto h-auto' alt="empty_cart" />
+                                <p className='mb-5 text-center text-theme1 fw-4'>No Orders Found</p>
+                            </>
                         )}
 
 

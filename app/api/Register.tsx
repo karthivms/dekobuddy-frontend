@@ -8,11 +8,8 @@ interface response {
     error: string
 }
 
-
-interface body {
-    username: string,
-    email: string,
-    password: string
+interface body extends User{
+    email: string
 }
 
 export const RegisterUser = async (data: body) => {

@@ -6,6 +6,7 @@ import EyeOn from "../icons/eyeOn";
 import { useState } from "react";
 import { RegisterUser } from "@/app/api/Register";
 import Activation from "./activationPopup";
+import { Spinner } from "react-bootstrap";
 
 interface ErrorObject {
     [key: string]: string;
@@ -17,6 +18,9 @@ export default function SignUp() {
     const [terms, setTerms] = useState(false);
     const [responseError, setResponseError] = useState("");
     const [modalShow, setModalShow] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
 
 const handleModal = () => {
     setModalShow(false)
@@ -128,7 +132,10 @@ const handleModal = () => {
 
         if (error.username === "" && error.password === "" && error.email === "" && error.confirmpassword === "" && error.acceptterms === "") {
             setError({})
+            setIsLoading(true)
             const response = await RegisterUser(formData);
+            setIsLoading(false)
+            setIsDisabled(true)
             localStorage.setItem('email', formData.email)
             if (response === "successfully registered") {
                 setResponseError("")
@@ -242,9 +249,15 @@ const handleModal = () => {
                     </div>
                 </div>
                 {responseError && <div className="text-danger text-center mb-4 font-primary fw-3">{responseError}</div>}
-                <button className='btn3 fw-3 text-uppercase w-100 py-2'>Sign Up</button>
+                <button className='btn3 fw-3 text-uppercase w-100 py-2' disabled={isLoading}>{isLoading? (<Spinner
+                                        as="span"
+                                        animation="border"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    />) : <>Sign Up</>}</button>
             </form>
-            <Activation show={modalShow} handleShow={handleModal}/>
+            <Activation show={modalShow} isDisabled={isDisabled} setIsDisabled={setIsDisabled} handleShow={handleModal}/>
         </div>
     )
 }

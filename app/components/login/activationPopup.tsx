@@ -1,19 +1,26 @@
 'use client'
 
 import Modal from 'react-bootstrap/Modal';
-import { ModalProps } from 'react-bootstrap';
-import { useEffect, useRef, useState } from 'react';
+import { ModalProps, Spinner } from 'react-bootstrap';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { verifyOtp } from '@/app/api/verifyotp';
 import { resendOtp } from '@/app/api/resendOTP';
 
 
 interface MyVerticallyCenteredModalProps extends ModalProps {
     onHide: () => void;
+    isDisabled: boolean,
+    setIsDisabled: Dispatch<SetStateAction<boolean>>
 }
 
 function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
     const [otp, setOtp] = useState(Array(6).fill(""));
     const inputRefs = useRef<HTMLInputElement[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [responseError, setResponse] = useState('');    
+    const [color, setColor] = useState("");
+
+
 
     const handleInputChange = (value: string, index: number) => {
         if (isNaN(Number(value))) return;
@@ -44,6 +51,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
         const clipboardData = e.clipboardData.getData("Text").slice(0, 6);
         const updatedOtp = [...otp];
 
+
         for (let i = 0; i < clipboardData.length; i++) {
             if (isNaN(Number(clipboardData[i]))) break;
             updatedOtp[i] = clipboardData[i];
@@ -55,18 +63,17 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
     };
 
 
-    const [countdown, setCountdown] = useState(300); 
-    const [isDisabled, setIsDisabled] = useState(false);
+    const [countdown, setCountdown] = useState(300);
 
     useEffect(() => {
         let timer: NodeJS.Timeout | null = null;
 
-        if (isDisabled) {
+        if (props.isDisabled) {
             timer = setInterval(() => {
                 setCountdown((prev) => {
                     if (prev <= 1) {
                         clearInterval(timer!);
-                        setIsDisabled(false);
+                        props.setIsDisabled(false);
                         return 300; // Reset the countdown for the next use
                     }
                     return prev - 1;
@@ -77,7 +84,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
         return () => {
             if (timer) clearInterval(timer);
         };
-    }, [isDisabled]);
+    }, [props.isDisabled, props]);
 
     const formatTime = (seconds: number) => {
         const minutes = Math.floor(seconds / 60);
@@ -85,27 +92,41 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
         return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
     };
 
-
     const OtpHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const email = localStorage.getItem('email') || ""
         const data = { email: email, otp: otp.join("") }
-        const response = await verifyOtp(data)
-        if (response === "verified successfully") {
-            props.onHide()
+        setIsLoading(true)
+
+        const response = await verifyOtp(data);
+        setIsLoading(false)
+
+        if (response !== "verified successfully") {
+            setColor("danger")
+            setResponse(response)
+        } else{
+            setColor("success")
+            setResponse("OTP Verified successfully. Please login to continue")
+            setTimeout(() => {
+                props.onHide();
+
+            }, 3000)
         }
-        setIsDisabled(true);
+        props.setIsDisabled(true);
     };
 
-    const resendOtp2 = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+    const resendOtp2 = async () => {
         const email = localStorage.getItem('email') || ""
         const data = { email: email }
-        const response = await resendOtp(data)
-        if (response === "verified successfully") {
-            props.onHide()
+        const response = await resendOtp(data);
+        if (response === "resend successfully") {
+            setResponse("OTP resent successfully")
+            setColor("danger")
+            props.setIsDisabled(true);
+        } else {
+            setResponse(response)
+            setColor("danger")
         }
-        setIsDisabled(true);
     };
 
     return (
@@ -120,7 +141,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
                 <Modal.Title id="contained-modal-title-vcenter" className='fw-4 text-theme1 '>
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body className='pt-3'>
+            <Modal.Body className='pt-3 px-5'>
                 <h6 className='text-theme1 fw-4 font-h2 text-center mb-3'>
                     Successfully Registered
                 </h6>
@@ -129,7 +150,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
 
                 </p>
                 <form onSubmit={OtpHandler}>
-                    <div className="otp-container mt-3 d-flex justify-content-center gap-20">
+                    <div className="otp-container mt-3 d-flex justify-content-center py-2 gap-20">
 
                         {otp.map((value, index) => (
                             <input
@@ -148,20 +169,30 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
                             />
                         ))}
                     </div>
-               
-                    <button className='btn1 w-100 py-2 mt-3' >Verify OTP</button>
+
+                    <button className='btn1 w-100 py-2 mt-3' disabled={isLoading}>
+
+                        {isLoading ? (<Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                        />) : <>Verify OTP</>}
+                    </button>
+                    {responseError && <p className={`bg-${color} br-5 text-white py-1 mb-0 font-primary mt-3 text-center`}>{responseError}</p>}
                 </form>
 
-                <div className='mt-3 d-flex align-items-center justify-content-center text-center'>Didn't receive the OTP?
-                         <button className={`text-theme1 btn ms-1 border-transparent-solid p-0`} onClick={() => resendOtp2} disabled={isDisabled}> Resend OTP</button>
-                        {isDisabled && <span className='ms-2 text-theme3'>{formatTime(countdown)}</span>}
-                    </div>
+                <div className='mt-3 d-flex align-items-center justify-content-center text-center'>Didn &apos; t receive the OTP?
+                    <button className={`text-theme1 btn ms-1 border-transparent-solid p-0`} onClick={resendOtp2} disabled={props.isDisabled}> Resend OTP</button>
+                    {props.isDisabled && <span className='ms-2 text-theme3'>{formatTime(countdown)}</span>}
+                </div>
             </Modal.Body>
         </Modal >
     );
 }
 
-function Activation({ show, handleShow }: { show: boolean, handleShow: () => void }) {
+function Activation({ show, handleShow, isDisabled, setIsDisabled }: { show: boolean, handleShow: () => void, isDisabled: boolean, setIsDisabled: Dispatch<SetStateAction<boolean>> }) {
 
     return (
         <>
@@ -169,6 +200,8 @@ function Activation({ show, handleShow }: { show: boolean, handleShow: () => voi
             <MyVerticallyCenteredModal
                 show={show}
                 onHide={handleShow}
+                isDisabled={isDisabled}
+                setIsDisabled={setIsDisabled}
             />
         </>
     );

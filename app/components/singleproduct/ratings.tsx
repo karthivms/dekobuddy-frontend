@@ -20,13 +20,19 @@ interface ratingData {
 export default function Ratings({ userid, productid, average, rat_count, rev_count }: { userid: number, productid: number, average: number, rat_count: number, rev_count: number }) {
 
     const groupedRatings: { [key: number]: number } = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
-    const dispatch : AppDispatch = useDispatch()
+    const dispatch : AppDispatch = useDispatch();
+
 
     useEffect(() => {
         dispatch(getReviews(productid))
     },[dispatch, productid])
 
-    const reviews = useSelector((state: RootState) => state.reviews.reviews)
+    const reviews = useSelector((state: RootState) => state.reviews.reviews);
+
+
+    const CurrentAverage =  reviews.reduce((acc, item) => acc +  item.rating, 0 ) / reviews.length;
+
+
 
     if (Array.isArray(reviews) && reviews.length > 0) {
         reviews.forEach((item: rating) => {
@@ -64,7 +70,7 @@ export default function Ratings({ userid, productid, average, rat_count, rev_cou
                         <Row className="align-items-center gap-20">
                             <Col lg={2} className="d-flex d-lg-block align-items-center gap-10">
                                 <div className="font-h1 font-sm-h3 fw-5 text-black d-flex gap-6 align-items-center justify-content-center rating_star">
-                                    <span>{average === null ? 0 : average.toFixed(1)}</span> <Star fill={"currentcolor"} size={"28"} />
+                                    <span>{average === null ? CurrentAverage.toFixed(1) : average.toFixed(1)}</span> <Star fill={"currentcolor"} size={"28"} />
                                 </div>
                                 <p className="mb-0 font-secondary fw-3 text-black text-center">
                                     {rat_count} {rat_count > 1 ? (<>Ratings</>) : (<>Rating</>)} & {rev_count} {rev_count > 1 ? (<>Reviews</>) : (<>Review</>)}</p>

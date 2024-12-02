@@ -3,7 +3,7 @@
 import { apiRequest } from "./apiConfig";
 
 
-export const getReviews = async (id: Number) => {
+export const getReviews = async (id: number) => {
 
     const url = `/rating/`;
     const body = { product_id: id }

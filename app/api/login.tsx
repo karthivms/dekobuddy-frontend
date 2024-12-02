@@ -1,5 +1,5 @@
 'use server'
-import { redirect	 } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 
 import { cookies } from "next/headers";
@@ -11,7 +11,18 @@ interface response {
     error: string
 }
 
-export const LoginUser = async (data: User) => {
+interface cartbody {
+    variation_id: number,
+    quantity: number
+}
+
+interface logindata extends User {
+    cart_item?: cartbody[],
+    wishlist_item?: string[]
+}
+
+export const LoginUser = async (data: logindata) => {
+    console.log(data)
 
     const response: response = await apiRequest('POST', '/login/', data);
 
