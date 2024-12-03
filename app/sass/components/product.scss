@@ -52,7 +52,7 @@
 
     position: relative;
 
-    @media screen and (max-width:600px) {
+    @media screen and (max-width:768px) {
         padding-left: 0 !important;
         padding: 0 10px !important;
         margin-top: 20px !important;
@@ -104,8 +104,18 @@
 }
 
 .modal-dialog {
-    width: 30%;
+    width: 35%;
 
+    @media screen and (max-width:1050px){
+        width: 45%;
+        margin: 0 auto !important ;
+    }
+
+
+    @media screen and (max-width:768px){
+        width: 95%;
+        margin: 0 auto !important ;
+    }
     .modal-content {
         background-color: $body-color;
     }
@@ -121,7 +131,7 @@
         color: white !important;
     }
 
-    @media screen and (max-width:600px) {
+    @media screen and (max-width:768px) {
         margin-top: 10px !important;
         margin-bottom: 30px !important;
     }
@@ -289,21 +299,24 @@
         padding-bottom: 30px;
     }
 
-    .galleryslider .swiper-pagination {
-        bottom: 0px !important;
 
-        .swiper-pagination-bullet {
-            background-color: $secondary-color;
-            opacity: 1 !important;
-        }
 
-        .swiper-pagination-bullet-active {
-            background-color: $primary-color !important;
-            width: 20px;
-            border-radius: 10px;
-        }
+}
+
+
+.galleryslider .swiper-pagination {
+    bottom: 0px !important;
+
+    .swiper-pagination-bullet {
+        background-color: $secondary-color;
+        opacity: 1 !important;
     }
 
+    .swiper-pagination-bullet-active {
+        background-color: $primary-color !important;
+        width: 20px;
+        border-radius: 10px;
+    }
 }
 
 .toast-message {

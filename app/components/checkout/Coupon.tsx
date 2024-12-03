@@ -44,9 +44,9 @@ export default function Coupon({ userid }: { userid: string }) {
                         <span className="font-primary fw-3 line-tight mt-1">Add Coupon</span>
                     </div>
                     <div className="mt-3">
-                        <form onSubmit={handleSubmit} className="w-100 d-flex flex-wrap align-items-center gap-20 row-gap-20">
+                        <form onSubmit={handleSubmit} className="w-100 d-flex couponform  flex-wrap align-items-center gap-20 row-gap-20">
                             <input type="text" placeholder="Coupon Code" className="p-1 wc-40" value={coupon} onChange={(e) => SetCoupon(e.target.value)} required />
-                            <button type="submit" disabled={couponStatus === 'loading'} className="btn1 h-35 px-4 d-block w-40 font-primary fw-3 text-uppercase" >
+                            <button type="submit" disabled={couponStatus === 'loading'} className="btn1 h-35 px-4 d-block  font-primary fw-3 text-uppercase" >
                                 {couponStatus === 'loading' ? (
                                     <Spinner
                                         as="span"

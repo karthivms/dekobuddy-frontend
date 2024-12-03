@@ -31,7 +31,7 @@ export default function GallerySlider({ images }: { images: productimage[] }) {
             >
                 {images.map((item: productimage) => (
                     <SwiperSlide  key={`testimonila_${item.id}`}>
-                            <Image src={item.image} alt="quote" width="552" height="558" className="w-100 h-400 br-30" />
+                            <Image src={item.image} alt="quote" width="552" height="558" className="w-100 h-auto br-30" />
                             
                     </SwiperSlide>
                 ))}

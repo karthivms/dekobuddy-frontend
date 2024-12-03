@@ -40,8 +40,8 @@ const ProductGallery = ({ images }: { images: productimage[] }) => {
     const handleActiveImg = (image: productimage) => setActiveImage(image);
 
     return (
-        <div className='d-block d-lg-flex gap-40 align-items-center'>
-            <div className='product-gallery wc-13 d-flex justify-content-around d-lg-block w-sm-100'>
+        <div className='d-flex gap-40 align-items-center'>
+            <div className='product-gallery wc-13 justify-content-around w-sm-100'>
                 {images.map((image: productimage) => (
                     <div
                         key={`gallery_img_${image.id}`}

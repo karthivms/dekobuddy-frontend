@@ -64,8 +64,16 @@
 
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width:768px) {
     .checkout_delivery {
         text-align: start !important;
+    }
+
+    .couponform{
+        display: block;
+
+        input, button{
+            width: 100% !important;
+        }
     }
 }

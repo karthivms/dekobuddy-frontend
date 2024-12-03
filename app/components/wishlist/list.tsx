@@ -153,7 +153,7 @@ export default function Wishlist({ userid }: { userid: string }) {
                         <div className="text-center">
                             <Image src={'/images/empty-wishlist.png'} width={485} height={380} className='wp-350 h-auto' alt="empty_wishlist" />
                             <h1 className="font-h2 fw-5 mb-5">Your wishlist is empty</h1>
-                            <Link href="/" className="bg-theme1 text-white px-4 py-2 br-5">Continue Shopping</Link>
+                            <Link href="/shop" className="bg-theme1 text-white px-4 py-2 br-5">Continue Shopping</Link>
                         </div>
                     </div>
                 )}

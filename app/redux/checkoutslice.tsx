@@ -167,6 +167,9 @@ export const ApplyCoupon = createAsyncThunk<couponResponse, dataType, { rejectVa
 export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue: string }>('/checkout/placeorder', async (id, { rejectWithValue, getState }) => {
     try {
         const state = getState() as RootState;
+        const discount =  state.checkout.coupon_code !== '' ?`${(Number(state.checkout.discounted_total) + Number(state.checkout.discount_amount)) / Number(state.checkout.discount_amount)}%`:0;
+        
+        
         const address = state.checkout.selectedAddress
         let body = {}
         if (state.checkout.buy_now.length === 0) {
@@ -192,8 +195,8 @@ export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue:
                 },
                 tax_amount: "0.00",
                 amount: `${state.cart.total}`,
-                total_amount: state.checkout.discounted_total,
-                discount : `${(Number(state.checkout.discounted_total) + Number(state.checkout.discount_amount)) / Number(state.checkout.discount_amount)}%`,
+                total_amount: state.checkout.coupon_code !== '' ? state.checkout.discounted_total : state.cart.total,
+                discount : discount,
                 shipping_cost: "0.00",
                 coupon_code: state.checkout.coupon_code !== '' ? state.checkout.coupon_code : ''
 
@@ -221,8 +224,8 @@ export const placeOrder = createAsyncThunk<OrderResponse, number, { rejectValue:
                 },
                 amount: `${state.checkout.buy_total}`,
                 tax_amount: "0.00",
-                total_amount: state.checkout.discounted_total,
-                discount : `${(Number(state.checkout.discounted_total) + Number(state.checkout.discount_amount)) / Number(state.checkout.discount_amount)}%`,
+                total_amount: state.checkout.coupon_code !== '' ? state.checkout.discounted_total : state.cart.total,
+                discount : discount,
                 shipping_cost: "0.00",
                 coupon_code: state.checkout.coupon_code !== '' ? state.checkout.coupon_code : ''
             }

@@ -19,10 +19,16 @@
         top: -40px;
         right: -35px;
 
-        @media screen and (max-width : 600px) {
-            top: -40px;
-            right: -5px;
+        @media screen and (max-width : 768px) {
+            right: -20px;
         }
+
+
+        @media screen and (max-width : 600px) {
+            right: 0px;
+        }
+
+        
     }
 }
 

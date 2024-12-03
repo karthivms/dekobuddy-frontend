@@ -48,7 +48,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className='pt-3'>
-                <form className='px-5 pb-3' onSubmit={handlePopup}>
+                <form className='px-md-5 px-2 pb-3' onSubmit={handlePopup}>
                     <h6 className='text-theme1 fw-4 font-h2 text-center mb-3'>
                         Reset Password
                     </h6>

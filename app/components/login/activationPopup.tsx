@@ -141,7 +141,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
                 <Modal.Title id="contained-modal-title-vcenter" className='fw-4 text-theme1 '>
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body className='pt-3 px-5'>
+            <Modal.Body className='pt-3 px-md-5 px-2'>
                 <h6 className='text-theme1 fw-4 font-h2 text-center mb-3'>
                     Successfully Registered
                 </h6>
@@ -150,7 +150,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
 
                 </p>
                 <form onSubmit={OtpHandler}>
-                    <div className="otp-container mt-3 d-flex justify-content-center py-2 gap-20">
+                    <div className="otp-container mt-3 d-flex justify-content-center py-2 gap-20 gap-sm-10">
 
                         {otp.map((value, index) => (
                             <input

@@ -101,7 +101,7 @@ export default function Page() {
     }
     return (
         <Container className="my-5">
-            <form className='px-5 pb-3 wc-40 mx-auto' onSubmit={handleSubmit}>
+            <form className='px-md-5 px-3 pb-3  wc-60 w-md-80 w-sm-100 mx-auto' onSubmit={handleSubmit}>
                 <h1 className='text-theme1 fw-4 font-h1 text-center mb-3'>
                     Reset Your Password
                 </h1>
