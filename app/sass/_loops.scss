@@ -138,7 +138,7 @@ $width-px: 1px;
     }
   }
 
-  @media screen and (max-width: 992px) {
+  @media screen and (max-width: 1050px) {
     .w-lg-#{$i} {
       width: $i * $width !important;
     }

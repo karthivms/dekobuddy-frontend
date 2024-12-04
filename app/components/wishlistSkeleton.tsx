@@ -1,11 +1,11 @@
 import { Col } from "react-bootstrap";
 import "@/app/sass/components/productskeleton.scss";
 
-export default function ProductSkeleton({grid, array}:{grid:number, array : number}) {
+export default function WishlistSkeleton({grid, array}:{grid:number, array : number}) {
     return (
         <>
             {[...Array(array)].map((_, index) => (
-                <Col xl={grid} lg={4} md={4} key={`product_skeleton_${index}`} sm={6} xs={6} className="p-1 mb-1 product_item ">
+                <Col lg={grid} key={`product_skeleton_${index}`} sm={6} xs={6} className="p-1 mb-1 product_item ">
 
                     <div className="bg-white br-8 p-3 pt-1">
          

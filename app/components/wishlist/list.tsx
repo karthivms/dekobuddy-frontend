@@ -9,11 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { fetchWishlistItems, handleSelectedItem, removeItem, removeWishlistItems, showTab } from "@/app/redux/wishlistslice";
 import ActionTab from "./actionTab";
-import ProductSkeleton from "../productCardSkeleton";
 import { wishlistItem } from "@/app/types/types";
 import formatPriceIndian from "@/app/utilis/formatPrice";
 import CartIcon2 from "../icons/carticon2";
 import Modal from "../category/Modal";
+import WishlistSkeleton from "../wishlistSkeleton";
 
 
 
@@ -25,12 +25,9 @@ export default function Wishlist({ userid }: { userid: string }) {
     const [attModal, setAttModal] = useState<number | null>(null);
     const [selectedSize, setSelectedsize] = useState(0);
 
-
-
     const isProductSelected = (id: number): boolean => {
         return selectedItems.includes(id)
     }
-
 
     useEffect(() => {
         const anyChecked = selectedItems.length >= 1;
@@ -80,14 +77,14 @@ export default function Wishlist({ userid }: { userid: string }) {
         <Row className="my-4 row-gap-20">
             {status === 'loading' ? (<>
                 <h1 className="mt-3 font-h1  text-theme1 fw-4 pb-2">Wishlist</h1>
-                <ProductSkeleton grid={20} array={5} />
+                <WishlistSkeleton grid={20} array={5} />
             </>
             ) : (<>
                 {wishlist.length > 0 ? (<>
                     <ActionTab userid={userid} />
                     {
                         wishlist.map((item: wishlistItem) => (
-                            <Col lg={20} xs={6} className="p-1 mb-1 product_item " key={`productitem_${item.id}`}>
+                            <Col lg={20}  className="p-1 mb-1 product_item " key={`productitem_${item.id}`}>
                                 <div className="bg-white br-8 p-3 pt-1">
                                     <div className="mb-2 d-flex justify-content-between align-items-center remove_wishlist">
                                         <button className="font-small btn fw-3 d-flex align-items-center gap-1"
@@ -145,6 +142,7 @@ export default function Wishlist({ userid }: { userid: string }) {
                                     </div>
 
                                 </div>
+                                
                             </Col>
                         ))
                     }

@@ -8,6 +8,7 @@ import Wishlisticon from "../icons/wishlisticon";
 import AccountIcon from "../icons/accounticon";
 import { Dropdown } from "react-bootstrap";
 import { categoryMenu } from "@/app/types/types";
+import SearchPopup from "./SearchPopup";
 
 
 
@@ -74,22 +75,22 @@ const Menu: React.FC<MenuProps> = ({ categoryMenu, cart, setshow, wishlist, user
     return (
         <>
             <Dropdown show={showMenu} onMouseEnter={() => setShowMenu(true)}
-      onMouseLeave={() => setShowMenu(false)}>
+                onMouseLeave={() => setShowMenu(false)}>
                 <Dropdown.Toggle
                     as="button"
                     id="basic-nav-dropdown"
                     className="text-black font-primary bg-transparent border-transparent-solid fw-4 ms-3 px-2"
-                    
+
                 >
                     All Categories
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="categorymenu" >
                     {categoryMenu.map((item) => (
                         <div key={`category_menu_${item.name}`} className="catmenu">
-                            <Link  href={`/category/${item.slug}`} className="w-100 d-block font-primary px-3 py-2 link1"  onClick={ () => setshow(false)}>{item.name}</Link>
+                            <Link href={`/category/${item.slug}`} className="w-100 d-block font-primary px-3 py-2 link1" onClick={() => setshow(false)}>{item.name}</Link>
                             {item.subcategories.map((subcat) => (
                                 <div key={`category_menu_${item.name}_${subcat.slug}`} className="subcategorymenu">
-                                    <Link href={`/category/${item.slug}/${subcat.slug}`} className="w-100 d-block font-primary px-3 py-2 link1" onClick={ () => setshow(false)}>{subcat.name}</Link>
+                                    <Link href={`/category/${item.slug}/${subcat.slug}`} className="w-100 d-block font-primary px-3 py-2 link1" onClick={() => setshow(false)}>{subcat.name}</Link>
                                 </div>
                             ))}
 
@@ -97,7 +98,7 @@ const Menu: React.FC<MenuProps> = ({ categoryMenu, cart, setshow, wishlist, user
                     ))}
                 </Dropdown.Menu>
             </Dropdown>
-            <ul className="d-flex p-0 m-0 ">
+            <ul className="d-flex user-menu-new p-0 m-0 ">
                 {menu.map((item: MenuItem) => (
                     <li key={`menu_${item.id}`} className="text-white ">
                         <Link
@@ -125,6 +126,9 @@ const Menu: React.FC<MenuProps> = ({ categoryMenu, cart, setshow, wishlist, user
                         </li>
                     )
                 })}
+                <li className="d-xl-none d-lg-block d-none">
+                    <SearchPopup />
+                </li>
             </ul>
         </>
     )

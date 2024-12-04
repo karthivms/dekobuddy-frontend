@@ -16,13 +16,13 @@ interface data2{
 }
 
 
-export default async function ForgotPasswordApi(data: data | data2) {
-    const response: response = await apiRequest('POST', '/forgot-password/', data);
+export default async function ForgotPasswordApi(data: data | data2, token? : string) {
+    const response: response = await apiRequest('POST', '/forgot-password/', data, {token : token});
     console.log(response);
 
     if (response.message) {
         return {message : "Password reset link has been sent to your email.", status : 200}
-    } else {
+    }  else {
         return {message : response.error, status : 400};
     }
 }

@@ -6,10 +6,10 @@ import { useState } from "react";
 import EyeOn from "../icons/eyeOn";
 import EyeOff from "../icons/eyeOff";
 import { LoginUser } from "@/app/api/login";
-import { useFormStatus } from "react-dom";
 import ForgotPassword from "./forgotpassword";
 import Toaster from "./toaster";
 import { cartItem, wishlistItem } from "@/app/types/types";
+import { Spinner } from "react-bootstrap";
 
 
 
@@ -20,8 +20,9 @@ interface ErrorObject {
 export default function Login() {
     const [show, setShow] = useState(false);
     const [responseError, setResponseError] = useState("");
-    const { pending } = useFormStatus();
     const [showToast, setShowToast] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
 
 
     const [formData, setFormData] = useState({
@@ -69,8 +70,8 @@ export default function Login() {
     }
 
 
-    const handleSubmit = async () => {
-
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         validateForm("username");
         validateForm("password");
 
@@ -89,8 +90,10 @@ export default function Login() {
                 ...(cartbody && { cart_item: cartbody }),
                 ...(wishlistbody && { wishlist_item: wishlistbody })
             }
-
+            setIsLoading(true)
             const response = await LoginUser(body);
+            setIsLoading(false);
+
             if (!response) {
                 setShowToast(true)
             }
@@ -112,7 +115,7 @@ export default function Login() {
     return (
         <div className='w-100'>
             <h2 className="text-center font-h2 fw-4 text-theme1 mb-4">Login</h2>
-            <form className='login-form' action={handleSubmit}>
+            <form className='login-form' onSubmit={handleSubmit}>
                 <div className='form-group'>
                     <label>Username / Email</label>
                     <input
@@ -157,7 +160,15 @@ export default function Login() {
                     <ForgotPassword />
                 </div>
                 {responseError && <div className="text-danger text-center mb-4 font-primary fw-3">{responseError}</div>}
-                <button className='btn3 fw-3 text-uppercase w-100 py-2' type="submit">{pending ? ("loading") : ("Log In")}</button>
+                <button className='btn3 fw-3 text-uppercase w-100 py-2' type="submit" disabled={isLoading}>
+                {isLoading? (<Spinner
+                                        as="span"
+                                        animation="border"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    />) : <>Log In</>}
+                </button>
             </form>
             <div className='d-flex align-items-center justify-content-center gap-30 my-5 or_block'>
                 <hr className="wc-40 d-inline-block" />

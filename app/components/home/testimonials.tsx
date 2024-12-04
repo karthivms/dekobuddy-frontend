@@ -19,7 +19,7 @@ export default function Testimonials({ reviews }: { reviews: testimonial[] }) {
 
     return (
         <div className="py-4 bg-theme2">
-            <Container className="wc-77 w-sm-97">
+            <Container className="wc-77 w-sm-97 w-lg-95">
                 <ScrollWrapper direction={-20}>
                     <h2 className="mt-3 text-uppercase font-h2 text-center text-theme1 fw-4">Testimonials</h2>
                 </ScrollWrapper>

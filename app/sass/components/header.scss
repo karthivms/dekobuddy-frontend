@@ -6,6 +6,17 @@ header {
     z-index: 999;
 }
 
+
+.searchpopup .modal-dialog {
+
+    .modal-content {
+        background-color: white;
+
+    }
+
+    width: initial !important;
+}
+
 .categorymenu {
     @media screen and (max-width: 600px) {
         margin-left: 0 !important;
@@ -275,7 +286,7 @@ header {
                         }
                     }
 
-                    &:last-child {
+                    &:nth-child(3) {
                         a::after {
                             content: "Cart";
                         }

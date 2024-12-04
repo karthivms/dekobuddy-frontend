@@ -80,7 +80,7 @@ export default function SimilarProducts({ userid, data }: { userid: string, data
                 modules={[Autoplay]}
             >
                 {data.map((item: Product) => (
-                    <SwiperSlide className="" key={`similar-product_${item.id}`}>
+                    <SwiperSlide  key={`similar-product_${item.id}`}>
                         <div className="p-1 mb-1 product_item " >
 
                             <div className="bg-white br-8 p-3">

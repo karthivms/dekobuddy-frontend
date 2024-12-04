@@ -127,8 +127,8 @@ export default function Menubar({ categoryMenu, username, userid }: { categoryMe
                             </Offcanvas.Header>
                             <Offcanvas.Body  >
                                 <Nav className="justify-content-end flex-grow-1 align-items-lg-center">
-                                    <form className="search-form ms-lg-5" onSubmit={(e) => e.preventDefault()}>
-                                        <Search />
+                                    <form className="search-form ms-xl-5 ms-lg-1 ms-0 d-lg-none d-xl-block" onSubmit={(e) => e.preventDefault()}>
+                                       <span className='text-white'> <Search /></span>
                                         <input
                                             type="text"
                                             value={search}
@@ -140,7 +140,7 @@ export default function Menubar({ categoryMenu, username, userid }: { categoryMe
                                         {isFocused && (<>{
                                             results.length !== 0 ? (
                                                 <div onMouseLeave={() => setIsFocused(false)}
-                                                    onClick={() => setIsFocused(false) }
+                                                    onClick={() => setIsFocused(false)}
                                                     className="search-result w-100  max-h-300 overflow-auto custom-scrollbar">
                                                     {results.map((item: search, index) => (
                                                         <div key={`search_item_${index}`} className={index === selectedIndex ? 'active-item' : 'bg-white'} onMouseOver={() => setSelectedIndex(index)}>

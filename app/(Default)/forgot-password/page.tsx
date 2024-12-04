@@ -25,7 +25,7 @@ export default function Page() {
     const [color, setColor] = useState("");
     const [error, setError] = useState<ErrorObject>({});
     const params = useSearchParams();
-    const token = params.get('token');
+    const token = params.get('token') || "";
 
     useEffect(() => {
         if (!token) {
@@ -84,12 +84,12 @@ export default function Page() {
             const body = {new_password : formData.password}
 
             setError({})
-            const response = await ForgotPasswordApi(body);
+            const response = await ForgotPasswordApi(body, token);
             setFormData({
                 password: "",
                 confirm_password: "",
             })
-            setResponseError(response.message);
+            setResponseError("Password has been reset successfully");
             if (response.status === 400) {
                 setColor("danger")
             } else {

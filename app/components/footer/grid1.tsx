@@ -29,7 +29,7 @@ export default function Grid1() {
     };
 
     return (
-        <Col lg={4}>
+        <Col xl={4} lg={4}>
             <Link href="/">
                 <Image src={logo} alt="deko-buddy" width={267} height={39} />
             </Link>

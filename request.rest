@@ -292,8 +292,8 @@ Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
 Content-Type: application/json
 
 {
-        "email": "arunmozhivarman.dev@gmail.com",
-        "otp": "870822"
+        "email": "arunmozhi.zinavo@gmail.com",
+        "otp": "574728"
 }
 
 

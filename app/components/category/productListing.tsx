@@ -114,9 +114,9 @@ export default function ProductGrid({ grid, userid, category, subcategory }: { g
                         <>
                             {
                                 products.map((item: Product) => (
-                                    <Col lg={grid} xs={6} className="p-1 mb-1 product_item " key={`productitem_${item.id}`}>
+                                    <Col xl={grid} lg={4} sm={4} xs={6} className="p-1 mb-1 product_item d-flex" key={`productitem_${item.id}`}>
                                         <div className="bg-white br-8 p-3">
-                                            <div className="product_grid">
+                                            <div className="product_grid ">
                                                 <div className="pro_btn_holder">
                                                     <Image alt="product-image" width={384} height={384} className="w-100 zoomimage h-auto br-10" src={item.images[1].image} loading="lazy" />
                                                     <Image alt="product-image" width={384} height={384} className="w-100 initialimage h-auto br-10" src={item.images[2].image} loading="lazy" />

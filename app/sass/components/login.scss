@@ -77,6 +77,20 @@
     }
 }
 
+.toast-message {
+    position: fixed !important;
+    right: 20px;
+    z-index: 999 !important;
+    bottom: 20px !important;
+    width: 250px !important;
+
+    .toast {
+        border-left: 4px solid $primary-color !important;
+        border-radius: 0 !important;
+    }
+
+}
+
 @media screen and (max-width:768px) {
     .login_page {
         padding: 0 !important;
