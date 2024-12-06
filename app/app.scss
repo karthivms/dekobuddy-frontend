@@ -1,4 +1,3 @@
-
 @import './sass/variables';
 @import './sass/mixins';
 @import './sass/loops';
@@ -24,7 +23,7 @@ body {
   font-style: normal;
 }
 
-.font-2{
+.font-2 {
   font-family: 'Algerian', sans-serif !important;
 }
 
@@ -33,20 +32,50 @@ a {
   text-decoration: none;
 }
 
-ul{
+ul {
   list-style-type: none;
 }
 
-.cartsidebar_btn{
+.cartsidebar_btn {
   position: absolute;
   bottom: 15px;
   width: 100%;
 
-  a:hover{
+  a:hover {
     background-color: $secondary-color !important;
   }
 }
 
-.cartsidebar{
+.cartsidebar {
   height: 90% !important;
+}
+
+.logoloader {
+  div {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      z-index: 1;
+      height: 100%;
+      animation: loader 2s;
+      right: 0;
+      background-color: rgb(241,232,219,.5);
+    }
+
+    
+  }
+}
+
+
+
+@keyframes loader {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
 }

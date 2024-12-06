@@ -1,6 +1,6 @@
 'use client'
 
-import { GetCountries } from '@/app/api/countries';
+// import { GetCountries } from '@/app/api/countries';
 import { GetState } from '@/app/api/states';
 import { changeStep, fetchAddress, updateSelectedAddress } from '@/app/redux/checkoutslice';
 import React, { useEffect, useState } from 'react';
@@ -9,6 +9,7 @@ import Select from './selectItem';
 import { AddAddress } from '@/app/api/addAddress';
 import { AppDispatch } from '@/app/redux/store';
 import Toaster from './toaster';
+import { Spinner } from 'react-bootstrap';
 
 interface Props {
     setedit: () => void;
@@ -19,10 +20,11 @@ interface Props {
 const AddressForm: React.FC<Props> = ({ setedit, userid }) => {
 
     const dispatch: AppDispatch = useDispatch();
-    const [country, setCountry] = useState([])
+    // const [country, setCountry] = useState([])
 
     const [state, setState] = useState([]);
     const [show, setShow] = useState(false);
+    const [loading, setIsloading] = useState(false);
 
     const handleClose = () => {
         setShow(false)
@@ -33,7 +35,7 @@ const AddressForm: React.FC<Props> = ({ setedit, userid }) => {
         mobileNumber: '',
         email: '',
         pincode: '',
-        country: '',
+        country: 'India',
         address: '',
         city: '',
         state: '',
@@ -60,7 +62,9 @@ const AddressForm: React.FC<Props> = ({ setedit, userid }) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        setIsloading(true)
         const response = await AddAddress(formData);
+        setIsloading(false)
 
         setFormData({
             first_name: '',
@@ -76,39 +80,39 @@ const AddressForm: React.FC<Props> = ({ setedit, userid }) => {
             user: Number(userid)
         })
 
-    
+
         setShow(true)
         dispatch(fetchAddress(Number(userid)))
 
         setTimeout(() => {
             dispatch(updateSelectedAddress(response.id))
-                setedit();
-            
+            setedit();
 
-        }, 2000)
+
+        }, 1000)
 
         dispatch(changeStep(3))
-     
-        
+
+
     };
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        async function getcountry() {
-            const response = await GetCountries();
-            setCountry(response)
-        }
-        getcountry()
-    }, [])
+    //     async function getcountry() {
+    //         const response = await GetCountries();
+    //         setCountry(response)
+    //     }
+    //     getcountry()
+    // }, [])
 
     useEffect(() => {
         async function getstate() {
-            const response = await GetState(formData.country);
+            const response = await GetState();
             setState(response?.data?.states)
         }
         getstate()
 
-    }, [formData.country])
+    }, [])
 
     return (
         <form className="address-form wc-70" onSubmit={handleSubmit}>
@@ -163,7 +167,8 @@ const AddressForm: React.FC<Props> = ({ setedit, userid }) => {
             <div className="form-row">
 
                 <div className="form-group">
-                    <Select value={formData.country} data={country} handlechange={handleChange} type={'country'} />
+                    {/* <Select value={formData.country} data={country} handlechange={handleChange} type={'country'} /> */}
+                    <input value={formData.country} type='text' />
                 </div>
 
                 <div className="form-group">
@@ -247,7 +252,13 @@ const AddressForm: React.FC<Props> = ({ setedit, userid }) => {
             </div> */}
             <div className='d-flex align-items-center mt-3 gap-20 flex-wrap'>
                 <button className="btn1 py-1 br-0 px-4 d-block  font-primary fw-3 text-uppercase" type="submit" >
-                    Save
+                    {loading ? (<Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                    />) : (<>Save</>)}
                 </button>
 
                 <span className="btn2  br-0 py-1 px-4  font-primary fw-3 text-uppercase pointer" onClick={() => setedit()}>

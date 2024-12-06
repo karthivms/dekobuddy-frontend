@@ -261,6 +261,22 @@ const cartSlice = createSlice({
             console.log(selected)
             if (selected) {
                 state.selectedAddress = selected;
+            }else{
+                state.selectedAddress = {
+                    id: 0,
+                    address_type: "Billing",
+                    first_name: "",
+                    address_1: "",
+                    city: "",
+                    landmark: null,
+                    postcode: "",
+                    Country_Region: "",
+                    state_country: "",
+                    email: "",
+                    phone: "",
+                    alternative_phone: null,
+                    user: 0
+                }
             }
         },
         AddtoBuy: (state, { payload }) => {

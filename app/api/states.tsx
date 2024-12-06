@@ -2,9 +2,9 @@
 
 import { apiRequest } from "./apiConfig";
 
-export async function GetState(country:string){
+export async function GetState(){
     const body = {
-        country: country
+        country: 'India'
     }
 
     const response = await apiRequest('POST', `https://countriesnow.space/api/v0.1/countries/states`, body);

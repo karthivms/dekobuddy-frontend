@@ -6,6 +6,7 @@ import { apiRequest } from "./apiConfig";
 interface response {
     access: string
     error: string
+    otp : string
 }
 
 interface body extends User{
@@ -23,9 +24,9 @@ export const RegisterUser = async (data: body) => {
     const response: response = await apiRequest('POST', '/register/', body);
     console.log(`fromregister : ${JSON.stringify(response)}`)
     if (response.error) {
-        return response.error;
+        return {error : response.error};
     } else {
-        return 'successfully registered';
+        return {otp : response.otp};
     }
 
 

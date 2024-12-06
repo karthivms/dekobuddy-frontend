@@ -8,7 +8,8 @@ import { resendOtp } from '@/app/api/resendOTP';
 
 
 interface MyVerticallyCenteredModalProps extends ModalProps {
-    onHide: () => void;
+    show: boolean,
+    onHide: () => void,
     isDisabled: boolean,
     setIsDisabled: Dispatch<SetStateAction<boolean>>
 }
@@ -17,7 +18,8 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
     const [otp, setOtp] = useState(Array(6).fill(""));
     const inputRefs = useRef<HTMLInputElement[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [responseError, setResponse] = useState('');    
+    const [isReloading, setIsReloading] = useState(false);
+    const [responseError, setResponse] = useState('');
     const [color, setColor] = useState("");
 
 
@@ -66,6 +68,13 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
     const [countdown, setCountdown] = useState(300);
 
     useEffect(() => {
+        if (!props.show) {
+            setCountdown(300)
+            props.setIsDisabled(true)
+        }
+    }, [props.show])
+
+    useEffect(() => {
         let timer: NodeJS.Timeout | null = null;
 
         if (props.isDisabled) {
@@ -94,34 +103,51 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
 
     const OtpHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const email = localStorage.getItem('email') || ""
-        const data = { email: email, otp: otp.join("") }
-        setIsLoading(true)
-
-        const response = await verifyOtp(data);
-        setIsLoading(false)
-
-        if (response !== "verified successfully") {
+        const email = localStorage.getItem('dkb_email') || ""
+        const stored_otp = localStorage.getItem('dkb_otp') || ""
+        const form_otp = otp.join("")
+        console.log(countdown)
+        if (countdown === 300) {
             setColor("danger")
-            setResponse(response)
-        } else{
+            setResponse("OTP expired. Please click resend otp to try again")
+        } else if (atob(`${stored_otp}`) !== form_otp) {
+            console.log(atob(`${stored_otp}`))
+            setColor("danger")
+            setResponse("Invalid OTP. Please try again")
+        } else {
             setColor("success")
-            setResponse("OTP Verified successfully. Please login to continue")
-            setTimeout(() => {
-                props.onHide();
+            setIsLoading(true)
+            const response = await verifyOtp({ email: email, status: true })
+            setIsLoading(false)
 
-            }, 3000)
+            if (!response) {
+                setResponse("OTP Verified successfully")
+                localStorage.removeItem('dkb_email')
+                localStorage.removeItem('dkb_otp')
+                setTimeout(() => {
+                    props.onHide();
+                    setCountdown(0)
+                    props.setIsDisabled(true);
+                }, 3000)
+            }
+
+
+
         }
-        props.setIsDisabled(true);
+
     };
 
     const resendOtp2 = async () => {
-        const email = localStorage.getItem('email') || ""
+        const email = localStorage.getItem('dkb_email') || ""
         const data = { email: email }
+        setIsReloading(true)
         const response = await resendOtp(data);
-        if (response === "resend successfully") {
+        setIsReloading(false)
+
+        if (response.otp) {
             setResponse("OTP resent successfully")
-            setColor("danger")
+            setColor("success")
+            localStorage.setItem("dkb_otp", btoa(`${response.otp}`))
             props.setIsDisabled(true);
         } else {
             setResponse(response)
@@ -184,7 +210,15 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
                 </form>
 
                 <div className='mt-3 d-flex align-items-center justify-content-center text-center'>Didn &apos; t receive the OTP?
-                    <button className={`text-theme1 btn ms-1 border-transparent-solid p-0`} onClick={resendOtp2} disabled={props.isDisabled}> Resend OTP</button>
+                    <button className={`text-theme1 btn ms-1 border-transparent-solid p-0`} onClick={resendOtp2} disabled={props.isDisabled}>
+                        {isReloading ? (<Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                        />) : (<>Resend OTP</>)}
+                    </button>
                     {props.isDisabled && <span className='ms-2 text-theme3'>{formatTime(countdown)}</span>}
                 </div>
             </Modal.Body>
@@ -193,6 +227,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
 }
 
 function Activation({ show, handleShow, isDisabled, setIsDisabled }: { show: boolean, handleShow: () => void, isDisabled: boolean, setIsDisabled: Dispatch<SetStateAction<boolean>> }) {
+
 
     return (
         <>

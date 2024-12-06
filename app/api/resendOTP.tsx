@@ -4,8 +4,8 @@ import { apiRequest } from "./apiConfig";
 
 
 
-interface otpdata{
-    email : string,
+interface otpdata {
+    email: string,
 }
 
 export const resendOtp = async (data: otpdata) => {
@@ -13,11 +13,8 @@ export const resendOtp = async (data: otpdata) => {
     const response = await apiRequest('POST', '/resend/', data);
     console.log(response)
 
-    if (response.error) {
-        return response.error;
-    } else {
-        return 'resend successfully';
-    }
+    return response;
+
 
 
 }

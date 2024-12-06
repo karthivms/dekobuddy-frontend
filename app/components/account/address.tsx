@@ -11,6 +11,7 @@ import EditIcon from "../icons/editIcon"
 import EditAddressForm from "../checkout/editAddress"
 import { DeleteAddress } from "@/app/api/deleteAddress"
 import Toaster from "../checkout/toaster"
+import { Spinner } from "react-bootstrap"
 
 
 
@@ -24,6 +25,10 @@ export default function Address({ userid }: { userid: string }) {
     }
 
     const addresses = useSelector((state: RootState) => state.checkout.addresses);
+
+
+    const [loadingStates, setLoadingStates] = useState<Record<number, boolean>>({});
+
     const status = useSelector((state: RootState) => state.checkout.status);
     const dispatch: AppDispatch = useDispatch();
     const [editState, setEditState] = useState(addresses[0]);
@@ -43,15 +48,16 @@ export default function Address({ userid }: { userid: string }) {
     }
 
     const handleDelete = async (id: number) => {
+        setLoadingStates((prevState) => ({ ...prevState, [id]: true }));
         const response = await DeleteAddress(id);
-        if (response) {
-            setShow(true)
+        setLoadingStates((prevState) => ({ ...prevState, [id]: false }));
 
-            dispatch(fetchAddress(Number(userid)))
+        if (response) {
+            setShow(true);
+            dispatch(fetchAddress(Number(userid)));
         }
 
     }
-
 
     return (
         <>{edit ? (<>
@@ -71,8 +77,15 @@ export default function Address({ userid }: { userid: string }) {
                                 <span className="font-primary fw-3 ms-3">{item.phone}</span>
                                 <div className="ms-auto text-theme1">
                                     <span onClick={() => handleEdit(item)} className="me-2 pointer" title="edit"><EditIcon /></span>
-                                    <span onClick={() => handleDelete(item.id)} className="pointer" title="delete">
-                                        <BinIcon />
+                                    <span onClick={() => handleDelete(item.id)} className={ loadingStates[item.id] || false ? (''):('pointer')} title="delete" >
+                                        {loadingStates[item.id] ? (<Spinner
+                                            as="span"
+                                            animation="border"
+                                            size="sm"
+                                            role="status"
+                                            aria-hidden="true"
+                                        />) : (<BinIcon />
+                                        )}
                                     </span>
                                 </div>
                             </div>
@@ -81,7 +94,6 @@ export default function Address({ userid }: { userid: string }) {
                             </span>
                         </div>
                         <Toaster msg={'Address Deleted Successfully'} show={show} handleClose={handleClose} />
-
                     </div>
                 ))}
             </>)}

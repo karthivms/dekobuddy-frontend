@@ -5,7 +5,7 @@ import Step from "./step";
 import { useDispatch, useSelector } from "react-redux";
 import { changeStep, fetchAddress, updateSelectedAddress } from "@/app/redux/checkoutslice";
 import { AppDispatch, RootState } from "@/app/redux/store";
-import  { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import AddressForm from "./addressForm";
 import { address } from "@/app/types/types";
 import { fetchCartItems, updateUrl } from "@/app/redux/cartSlice";
@@ -13,16 +13,17 @@ import AddressSkeleton from "../account/AddressSkeleton";
 import EditAddressForm from "./editAddress";
 
 function ChangeAddress({
-    add, edit, setEdit, setAdd, changeAddState, handleAddaddress , userid, selectedAdd, addresses }: { 
-    add : boolean, edit : boolean, setEdit : Dispatch<SetStateAction<boolean>>, setAdd : Dispatch<SetStateAction<boolean>>,  changeAddState : () => void, handleAddaddress : () => void, userid: string, selectedAdd: address, addresses: address[] }) {
+    add, edit, setEdit, setAdd, changeAddState, handleAddaddress, userid, selectedAdd, addresses }: {
+        add: boolean, edit: boolean, setEdit: Dispatch<SetStateAction<boolean>>, setAdd: Dispatch<SetStateAction<boolean>>, changeAddState: () => void, handleAddaddress: () => void, userid: string, selectedAdd: address, addresses: address[]
+    }) {
     const dispatch: AppDispatch = useDispatch();
-  
+
     const [editState, setEditState] = useState(addresses[0]);
 
     const changeState = () => {
         setEdit(false)
     }
-   
+
     const handleEditaddress = (item: address) => {
         setAdd(false)
         setEditState(item)
@@ -109,6 +110,9 @@ export default function Address({ userid }: { userid: string }) {
     }, [dispatch, userid])
 
 
+
+
+
     useEffect(() => {
         dispatch(fetchCartItems(userid))
 
@@ -133,9 +137,18 @@ export default function Address({ userid }: { userid: string }) {
         setEdit(false)
     }
 
+    useEffect(() => {
+        const selectedAddress = addresses.find((addr) => addr.id === SelectedAdd.id);
+        console.log("Iam Running")
+        if (!selectedAddress && SelectedAdd?.id !== 0) {
+            console.log("condiition is true")
+            dispatch(updateSelectedAddress(null));
+        }
+    }, [dispatch, addresses, SelectedAdd?.id])
+
     return (
         <>
-            {SelectedAdd ? (<>
+            {SelectedAdd && SelectedAdd?.id !== 0 ? (<>
                 {step === 2 ? (<ChangeAddress add={add} edit={edit} setEdit={setEdit} setAdd={setAdd} changeAddState={changeAddState} handleAddaddress={handleAddaddress} userid={userid} selectedAdd={SelectedAdd} addresses={addresses} />) : (<div className="bg-grey3 mt-4 d-flex px-4 py-3 br-2 gap-15">
                     <Step number={2} />
                     <div className="d-flex justify-content-between flex-wrap row-gap-10 w-100 align-items-start gap-20">
@@ -167,15 +180,15 @@ export default function Address({ userid }: { userid: string }) {
                 </div>
                 <div className="bg-grey3 mt-2 d-flex align-items-center px-4 py-3 br-2 gap-15">
 
-                {add ? (
-                    <AddressForm userid={userid} page="checkout" setedit={changeAddState} />
-                ) : (
-                    <button className="btn p-0" onClick={() => handleAddaddress()}>
-                        <span className="mx-2 font-secondary fw-4">+</span> <span className="font-primary fw-3 line-tight mt-1">Add New Address</span>
-                    </button>
-                )}
+                    {add ? (
+                        <AddressForm userid={userid} page="checkout" setedit={changeAddState} />
+                    ) : (
+                        <button className="btn p-0" onClick={() => handleAddaddress()}>
+                            <span className="mx-2 font-secondary fw-4">+</span> <span className="font-primary fw-3 line-tight mt-1">Add New Address</span>
+                        </button>
+                    )}
                 </div>
-                </>)}
+            </>)}
 
         </>
 

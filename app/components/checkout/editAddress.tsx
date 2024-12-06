@@ -1,6 +1,6 @@
 'use client'
 
-import { GetCountries } from '@/app/api/countries';
+// import { GetCountries } from '@/app/api/countries';
 import { GetState } from '@/app/api/states';
 import { changeStep, fetchAddress, updateSelectedAddress } from '@/app/redux/checkoutslice';
 import React, { useEffect, useState } from 'react';
@@ -10,6 +10,7 @@ import { AppDispatch } from '@/app/redux/store';
 import Toaster from './toaster';
 import { address } from '@/app/types/types';
 import { EditAddress } from '@/app/api/editAddress';
+import { Spinner } from 'react-bootstrap';
 
 interface Props {
     setedit: () => void;
@@ -21,9 +22,10 @@ interface Props {
 const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) => {
 
     const dispatch: AppDispatch = useDispatch();
-    const [country, setCountry] = useState([])
+    // const [country, setCountry] = useState([])
     const [state, setState] = useState([]);
     const [show, setShow] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
 
     const handleClose = () => {
@@ -63,14 +65,16 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
     const handleSubmit = async (e: React.FormEvent, id: number) => {
         e.preventDefault();
 
+        setIsLoading(true)
         const response = await EditAddress(formData);
-        console.log(response)
+        setIsLoading(false)
 
 
-        setShow(true)
-        dispatch(fetchAddress(Number(userid)))
 
-
+        if (response) {
+            setShow(true)
+            dispatch(fetchAddress(Number(userid)))
+        }
         setFormData({
             id: 0,
             first_name: '',
@@ -86,7 +90,6 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
             user: Number(userid)
         })
 
-        setShow(true)
         dispatch(changeStep(3))
         setTimeout(() => {
             setedit()
@@ -95,23 +98,23 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
         }, 2000)
     };
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        async function getcountry() {
-            const response = await GetCountries();
-            setCountry(response)
-        }
-        getcountry()
-    }, [])
+    //     async function getcountry() {
+    //         const response = await GetCountries();
+    //         setCountry(response)
+    //     }
+    //     getcountry()
+    // }, [])
 
     useEffect(() => {
         async function getstate() {
-            const response = await GetState(formData.country);
+            const response = await GetState();
             setState(response?.data?.states)
         }
         getstate()
 
-    }, [formData.country])
+    }, [])
 
     return (
         <form className="address-form wc-70" onSubmit={(event) => handleSubmit(event, formData.id)}>
@@ -166,13 +169,12 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
             <div className="form-row">
 
                 <div className="form-group">
-                    <Select value={formData.country} data={country} handlechange={handleChange} type={'country'} />
-
+                    {/* <Select value={formData.country} data={country} handlechange={handleChange} type={'country'} /> */}
+                    <input value={formData.country} type='text' />
                 </div>
 
                 <div className="form-group">
                     <Select value={formData.state} data={state} handlechange={handleChange} type={'state'} />
-
                 </div>
             </div>
 
@@ -251,7 +253,15 @@ const EditAddressForm: React.FC<Props> = ({ setedit, page, userid, address }) =>
             </div> */}
             <div className='d-flex align-items-center mt-3 gap-20 flex-wrap'>
                 <button className="btn1 py-1 br-0 px-4 d-block  font-primary fw-3 text-uppercase" type="submit" >
-                    {page === "checkout" ? (<>Save And Deliver here</>) : (<>Save</>)}
+                    {isLoading ? (<Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                    />) : (<>
+                        {page === "checkout" ? (<>Save And Deliver here</>) : (<>Save</>)}
+                    </>)}
                 </button>
 
                 <span className="btn2  br-0 py-1 px-4  font-primary fw-3 text-uppercase pointer" onClick={() => setedit()}>

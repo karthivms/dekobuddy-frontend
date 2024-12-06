@@ -10,7 +10,7 @@ export default function RootLayout({
     return (
         <div>
             <Header />
-            {children}
+            <div style={{minHeight:`calc(100vh - 441.6px)`}}>{children}</div>
             <Footer />
         </div>
 

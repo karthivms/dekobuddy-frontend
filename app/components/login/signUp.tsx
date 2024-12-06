@@ -3,7 +3,7 @@
 import Link from "next/link";
 import EyeOff from "../icons/eyeOff";
 import EyeOn from "../icons/eyeOn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RegisterUser } from "@/app/api/Register";
 import Activation from "./activationPopup";
 import { Spinner } from "react-bootstrap";
@@ -22,9 +22,9 @@ export default function SignUp() {
     const [isLoading, setIsLoading] = useState(false);
 
 
-const handleModal = () => {
-    setModalShow(false)
-}
+    const handleModal = () => {
+        setModalShow(false)
+    }
 
     const [formData, setFormData] = useState({
         username: '',
@@ -135,14 +135,21 @@ const handleModal = () => {
             setIsLoading(true)
             const response = await RegisterUser(formData);
             setIsLoading(false)
-            setIsDisabled(true)
-            localStorage.setItem('email', formData.email)
-            if (response === "successfully registered") {
+
+
+            if (response.otp) {
+                localStorage.setItem('dkb_email', formData.email)
+                localStorage.setItem('dkb_otp', btoa(`${response.otp}`))
+
                 setResponseError("")
                 setModalShow(true)
+                setIsDisabled(true)
+
 
             } else {
-                setResponseError(response)
+                if (response.error) {
+                    setResponseError(response.error)
+                }
 
             }
             setFormData({
@@ -154,6 +161,7 @@ const handleModal = () => {
             setTerms(false)
         }
     }
+
 
     return (
         <div className='w-100'>
@@ -249,15 +257,15 @@ const handleModal = () => {
                     </div>
                 </div>
                 {responseError && <div className="text-danger text-center mb-4 font-primary fw-3">{responseError}</div>}
-                <button className='btn3 fw-3 text-uppercase w-100 py-2' disabled={isLoading}>{isLoading? (<Spinner
-                                        as="span"
-                                        animation="border"
-                                        size="sm"
-                                        role="status"
-                                        aria-hidden="true"
-                                    />) : <>Sign Up</>}</button>
+                <button className='btn3 fw-3 text-uppercase w-100 py-2' disabled={isLoading}>{isLoading ? (<Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                />) : <>Sign Up</>}</button>
             </form>
-            <Activation show={modalShow} isDisabled={isDisabled} setIsDisabled={setIsDisabled} handleShow={handleModal}/>
+            <Activation show={modalShow} isDisabled={isDisabled} setIsDisabled={setIsDisabled} handleShow={handleModal} />
         </div>
     )
 }
