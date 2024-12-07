@@ -176,7 +176,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
 
                 </p>
                 <form onSubmit={OtpHandler}>
-                    <div className="otp-container mt-3 d-flex justify-content-center py-2 gap-20 gap-sm-10">
+                    <div className=" mt-3 d-flex justify-content-center py-2 gap-20 gap-sm-10">
 
                         {otp.map((value, index) => (
                             <input
@@ -231,7 +231,6 @@ function Activation({ show, handleShow, isDisabled, setIsDisabled }: { show: boo
 
     return (
         <>
-
             <MyVerticallyCenteredModal
                 show={show}
                 onHide={handleShow}

@@ -130,7 +130,6 @@ const filterSlice = createSlice({
             state.status = "success";
             state.count = action.payload.count;
             state.products = action.payload.results;
-            state.best_sellers = false;
         });
         builder.addCase(getProducts.rejected, (state) => {
             state.status = "failure";

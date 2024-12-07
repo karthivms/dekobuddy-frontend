@@ -225,9 +225,7 @@ $radius: 1px;
 $gap: 1px;
 
 @for $i from 1 through 100 {
-  .col-#{$i} {
-    grid-template-columns: repeat($i, 1fr);
-  }
+
 
   .gap-#{$i} {
     column-gap: $i * $gap;

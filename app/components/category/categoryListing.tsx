@@ -17,19 +17,18 @@ const ArrowIcon = ({ open }: { open: boolean }) => (
 export default function CategoryListing({ category }: { category: navigationItem[] }) {
 
     const [open, setOpen] = useState(true);
-    const subcategory = useSelector((state: RootState) => state.product.currentSubCategory)
-    const currentCategory = useSelector((state: RootState) => state.product.currentCategory)
+    const subcategory = useSelector((state: RootState) => state.product.currentSubCategory);
+    const currentCategory = useSelector((state: RootState) => state.product.currentCategory);
 
     const createSlug = useCallback((input: string | undefined) => {
         if (input) {
             return input.trim().replace(/\s+/g, '-').toLowerCase();
-
         }
         return ''
     }, []);
     return (
         <>
-            {subcategory === "" ? (
+            {subcategory === "" && category.length !== 0 ? (
                 <>
                     <Button
                         onClick={() => setOpen(!open)}

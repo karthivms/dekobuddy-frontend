@@ -3,7 +3,7 @@
 import Link from "next/link";
 import EyeOff from "../icons/eyeOff";
 import EyeOn from "../icons/eyeOn";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { RegisterUser } from "@/app/api/Register";
 import Activation from "./activationPopup";
 import { Spinner } from "react-bootstrap";
@@ -152,6 +152,7 @@ export default function SignUp() {
                 }
 
             }
+
             setFormData({
                 username: "",
                 email: "",

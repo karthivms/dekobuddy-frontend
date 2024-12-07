@@ -26,8 +26,10 @@ export default function Topbar() {
 
     useEffect(() => {
         dispatch(updateSort(params?.get('sort')))
-        if(params?.get('best_sellers')){
+        if (params?.get('best_sellers')) {
             dispatch(updateBestsellers(true))
+        } else {
+            dispatch(updateBestsellers(false))
         }
     }, [params, dispatch])
 
@@ -46,7 +48,7 @@ export default function Topbar() {
                 <Col md={6}>
                     <h3 className="font-h2 text-black font-sm-secondary line-normal">
                         Showing {products.count} Products
-                        { products.currentCategory !== "" ?
+                        {products.currentCategory !== "" ?
                             (<> for {deslugger(products.currentSubCategory === '' ? products.currentCategory : products.currentSubCategory)}</>) : <></>}
                     </h3></Col>
                 <Col className="d-flex justify-content-md-end align-items-center justify-content-start">
