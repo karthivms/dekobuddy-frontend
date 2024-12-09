@@ -31,7 +31,7 @@ export const LoginUser = async (data: logindata) => {
         cookies().set('_acdkb', encryptedSessionData, {
             httpOnly: true,
             secure: false,
-            // maxAge: 60 * 60 * 24 * 7,
+            maxAge: 60 * 60 * 24 * 30,
             path: '/',
         })
         redirect('/')
