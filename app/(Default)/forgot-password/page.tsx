@@ -4,7 +4,7 @@ import EyeOff from "@/app/components/icons/eyeOff";
 import EyeOn from "@/app/components/icons/eyeOn";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 import '@/app/sass/components/forgotpassword.scss';
 import ForgotPasswordApi from "@/app/api/forgotPassword";
 import { useSearchParams } from "next/navigation";
@@ -14,6 +14,7 @@ interface ErrorObject {
 }
 
 export default function Page() {
+    const [isLoading, setIsLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         password: '',
@@ -81,10 +82,13 @@ export default function Page() {
         validateForm("confirmpassword");
 
         if (error.password === "" && error.confirmpassword === "") {
-            const body = {new_password : formData.password}
+            const body = { new_password: formData.password }
 
             setError({})
+            setIsLoading(true)
             const response = await ForgotPasswordApi(body, token);
+            setIsLoading(false)
+
             setFormData({
                 password: "",
                 confirm_password: "",
@@ -144,6 +148,15 @@ export default function Page() {
                     </div>
                 </div>
                 <button className="btn1 p-2 w-100 fw-3 mt-2" >Submit</button>
+                <button className='btn1 w-100 p-2 mt-2 fw-3' disabled={isLoading}>
+                    {isLoading ? (<Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                    />) : <>Submit</>}
+                </button>
                 {responseError && <div className={`bg-${color} text-center text-white py-2 br-5 mt-4 font-primary fw-3`}>{responseError}</div>}
                 <div className='d-flex align-items-center justify-content-center gap-30 my-4 or_block'>
                     <hr className="wc-40 d-inline-block" />
