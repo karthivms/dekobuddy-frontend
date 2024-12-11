@@ -10,6 +10,7 @@ import ForgotPassword from "./forgotpassword";
 import Toaster from "./toaster";
 import { cartItem, wishlistItem } from "@/app/types/types";
 import { Spinner } from "react-bootstrap";
+import { signIn } from "next-auth/react";
 
 
 
@@ -112,6 +113,18 @@ export default function Login() {
         setShowToast(false)
     }
 
+
+
+    const googleAuth = async () => {
+        try {
+            const response = await signIn('google');
+            console.log("Sign-in response:", response);
+        } catch (error) {
+            console.error("Error during sign-in:", error);
+        }
+    }
+
+
     return (
         <div className='w-100'>
             <h2 className="text-center font-h2 fw-4 text-theme1 mb-4">Login</h2>
@@ -161,13 +174,13 @@ export default function Login() {
                 </div>
                 {responseError && <div className="text-danger text-center mb-4 font-primary fw-3">{responseError}</div>}
                 <button className='btn3 fw-3 text-uppercase w-100 py-2' type="submit" disabled={isLoading}>
-                {isLoading? (<Spinner
-                                        as="span"
-                                        animation="border"
-                                        size="sm"
-                                        role="status"
-                                        aria-hidden="true"
-                                    />) : <>Log In</>}
+                    {isLoading ? (<Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                    />) : <>Log In</>}
                 </button>
             </form>
             <div className='d-flex align-items-center justify-content-center gap-30 my-5 or_block'>
@@ -175,7 +188,7 @@ export default function Login() {
                 <span className='fw-3 text-grey2'>Or</span>
                 <hr className="wc-40 d-inline-block" />
             </div>
-            <button className='bg-grey3 mt-2 border-border2-solid br-5 py-2 wc-80 fw-3 mx-auto d-block text-grey2 font-secondary '>
+            <button className='bg-grey3 mt-2 border-border2-solid br-5 py-2 wc-80 fw-3 mx-auto d-block text-grey2 font-secondary ' onClick={googleAuth}>
                 <Image src={google} width={18} height={18} alt='google' className=' d-inline-block mb-1' />
                 <span className='ms-2'>Sign in with Google</span>
             </button>
