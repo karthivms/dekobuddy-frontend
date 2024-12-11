@@ -1,6 +1,5 @@
 'use client'
 
-import { apiRequest } from "@/app/api/apiConfig";
 import { cancelOrder } from "@/app/api/cancelOrder";
 import { Reasons } from "@/app/api/getReasons";
 import { usePathname, useRouter } from "next/navigation";
