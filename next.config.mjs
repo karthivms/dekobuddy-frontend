@@ -10,12 +10,16 @@ const nextConfig = {
         port: '8002',
         pathname: '/media/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      }
     ],
   }
 };
 
 const bundleAnalyzer = withBundleAnalyzer({
-    enabled: false,
-  });
+  enabled: false,
+});
 
 export default bundleAnalyzer(nextConfig);

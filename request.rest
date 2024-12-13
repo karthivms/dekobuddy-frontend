@@ -341,6 +341,16 @@ Content-Type: application/json
     "email" : "arun@zinavo.in"
 }
 
+###
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/google/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
+
+
+{
+    "email" : "arun@zinavo.in",
+    "username" : "arun"
+}
 
 
 

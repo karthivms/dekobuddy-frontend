@@ -13,6 +13,7 @@ import { usePathname } from "next/navigation";
 import { LogoutUser } from "@/app/utilis/logout";
 import { getUser } from "@/app/utilis/auth";
 import { useEffect, useState } from "react";
+import { signOut } from "next-auth/react";
 
 
 export const SideBar = () => {
@@ -35,8 +36,10 @@ export const SideBar = () => {
 
     };
 
+
     const handleLogout = async () => {
         await LogoutUser()
+        signOut({ callbackUrl: "/" })
     }
 
     useEffect(() => {

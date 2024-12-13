@@ -9,6 +9,8 @@ import AccountIcon from "../icons/accounticon";
 import { Dropdown } from "react-bootstrap";
 import { categoryMenu } from "@/app/types/types";
 import SearchPopup from "./SearchPopup";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 
 
@@ -34,6 +36,7 @@ const Menu: React.FC<MenuProps> = ({ categoryMenu, cart, setshow, wishlist, user
 
     const [showMenu, setShowMenu] = useState(false);
 
+    const { data: session, status } = useSession();
 
     const getIcon = (name: string) => {
         switch (name) {
@@ -44,6 +47,14 @@ const Menu: React.FC<MenuProps> = ({ categoryMenu, cart, setshow, wishlist, user
             case "account":
                 if (username) {
                     return <AccountIcon />
+                } else if (status === 'authenticated') {
+                    return <Image
+                        src={session?.user?.image || ''}
+                        alt="Profile Picture"
+                        width={22}
+                        height={22}
+                        style={{ borderRadius: '50%' }}
+                    />
                 }
                 else {
                     return 'login / register'
@@ -114,7 +125,7 @@ const Menu: React.FC<MenuProps> = ({ categoryMenu, cart, setshow, wishlist, user
                     const itemcount = getItems(item.name);
                     return (
                         <li key={`usermenu_${item.id}`}>
-                            <Link href={username || item.name !== 'account' ? item.link : "/login"} className="link1 font-primary fw-4 no-of-items">
+                            <Link href={username || status === 'authenticated' || item.name !== 'account' ? item.link : "/login"} className="link1 font-primary fw-4 no-of-items">
 
                                 {getIcon(item.name)}
                                 {username && item.name === 'account' && (<span className="ms-1 d-inline-block text-capitalize">{username}</span>)}

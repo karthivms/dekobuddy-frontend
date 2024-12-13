@@ -7,6 +7,7 @@ import 'swiper/css/navigation';
 
 import { Barlow } from 'next/font/google';
 import ReduxProvider from "./redux/provider";
+import { SessionProvider } from "next-auth/react";
 
 const barlow = Barlow({
   subsets: ['latin'],
@@ -29,7 +30,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={barlow.className}>
         <ReduxProvider>
-          {children}
+          <SessionProvider>
+            {children}
+          </SessionProvider>
         </ReduxProvider>
       </body>
     </html>

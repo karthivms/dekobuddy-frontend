@@ -192,6 +192,8 @@ export default function Login() {
                 <Image src={google} width={18} height={18} alt='google' className=' d-inline-block mb-1' />
                 <span className='ms-2'>Sign in with Google</span>
             </button>
+    
+
             <Toaster show={showToast} handleClose={handleClose} />
         </div>
     )
