@@ -147,7 +147,6 @@ export default function Page() {
                         {error.confirmpassword && <p className="text-danger m-0  font-primary fw-3">{error.confirmpassword}</p>}
                     </div>
                 </div>
-                <button className="btn1 p-2 w-100 fw-3 mt-2" >Submit</button>
                 <button className='btn1 w-100 p-2 mt-2 fw-3' disabled={isLoading}>
                     {isLoading ? (<Spinner
                         as="span"
