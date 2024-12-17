@@ -11,7 +11,7 @@ interface initialState {
     status: "loading" | "success" | "failure",
     error: undefined
     total: number
-    url : string
+    url: string
 }
 
 interface updateBody {
@@ -77,9 +77,9 @@ export const AddCartItems = createAsyncThunk<addResponse, cartdata, { rejectValu
         } else {
             const state = getState() as RootState;
             localStorage.setItem("cart", JSON.stringify(state.cart.cartItems));
-            const isFirstitem  = state.cart.cartItems.length === 1
+            const isFirstitem = state.cart.cartItems.length === 1
             console.log(isFirstitem)
-            return {success : true, cart_data : {cart_item_id : isFirstitem? 1 : state.cart.cartItems[state.cart.cartItems.length - 1].id }}
+            return { success: true, cart_data: { cart_item_id: isFirstitem ? 1 : state.cart.cartItems[state.cart.cartItems.length - 1].id } }
         }
     })
 
@@ -128,7 +128,7 @@ const initialState: initialState = {
     status: "loading",
     error: undefined,
     total: 0,
-    url : ''
+    url: ''
 }
 
 const cartSlice = createSlice({
@@ -185,11 +185,11 @@ const cartSlice = createSlice({
 
             state.total = total;
         },
-        updateUrl : (state) => {
-            const {url} = getDomainUrl();
+        updateUrl: (state) => {
+            const { url } = getDomainUrl();
             state.url = url;
         },
-        clearCart : (state) => {
+        clearCart: (state) => {
             state.cartItems = [];
         }
     },
