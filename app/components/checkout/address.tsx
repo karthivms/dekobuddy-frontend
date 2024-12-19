@@ -111,8 +111,6 @@ export default function Address({ userid }: { userid: string }) {
 
 
 
-
-
     useEffect(() => {
         dispatch(fetchCartItems(userid))
 
@@ -139,7 +137,6 @@ export default function Address({ userid }: { userid: string }) {
 
     useEffect(() => {
         const selectedAddress = addresses.find((addr) => addr.id === SelectedAdd.id);
-        console.log("Iam Running")
         if (!selectedAddress && SelectedAdd?.id !== 0) {
             console.log("condiition is true")
             dispatch(updateSelectedAddress(null));
