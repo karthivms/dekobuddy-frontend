@@ -11,17 +11,12 @@
     },
     {
         "id":3,
-        "name": "Products",
+        "name": "Shop",
         "link": "/shop"
     },
     {
         "id":4,
-        "name": "Cart",
-        "link": "/cart"
-    },
-    {
-        "id":5,
-        "name": "Wishlist",
-        "link": "/wishlist"
+        "name": "Empowering Artisans",
+        "link": "/empowering-artisans"
     }
 ]

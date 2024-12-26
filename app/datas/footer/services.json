@@ -2,7 +2,7 @@
     {
         "id":1,
         "name": "Terms and Conditions",
-        "link": "#"
+        "link": "/terms-conditions"
     },
     {
         "id":2,
@@ -13,15 +13,5 @@
         "id":3,
         "name": "Cookies",
         "link": "#"
-    },
-    {
-        "id":4,
-        "name": "Exchange and Refund Policy",
-        "link": "#"
-    },
-    {
-        "id":5,
-        "name": "Track Orders",
-        "link": "/account/orders"
     }
 ]
