@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Accordion, Col, Container, Row } from "react-bootstrap";
 import '@/app/sass/components/dekobuddylux.scss';
+import Link from "next/link";
 
 export default function Page() {
     return (
@@ -48,7 +49,9 @@ export default function Page() {
 
                                 </ul>
                             </Col>
+
                         </Row>
+                        <Link href={'/dekobuddy-lux-products'} className="btn1 py-1 px-3 br-0 font-primary mt-4 d-inline-block">Shop Now</Link>
 
                     </Col>
                 </Row>

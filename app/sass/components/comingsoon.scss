@@ -1,0 +1,21 @@
+@import "@/app/sass/variables.scss";
+
+.layout-bg {
+    background-image: url('http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/media/Main_banners/banner2.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: -1;
+    left: 0;
+    opacity: 0.4;
+}
+
+.layout {
+    position: relative;
+    height: calc(100vh - 112px);
+z-index: 1;
+}

@@ -4,7 +4,7 @@ import { Container, Nav, Navbar, Offcanvas } from 'react-bootstrap';
 import Menu from './menu';
 import Link from 'next/link';
 import Image from 'next/image';
-import logo from "@/public/images/logo.svg";
+import logo from "@/public/images/dekobuddy-logo1.svg";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/app/redux/store';
 import Search from '../icons/search';
