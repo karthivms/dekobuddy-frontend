@@ -16,10 +16,9 @@ interface ApiInfo {
     user_id: number
 }
 
-export default function ActionButtons({  setErrormsg, Apiinfo, category, productid, image, variation, name, setCount }: {  setErrormsg: Dispatch<SetStateAction<string>>, Apiinfo: ApiInfo, category: string, productid: number, image: productimage, variation: variations, name: string, setCount: React.Dispatch<React.SetStateAction<number>> }) {
+export default function ActionButtons({ setErrormsg, Apiinfo, category, productid, image, variation, name, setCount }: { setErrormsg: Dispatch<SetStateAction<string>>, Apiinfo: ApiInfo, category: string, productid: number, image: productimage, variation: variations, name: string, setCount: React.Dispatch<React.SetStateAction<number>> }) {
     const dispatch: AppDispatch = useDispatch();
     const cartproducts = useSelector((state: RootState) => state.cart.cartItems);
-    // const router = useRouter()
 
     const [showsidebar, setShowSidebar] = useState(false);
 
@@ -79,12 +78,12 @@ export default function ActionButtons({  setErrormsg, Apiinfo, category, product
             user_id: Apiinfo.user_id
         }
 
-      
-            if ( Apiinfo.quantity > variation.stock) {
-                setErrormsg(`Product out of stock, Cannot add more of this item.`);
-                return;
-            }
-        
+
+        if (Apiinfo.quantity > variation.stock) {
+            setErrormsg(`Product out of stock, Cannot add more of this item.`);
+            return;
+        }
+
 
         dispatch(AddtoBuy(cartAPiData));
         setCount(1)

@@ -40,7 +40,7 @@ export default async function OrderDetail({ params }: { params: Params }) {
                 <Link href={'/account/orders'} className="fw-3 mb-2 d-flex align-items-center">
                     <span className="font-h2 me-2">&lsaquo;</span> Your Orders</Link>
                 <Row className="gap-40 align-items-start px-3 row-gap-40">
-                    <Col lg={8} className="bg-grey3 br-10 p-4">
+                    <Col lg={8} className="bg-white br-10 p-4">
                     <h3 className='font-secondary fw-4 mb-5'># ORDER ID : {params.id}</h3>
 
                         <Delivery data={order[0]} id={params.id} userid={userid}/>

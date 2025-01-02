@@ -27,8 +27,6 @@ export default function ProductGrid({ grid, userid, category, subcategory }: { g
     const [attModal, setAttModal] = useState<number | null>(null);
     const [selectedSize, setSelectedsize] = useState(0);
 
-
-
     const dispatch: AppDispatch = useDispatch()
 
 

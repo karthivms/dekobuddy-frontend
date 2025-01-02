@@ -10,8 +10,9 @@ import { RootState } from "@/app/redux/store";
 import { useEffect } from "react";
 import { changeStatus, changeStep } from "@/app/redux/checkoutslice";
 import { clearCart } from "@/app/redux/cartSlice";
+import ReplaceOrder from "./replaceOrder";
 
-export const Delivery = ({ userid, data, id }: {userid:string, data: order, id: string }) => {
+export const Delivery = ({ userid, data, id }: { userid: string, data: order, id: string }) => {
     // function getDateTwoDaysFromToday() {
     //     const today = new Date();
     //     today.setDate(today.getDate() + 2);
@@ -32,6 +33,12 @@ export const Delivery = ({ userid, data, id }: {userid:string, data: order, id: 
             dispatch(changeStep(3));
         }
     }, [dispatch, order_status])
+
+
+    const deliveredDate = new Date(data.delivered_date || new Date());
+    const fifteenDaysAfterDelivered = new Date(deliveredDate.getTime() + 1 * 24 * 60 * 60 * 1000);
+    const now = new Date();
+
 
     return (
         <>
@@ -76,7 +83,9 @@ export const Delivery = ({ userid, data, id }: {userid:string, data: order, id: 
                     </ul>
                 </Col>
                 <Col >
-                {data.order_status !== 'Shipped' && data.order_status !== 'Cancelled' && data.order_status !== 'Delivered' &&   (<CancelOrder userid={userid} id={id}/>) }
+                    {data.order_status !== 'Shipped' && data.order_status !== 'Cancelled' && data.order_status !== 'Replacement' && data.order_status !== 'Delivered' && (
+                        <CancelOrder userid={userid} id={id} />)}
+                    {data.order_status === 'Delivered' && fifteenDaysAfterDelivered > now && (<ReplaceOrder userid={userid} id={id} />)}
                 </Col>
             </Row>
         </>

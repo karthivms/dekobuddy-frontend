@@ -353,6 +353,21 @@ Content-Type: application/json
 }
 
 
+###
+
+POST http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/api/orders/deko000001/replace_order/
+Authorization: Basic ZGVrb2J1ZGR5OkFkbWluYW51c2hhQDEyMw==
+Content-Type: application/json
+
+
+{
+	    "user_id":124,
+	    "reason": "it is break",
+	    "comment": "test"
+	}
+
+
+
 
 
 
