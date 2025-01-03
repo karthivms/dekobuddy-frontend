@@ -4,7 +4,7 @@ export interface navigationItem {
     id: number;
     name: string;
     slug?: string;
-    parent_category? : string
+    parent_category?: string
     link?: string,
     image: string;
     active: boolean
@@ -12,23 +12,23 @@ export interface navigationItem {
 
 
 
-export interface categoryMenu{
-    
-        id: number,
-        name: string,
-        slug: string,
-        image: string,
-        active: boolean,
-        subcategories: [
-            {
-                id: number,
-                name: string,
-                slug: string,
-                image: null | string,
-                active: boolean
-            }
-        ]
-    
+export interface categoryMenu {
+
+    id: number,
+    name: string,
+    slug: string,
+    image: string,
+    active: boolean,
+    subcategories: [
+        {
+            id: number,
+            name: string,
+            slug: string,
+            image: null | string,
+            active: boolean
+        }
+    ]
+
 }
 
 
@@ -94,11 +94,11 @@ export interface cartItem {
 export interface wishListProduct {
     id: number,
     name: string,
-    category : string,
+    category: string,
     regular_price: number,
     sale_price?: number,
     images: productimage[],
-    variations : variations[]
+    variations: variations[]
 }
 
 export interface rating {
@@ -163,17 +163,28 @@ export interface order {
     id: number,
     user_id: number,
     order_id: string,
-    total_coupon_discount : number,
+    total_coupon_discount: number,
     amount: number,
     bill_amount: number,
     order_status: string,
     order_date: string,
-    order_confirmation_date? : string,
-    cancelled_date? : string,
-    shipped_date? : string,
-    delivered_date? : string,
+    order_confirmation_date?: string,
+    cancelled_date?: string,
+    shipped_date?: string,
+    delivered_date?: string,
     order_items: orderItem[],
+    replacement_status: string,
+    replacement_dates: replacementDates,
     billing_address: orderAddress
+}
+
+
+export interface replacementDates {
+    assign_to_agent_date: null | string | undefined,
+    approved_date: null | string | undefined,
+    delivered_date: null | string | undefined,
+    completed_date: null | string | undefined,
+    canceled_date: null | string | undefined
 }
 
 export interface profile {

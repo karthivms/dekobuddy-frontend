@@ -49,6 +49,8 @@ export const Delivery = ({ userid, data, id }: { userid: string, data: order, id
                 currentstatus={data.order_status}
                 shipped_date={data.shipped_date}
                 cancel_date={data.cancelled_date}
+                replacement_date={data.replacement_dates}
+                replacement_status={data.replacement_status}
                 deliver_date={data.delivered_date}
             />
             <MobileProgress

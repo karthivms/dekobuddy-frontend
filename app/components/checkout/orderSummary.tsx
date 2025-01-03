@@ -144,9 +144,9 @@ export default function OrderSummary({ userid, profiledata }: { userid: string, 
                 </div>
 
                 {/* <GstInvoice /> */}
-                {buyProducts.length !== 0? (<>
+                {buyProducts.length !== 0 ? (<>
                     <OrderMail email={profiledata.email} />
-                </>):(<>
+                </>) : (<>
                     {cartproducts.length > 0 && (<OrderMail email={profiledata.email} />)}
 
                 </>)}

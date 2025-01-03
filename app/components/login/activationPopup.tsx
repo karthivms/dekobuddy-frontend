@@ -22,7 +22,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
     const [responseError, setResponse] = useState('');
     const [color, setColor] = useState("");
 
-
+    const {show, onHide, isDisabled, setIsDisabled} = props
 
     const handleInputChange = (value: string, index: number) => {
         if (isNaN(Number(value))) return;
@@ -68,21 +68,21 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
     const [countdown, setCountdown] = useState(300);
 
     useEffect(() => {
-        if (!props.show) {
+        if (!show) {
             setCountdown(300)
-            props.setIsDisabled(true)
+            setIsDisabled(true)
         }
-    }, [props.show])
+    }, [show, setIsDisabled])
 
     useEffect(() => {
         let timer: NodeJS.Timeout | null = null;
 
-        if (props.isDisabled) {
+        if (isDisabled) {
             timer = setInterval(() => {
                 setCountdown((prev) => {
                     if (prev <= 1) {
                         clearInterval(timer!);
-                        props.setIsDisabled(false);
+                        setIsDisabled(false);
                         return 300; // Reset the countdown for the next use
                     }
                     return prev - 1;
@@ -93,7 +93,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
         return () => {
             if (timer) clearInterval(timer);
         };
-    }, [props.isDisabled, props]);
+    }, [isDisabled, setIsDisabled]);
 
     const formatTime = (seconds: number) => {
         const minutes = Math.floor(seconds / 60);
@@ -125,9 +125,9 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
                 localStorage.removeItem('dkb_email')
                 localStorage.removeItem('dkb_otp')
                 setTimeout(() => {
-                    props.onHide();
+                    onHide();
                     setCountdown(0)
-                    props.setIsDisabled(true);
+                    setIsDisabled(true);
                 }, 3000)
             }
 
@@ -148,7 +148,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
             setResponse("OTP resent successfully")
             setColor("success")
             localStorage.setItem("dkb_otp", btoa(`${response.otp}`))
-            props.setIsDisabled(true);
+            setIsDisabled(true);
         } else {
             setResponse(response)
             setColor("danger")
@@ -210,7 +210,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
                 </form>
 
                 <div className='mt-3 d-flex align-items-center justify-content-center text-center'>Didn &apos; t receive the OTP?
-                    <button className={`text-theme1 btn ms-1 border-transparent-solid p-0`} onClick={resendOtp2} disabled={props.isDisabled}>
+                    <button className={`text-theme1 btn ms-1 border-transparent-solid p-0`} onClick={resendOtp2} disabled={isDisabled}>
                         {isReloading ? (<Spinner
                             as="span"
                             animation="border"
@@ -219,7 +219,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
                             aria-hidden="true"
                         />) : (<>Resend OTP</>)}
                     </button>
-                    {props.isDisabled && <span className='ms-2 text-theme3'>{formatTime(countdown)}</span>}
+                    {isDisabled && <span className='ms-2 text-theme3'>{formatTime(countdown)}</span>}
                 </div>
             </Modal.Body>
         </Modal >

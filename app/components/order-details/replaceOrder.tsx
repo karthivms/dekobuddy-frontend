@@ -111,7 +111,7 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalProps) {
                     <select className="w-100 p-2 text-grey2" value={reason} onChange={(e) => setReason(e.target.value)}>
                         <option value='default'>Select Reason</option>
                         {reasons.map((item: { id: number, reason: string }) => (
-                            <option key={item.id} value={item.reason}>{item.reason}</option>
+                            <option key={item.id} value={item.id}>{item.reason}</option>
                         ))}
                     </select>
                     <textarea className='w-100 h-150 mt-4 p-3' value={comments} placeholder="Comments" onChange={(e) => setComments(e.target.value)} required />

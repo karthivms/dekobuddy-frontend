@@ -2,7 +2,8 @@
 import { Container } from 'react-bootstrap';
 import Link from 'next/link';
 import Image from 'next/image';
-import logo from "@/public/images/logo.svg";
+import logo from "@/public/images/dekobuddy-logo1.svg";
+
 
 
 export default function CheckoutHeader() {
