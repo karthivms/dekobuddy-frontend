@@ -1,17 +1,22 @@
 [
     {
-        "id":1,
+        "id": 1,
         "name": "Terms and Conditions",
         "link": "/terms-conditions"
     },
     {
-        "id":2,
+        "id": 2,
         "name": "Privacy Policy",
         "link": "#"
     },
     {
-        "id":3,
-        "name": "Cookies",
-        "link": "#"
+        "id": 3,
+        "name": "Warranty Conditions",
+        "link": "warranty-conditions"
+    },
+    {
+        "id": 4,
+        "name": "Rug Services",
+        "link": "rug-services"
     }
 ]

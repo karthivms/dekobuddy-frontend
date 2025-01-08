@@ -5,10 +5,11 @@ export default function Page() {
         <Container className='my-sm-3  px-3 py-4 '>
             <h1 className="font-h2 text-theme1 fw-4 mb-3">Terms and Conditions</h1>
             <p className="text-justify line-relaxed text-black">
-                Welcome to Dekobuddy Rugs, where sophistication meets comfort.
-                We are committed to providing you with the finest rugs, crafted to enhance the beauty of your home.
-                By shopping with us, you are agreeing to the following terms and conditions.
-                Please take a moment to read them carefully.
+                By visiting this website, you agree unconditionally to abide by the terms and conditions outlined below.
+                We reserve the right to amend or revise these terms and conditions at any time at our sole discretion.
+                All purchases made through this website are subject to these terms and conditions.
+                This website is owned and operated by DEKOBUDDY Rugs.
+                The domain name www.dekobuddy.in i.e., the website, is registered under DEKOBUDDY Rugs, a registered entity under the Companies Act, 2013, with its registered office in Bhadohi, Uttar Pradesh, India.
             </p>
 
 
@@ -51,5 +52,39 @@ export default function Page() {
             <p>For inquiries, support, or additional information, we invite you to reach out to us at <a href="mailto:support@dekobuddy.in" >support@dekobuddy.in</a>. Our team is ready to assist you and ensure your experience with Dekobuddy Rugs is nothing short of exceptional.</p>
 
             <p>Thank you for choosing Dekobuddy Rugs—where timeless elegance and unparalleled quality meet the art of home décor.</p>
+            <h3 className="font-h3 text-theme1 fw-4 mt-4 mb-3">9. Product Visual Discrepancies</h3>
+            <p>While we strive to present our products as accurately as possible, there may be variations in colors, textures, sizes, and appearances due to individual screen settings. Customers can request additional product photographs by emailing us at <a href="mailto:shop@dekobuddy.in">shop@dekobuddy.in</a>.</p>
+
+            <h3 className="font-h3 text-theme1 fw-4 mt-4 mb-3">10. Website Copyright</h3>
+            <p>The content, design, and layout of this website are protected under copyright laws. Any imitation or reproduction in any form is strictly prohibited. DEKOBUDDY Rugs reserves all rights to its content, including social media posts on platforms like Facebook, Instagram, Twitter, and Pinterest. Any instance of plagiarism will be subject to legal action under the jurisdiction of Indian courts.</p>
+
+            <h3 className="font-h3 text-theme1 fw-4 mt-4 mb-3">11. Third-Party Links</h3>
+            <p>This website may contain links to third-party websites. DEKOBUDDY Rugs does not endorse or hold responsibility for the content or practices of these external websites.</p>
+
+            <h3 className="font-h3 text-theme1 fw-4 mt-4 mb-3">12. Prohibited Activities</h3>
+            <p>You shall not upload, post, host, or share any content on this website that:</p>
+            <ul className="flex-column d-flex row-gap-10">
+                <li>(a) Belongs to someone else without their consent.</li>
+                <li>(b) Is harmful, offensive, or violates privacy or public order.</li>
+                <li>(c) Involves harassment, defamation, or promotes illegal activities.</li>
+                <li>(d) Infringes upon intellectual property rights.</li>
+                <li>(e) Violates any applicable law.</li>
+                <li>(f) Contains malware or harmful code.</li>
+                <li>(g) Threatens national security, harmony, or incites unlawful acts.</li>
+            </ul>
+
+            <h3 className="font-h3 text-theme1 fw-4 mt-4 mb-3">13. Credit/Debit Card Information</h3>
+            <p>You confirm that the credit or debit card details you provide on this website are accurate and belong to you. DEKOBUDDY Rugs will not be held liable for any fraudulent use of your payment information. We do not share your payment details with third parties, except as required by law.</p>
+
+            <h3 className="font-h3 text-theme1 fw-4 mt-4 mb-3">14. Trademarks</h3>
+            <p>All trademarks, logos, and service marks displayed on this website are the exclusive property of DEKOBUDDY Rugs or their respective owners. Unauthorized use of these trademarks is strictly prohibited without prior written permission.</p>
+
+            <h3 className="font-h3 text-theme1 fw-4 mt-4 mb-3">15. Arbitration</h3>
+            <p>In the event of any dispute arising between the customer and DEKOBUDDY Rugs concerning the usage of this website, the matter will be referred to a sole arbitrator appointed by the company. The arbitration proceedings will take place in Bhadohi, Uttar Pradesh, in accordance with the Arbitration and Conciliation Act, 1996. The proceedings will be conducted in English.</p>
+
+            <h3 className="font-h3 text-theme1 fw-4 mt-4 mb-3">16. Governing Law</h3>
+            <p>These terms and conditions, along with any associated privacy policies, are governed by and construed in accordance with the laws of India. Any disputes will fall under the exclusive jurisdiction of the courts in Bhadohi, Uttar Pradesh.</p>
+
+
         </Container>);
 }

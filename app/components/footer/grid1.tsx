@@ -19,7 +19,7 @@ export default function Grid1() {
     const getIcon = (type: string) => {
         switch (type) {
             case "instagram":
-                return <Instagram/>
+                return <Instagram />
             case "youtube":
                 return <Youtube />
             case "facebook":
@@ -33,10 +33,9 @@ export default function Grid1() {
             <Link href="/">
                 <Image src={logo} alt="deko-buddy" width={267} height={39} />
             </Link>
-            <p className="font-primary my-4 line-relaxed">Lorem ipsum dolor sit amet consectetur.
-                Consequat feugiat lacus nisi malesuada
-                aliquet Lorem ipsum dolor sit amet
-                consectetur. Consequat feugiat lacus nisi
+            <p className="font-primary my-4 line-relaxed">
+                DEKOBUDDY Rugs is a brand dedicated to creating luxurious,
+                handcrafted rugs that honor the rich traditions of carpet weaving while embracing modern design sensibilities.
             </p>
             <ul className="d-flex p-0 m-0 gap-15">
                 {social.map((item: media) => (

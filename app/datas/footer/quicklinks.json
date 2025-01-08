@@ -1,22 +1,12 @@
 [
     {
-        "id":1,
-        "name": "About Us",
-        "link": "/about-us"
+        "id": 1,
+        "name": "The Founder",
+        "link": "/about-founder"
     },
     {
-        "id":2,
-        "name": "Contact Us",
-        "link": "/contact-us"
-    },
-    {
-        "id":3,
-        "name": "Shop",
-        "link": "/shop"
-    },
-    {
-        "id":4,
-        "name": "Empowering Artisans",
-        "link": "/empowering-artisans"
+        "id": 2,
+        "name": "The Company",
+        "link": "/about-company"
     }
 ]
