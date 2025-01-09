@@ -49,6 +49,9 @@ export const Delivery = ({ userid, data, id }: { userid: string, data: order, id
                 currentstatus={data.order_status}
                 shipped_date={data.shipped_date}
                 cancel_date={data.cancelled_date}
+                cancel_status={data.cancel_status}
+                approved_date={data.cancel_approved_date}
+                not_approved_date={data.cancel_not_approved_date}
                 replacement_date={data.replacement_dates}
                 replacement_status={data.replacement_status}
                 deliver_date={data.delivered_date}
@@ -58,6 +61,11 @@ export const Delivery = ({ userid, data, id }: { userid: string, data: order, id
                 currentstatus={data.order_status}
                 shipped_date={data.shipped_date}
                 cancel_date={data.cancelled_date}
+                cancel_status={data.cancel_status}
+                approved_date={data.cancel_approved_date}
+                not_approved_date={data.cancel_not_approved_date}
+                replacement_date={data.replacement_dates}
+                replacement_status={data.replacement_status}
                 deliver_date={data.delivered_date}
 
             />

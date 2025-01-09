@@ -6,20 +6,49 @@ interface orderstatus {
 }
 
 
-export default function ProgressBar({ order_date, replacement_date, replacement_status, currentstatus, shipped_date, cancel_date, deliver_date }: { order_date: string, replacement_date: replacementDates, replacement_status: string, currentstatus: string, shipped_date: string | undefined, cancel_date: string | undefined, deliver_date: string | undefined }) {
+export default function ProgressBar(
+    {
+        order_date,
+        replacement_date,
+        replacement_status,
+        currentstatus,
+        shipped_date,
+        cancel_date,
+        deliver_date,
+        cancel_status,
+        approved_date,
+        not_approved_date
+    }: {
+        order_date: string,
+        replacement_date: replacementDates,
+        replacement_status: string,
+        currentstatus: string,
+        shipped_date: string | undefined,
+        cancel_date: string | undefined,
+        deliver_date: string | undefined,
+        cancel_status: string,
+        approved_date: string | undefined,
+        not_approved_date: string | undefined,
+
+    }) {
 
     const orderstatus = [
         { status: 'processing', date: order_date },
         { status: 'Shipped', date: shipped_date },
         { status: 'Delivered', date: deliver_date },
-
     ];
 
 
     const cancelstatus = [
-        { status: 'Ordered', date: order_date },
-        { status: 'Cancelled', date: cancel_date }];
+        { status: 'Cancelled', date: cancel_date },
+        { status: 'processing', date: cancel_date },
+        { status: 'Approved', date: approved_date },
+    ];
 
+    const cancelNotApprovedstatus = [
+        { status: 'Cancelled', date: cancel_date },
+        { status: 'Not Approved', date: not_approved_date },
+    ];
 
     const replacementStatus = [
         { status: 'processing', date: replacement_date?.approved_date },
@@ -30,7 +59,7 @@ export default function ProgressBar({ order_date, replacement_date, replacement_
 
     const replacecancelstatus = [
         { status: 'processing', date: replacement_date?.approved_date },
-        { status: 'Cancelled', date: replacement_date?.canceled_date }];
+        { status: 'Not Approved', date: replacement_date?.canceled_date }];
 
     const setWidth = (status: string) => {
         switch (status) {
@@ -43,6 +72,16 @@ export default function ProgressBar({ order_date, replacement_date, replacement_
         }
     }
 
+    const setCancelWidth = (status: string) => {
+        switch (status) {
+            case 'Cancelled':
+                return 'wc-0';
+            case 'processing':
+                return 'wc-50';
+            case 'Approved':
+                return 'wc-100';
+        }
+    }
 
     const setReplaceWidth = (status: string) => {
         switch (status) {
@@ -75,7 +114,14 @@ export default function ProgressBar({ order_date, replacement_date, replacement_
         }
     }
 
-
+    const getCancelIndex = () => {
+        if (cancel_status === 'Cancelled') {
+            return 0
+        } else {
+            const index = cancelstatus.findIndex((item) => item.status === cancel_status)
+            return index
+        }
+    }
 
 
     function getDate(date: Date) {
@@ -90,26 +136,52 @@ export default function ProgressBar({ order_date, replacement_date, replacement_
     return (
         <div className="my-4 largeProgress">
             {currentstatus === 'Cancelled' && (
-                <div className="shipmentTracking mt-4">
-                    {cancelstatus.map((item: orderstatus, index) => (
-                        <div key={`status_${index}`} className={`statusBar activestatus`}>
-                            <div className="text-white d-flex justify-content-center align-items-center statusCheck">
-                                <Tick color="white" />
+                <>
+                    {cancel_status === 'Approved' && (<p className="font-large  text-theme1 fw-3  text-center mb-5">Your Order has been cancelled</p>
+                    )}
+                    {cancel_status === 'NotApproved' && (<p className="font-large text-danger fw-3 text-center mb-5">Your Cancel request has not been approved.</p>
+                    )}
+                    {cancel_status === "NotApproved" ? (
+                        <div className="shipmentTracking mt-4">
+                            {cancelNotApprovedstatus.map((item: orderstatus, index) => (
+                                <div key={`status_${index}`} className={`statusBar text-center activestatus`} >
+                                    <div className="text-white d-flex justify-content-center align-items-center statusCheck">
+                                        <Tick color="white" />
+                                    </div>
+                                    <div>
+                                        <h6 className="mt-3 mb-0 text-capitalize">{item.status}</h6>
+                                        {item.date && (<span className="font-primary fw-3 text-secondary">
+                                            {getDate(new Date(item.date))}
+                                        </span>)}
+                                    </div>
+                                </div>
+                            ))}
+                            <div className="progress-line wc-90 br-20 m-auto h-8">
+                                <div className={' progress-line-fill wc-99'}></div>
                             </div>
-                            <div>
-                                <h6 className="mt-3 mb-0 text-capitalize">{item.status}</h6>
-                                {item.date && (<span className="font-primary fw-3 text-secondary">
-                                    {getDate(new Date(item.date))}
-                                </span>)}
-                            </div>                        </div>
-                    ))}
-                    <div className="progress-line wc-90 br-20 m-auto h-8">
-                        <div className={' progress-line-fill w-100'}></div>
-                    </div>
-                </div>
+                        </div>
+                    ) : (<div className="shipmentTracking mt-4">
+                        {cancelstatus.map((item: orderstatus, index) => (
+                            <div key={`status_${index}`} className={`statusBar text-center  ${getCancelIndex() >= index && ('activestatus')}`}>
+                                <div className="text-white d-flex justify-content-center align-items-center statusCheck">
+                                    {getCancelIndex() >= index && (<Tick color="white" />)}
+                                </div>
+                                <div>
+                                    <h6 className="mt-3 mb-0 text-capitalize">{item.status}</h6>
+                                    {item.date && (<span className="font-primary fw-3 text-secondary">
+                                        {getDate(new Date(item.date))}
+                                    </span>)}
+                                </div>                        </div>
+                        ))}
+                        <div className="progress-line wc-90 br-20 m-auto h-8">
+                            <div className={`progress-line-fill ${setCancelWidth(cancel_status)}`}></div>
+                        </div>
+                    </div>)}
+
+                </>
             )}
 
-            {currentstatus === 'Delivered' && (
+            {(currentstatus !== 'Cancelled' && currentstatus !== "Replacement")  && (
                 <div className="shipmentTracking mt-4">
                     {orderstatus.map((item: orderstatus, index) => (
                         <div key={`status_${index}`} className={`statusBar text-center ${getIndex() >= index && ('activestatus')}`} >
@@ -143,7 +215,7 @@ export default function ProgressBar({ order_date, replacement_date, replacement_
                     {replacement_status === 'Delivered' && (<p className="font-large  text-success fw-3  text-center mb-5">Your replacement has been delivered. Thank you for your patience.</p>
                     )}
 
-                    {replacement_status === 'Canceled' && (<p className="font-large text-danger fw-3 text-center mb-5">Your replacement request has been canceled.</p>
+                    {replacement_status === 'Canceled' && (<p className="font-large text-danger fw-3 text-center mb-5">Your replacement request has not been approved.</p>
                     )}
                     {replacement_status === 'Canceled' ? (<div className="shipmentTracking mt-4">
                         {replacecancelstatus.map((item: orderstatus, index) => (
@@ -160,7 +232,7 @@ export default function ProgressBar({ order_date, replacement_date, replacement_
                             </div>
                         ))}
                         <div className="progress-line wc-90 br-20 m-auto h-8">
-                            <div className={' progress-line-fill w-100'}></div>
+                            <div className={' progress-line-fill wc-99'}></div>
                         </div>
                     </div>) : (<div className="shipmentTracking mt-4">
                         {replacementStatus.map((item: orderstatus, index) => (
