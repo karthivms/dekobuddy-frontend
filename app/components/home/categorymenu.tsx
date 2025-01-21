@@ -6,7 +6,7 @@ import { navigationItem } from "@/app/types/types";
 
 
 export default function CategoryMenu({ category }: { category: navigationItem[] }) {
-    const height = "280px"
+    const height = "400px"
     return (
         <div className="mt-4">
             <ScrollWrapper direction={-20}>

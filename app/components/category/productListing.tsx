@@ -106,7 +106,7 @@ export default function ProductGrid({ grid, userid, category, subcategory }: { g
                 {status === 'loading' ? (<ProductSkeleton grid={3} array={20} />) : (<>
                     {products.length === 0 ? (<div className="mt-3">
                         <Image src={'/images/empty-cart.png'} width={485} height={380} className='wp-350 h-auto d-block m-auto' alt="empty_cart" />
-                        <h3 className="text-theme1 font-h2 fw-4 text-center"> No Products Match your Selected Filters</h3>
+                        <h3 className="text-theme1 font-h2 fw-4 text-center"> Products Not Found</h3>
                     </div>
                     ) : (
                         <>

@@ -20,7 +20,7 @@ export default function NavigationMenu({ links, source, height, id }: { links: n
                                 className="br-7 nav-grid d-flex justify-content-center align-items-end">
                                 <h3 className="font-h3 text-white fw-3"><Link href={`${source === "category" ? `/category/${item.slug}` : item.link}`} >{item.name}</Link></h3>
                                 <Link className="nav-cat-btn" href={`${source === "category" ? `/category/${item.slug}` : item.link}`}>
-                                {item.name !== "Empowering Artisans" ? (<>Shop Now</>) : (<>View More</>)}</Link>
+                                    {item.name !== "Empowering Artisans" ? (<>Shop Now</>) : (<>View More</>)}</Link>
                             </div>
                         </Col>
                     ))}
