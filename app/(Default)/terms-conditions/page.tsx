@@ -1,5 +1,14 @@
 import { Container } from "react-bootstrap";
 
+
+
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Terms and Conditions',
+    description: '',
+}
+
 export default function Page() {
     return (
         <Container className='my-sm-3  px-3 py-4 '>

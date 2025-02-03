@@ -3,6 +3,14 @@ import Wishlist from "@/app/components/wishlist/list";
 import '@/app/sass/components/wishlist.scss';
 import { getUser } from "@/app/utilis/auth";
 
+
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Wishlist',
+    description: '',
+}
+
 export default async function Page() {
 
     let userid: string = "";
@@ -12,7 +20,7 @@ export default async function Page() {
     if (userData) {
         userid = userData.user_id;
     }
-    
+
     return (
         <Container>
             <Wishlist userid={userid} />

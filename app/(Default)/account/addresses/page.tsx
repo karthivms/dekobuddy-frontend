@@ -2,6 +2,12 @@ import AddAddress from "@/app/components/account/addAddress";
 import Address from "@/app/components/account/address";
 import { getUser } from "@/app/utilis/auth";
 
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Account',
+    description: '',
+}
 
 
 export default async function Page() {

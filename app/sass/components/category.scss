@@ -73,13 +73,16 @@
         }
     }
 
+    .inactive_wishlist {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
     .addtowishlist {
         position: absolute;
         right: 10px;
         top: 10px;
-        opacity: 0;
         transition: all 0.5s ease;
-        transform: translateX(10px);
         z-index: 2;
         cursor: pointer;
 

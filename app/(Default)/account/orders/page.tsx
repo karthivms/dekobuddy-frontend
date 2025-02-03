@@ -1,6 +1,12 @@
 import { apiRequest } from "@/app/api/apiConfig";
 import OrderTabs from "@/app/components/account/orderTabs";
 import { getUser } from "@/app/utilis/auth";
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Orders',
+    description: '',
+}
 
 
  async function getorders(userid:string) {

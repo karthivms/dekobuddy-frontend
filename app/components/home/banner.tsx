@@ -10,7 +10,7 @@ export interface banner {
     id: number,
     banner_image: string,
     banner_name: string,
-    link : string,
+    link: string,
     banner_button: string
 }
 
@@ -20,10 +20,10 @@ export default function Banner({ data }: { data: banner[] }) {
         <div className="banner-wrapper">
             <Swiper
                 slidesPerView={1}
-            
+
                 className=""
                 effect={'fade'}
-                speed = {1500}
+                speed={1500}
                 spaceBetween={30}
                 autoplay={{
                     delay: 4000,

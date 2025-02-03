@@ -4,9 +4,10 @@ import Topbar from "@/app/components/category/topbar";
 import Filter from "@/app/components/category/filterbox";
 import "@/app/sass/components/category.scss";
 import { apiRequest } from "@/app/api/apiConfig";
-import { navigationItem } from "@/app/types/types";
+import { categoryMenu, navigationItem } from "@/app/types/types";
 import { getUser } from "@/app/utilis/auth";
 import Link from "next/link";
+import { Metadata } from "next";
 
 
 type Params = {
@@ -20,6 +21,24 @@ export async function generateStaticParams() {
         category: item.slug,
     }));
     return staticParams;
+}
+
+type Props = {
+    params: Promise<{ category: string }>
+}
+
+
+export async function generateMetadata(
+    { params }: Props): Promise<Metadata> {
+    const categories = await getCategories();
+    const category = categories.find(async (cat: categoryMenu) => cat.slug === (await params).category)
+
+    return {
+        title: category.name,
+        openGraph: {
+            images: [category.image],
+        },
+    }
 }
 
 async function getCategories() {

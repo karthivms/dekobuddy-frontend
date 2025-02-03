@@ -1,7 +1,15 @@
 import Image from "next/image";
 import { Col, Container, Row } from "react-bootstrap";
 import '@/app/sass/components/artisans.scss';
-import benefits from '@/app/datas/artisans/benefits.json'
+import benefits from '@/app/datas/artisans/benefits.json';
+
+
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Empowering Artisans',
+    description: '',
+}
 
 export default function Page() {
     return (

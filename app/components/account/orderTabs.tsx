@@ -37,7 +37,7 @@ export default function OrderTabs({ All, Delivered, Processing, Cancelled }: { A
     return (
         <div className='h-440 overflow-auto custom-scrollbar'>
             <h1 className='font-h3 fw-4 text-theme1'>My Orders</h1>
-            <Tabs
+            <Tabs 
                 defaultActiveKey="All"
                 className="order-tabs mt-4"
             >

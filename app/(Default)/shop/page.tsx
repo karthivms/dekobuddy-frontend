@@ -21,6 +21,14 @@ async function getAttributes() {
 }
 
 
+
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Shop',
+    description: '',
+}
+
 export default async function page() {
 
 
@@ -42,7 +50,7 @@ export default async function page() {
         <>
             <Container fluid className="banner2">
                 <Container className="d-flex h-100 align-items-center">
-                    <h1 className="font-big font-sm-h1 text-theme3 fw-6">STYLE OF YOUR <br/>HOME</h1>
+                    <h1 className="font-big font-sm-h1 text-theme3 fw-6">STYLE OF YOUR <br />HOME</h1>
                 </Container>
             </Container>
             <Container className="mt-3">
@@ -58,7 +66,7 @@ export default async function page() {
                     </Col>
                     <Col className="">
                         <Topbar />
-                        <ProductGrid  grid={3} userid={userid} category={''} subcategory="" />
+                        <ProductGrid grid={3} userid={userid} category={''} subcategory="" />
                     </Col>
                 </Row>
             </Container>

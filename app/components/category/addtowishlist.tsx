@@ -50,7 +50,7 @@ export default function Addtowishlist(
     }
 
     return (
-        <div className="text-danger addtowishlist wp-26 h-26 d-flex justify-content-center align-items-center bg-white br-13" onClick={handleWishlistItem}>
+        <div className={`text-danger addtowishlist wp-26 h-26 d-flex justify-content-center align-items-center bg-white br-13  ${isWishlistItem? "" : "inactive_wishlist"}`} onClick={handleWishlistItem}>
             {isWishlistItem ? (
                 <Image width={15} height={13} alt="heart" className="wp-13 h-auto" src={filheart} />
             ) : (<><Image width={15} height={13} alt="heart" className="wp-13 h-auto heart" src={heart} />

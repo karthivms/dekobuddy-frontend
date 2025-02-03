@@ -5,6 +5,14 @@ import { Accordion, Col, Container, Row } from "react-bootstrap";
 import '@/app/sass/components/dekobuddylux.scss';
 import Link from "next/link";
 
+
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Dekobuddy Lux',
+    description: '',
+}
+
 export default function Page() {
     return (
         <>

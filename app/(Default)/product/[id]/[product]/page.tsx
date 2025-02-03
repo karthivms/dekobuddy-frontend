@@ -9,6 +9,7 @@ import GallerySlider from "@/app/components/singleproduct/gallerySlider";
 import { apiRequest } from "@/app/api/apiConfig";
 import { getUser } from "@/app/utilis/auth";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
 
 
 interface params {
@@ -16,6 +17,23 @@ interface params {
     product: string
 }
 
+
+type Props = {
+    params: Promise<{ id: string }>
+}
+
+
+export async function generateMetadata(
+    { params }: Props): Promise<Metadata> {
+    const product = await getProduct(Number((await params).id));
+
+    return {
+        title: product.name,
+        openGraph: {
+            images: [product.images[2].image],
+        },
+    }
+}
 
 const getProduct = async (id: number) => {
     const response = await apiRequest('GET', `/products/?id=${id}`);
@@ -76,7 +94,7 @@ export default async function page({ params }: { params: params }) {
             </Container>
 
             <Description data={data.description} />
-            <Ratings userid={Number(userid)} productid={id}  average={data.average_rating} rat_count={data.rating_count} rev_count={data.review_count} />
+            <Ratings userid={Number(userid)} productid={id} average={data.average_rating} rat_count={data.rating_count} rev_count={data.review_count} />
 
             <SimilarProducts userid={userid} data={simproducts} />
         </>

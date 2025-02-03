@@ -7,6 +7,7 @@ import { apiRequest } from "@/app/api/apiConfig";
 import { categoryMenu } from "@/app/types/types";
 import { getUser } from "@/app/utilis/auth";
 import Link from "next/link";
+import { Metadata } from "next";
 
 
 type Params = {
@@ -14,10 +15,26 @@ type Params = {
     subcategory: string;
 };
 
+type Props = {
+    params: Promise<{ category: string, subcategory: string }>
+}
+
+
+export async function generateMetadata(
+    { params }: Props): Promise<Metadata> {
+    const category = await getSubCategories((await params).category);
+
+    return {
+        title: category[0].name,
+        openGraph: {
+            images: [category[0].image],
+        },
+    }
+}
 
 export async function generateStaticParams() {
     const categories = await apiRequest('GET', '/menus/');
-    const params : Params[] = [];
+    const params: Params[] = [];
 
     categories.forEach((category: categoryMenu) => {
 
@@ -92,7 +109,7 @@ export default async function page({ params }: { params: Params }) {
                     </Col>
                     <Col className="">
                         <Topbar />
-                        <ProductGrid  grid={3} userid={userid} category={params.category} subcategory={params.subcategory} />
+                        <ProductGrid grid={3} userid={userid} category={params.category} subcategory={params.subcategory} />
                     </Col>
                 </Row>
             </Container>

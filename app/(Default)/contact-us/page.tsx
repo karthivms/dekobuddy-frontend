@@ -7,6 +7,14 @@ import Envelope from "@/app/components/icons/envelope";
 import Location from "@/app/components/icons/location";
 import ContactForm from "@/app/components/contact/contactform";
 
+
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Contact Us',
+    description: '',
+}
+
 export default function Page() {
     const getIcon = (item: string) => {
         switch (item) {

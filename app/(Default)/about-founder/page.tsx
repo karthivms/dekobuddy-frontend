@@ -2,6 +2,13 @@ import { Col, Container, Row } from "react-bootstrap";
 import "@/app/sass/components/aboutus.scss"
 import Image from "next/image";
 
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'About Founder',
+    description: '',
+}
+
 
 export default function Page() {
     return (
