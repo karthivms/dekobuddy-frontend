@@ -1,12 +1,13 @@
 'use client'
 
 import Image from "next/image";
-import { Accordion, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import '@/app/sass/components/dekobuddylux.scss';
 import Link from "next/link";
 
 
 import type { Metadata } from 'next'
+import Faq from "@/app/components/dekobuddy-lux/Faq";
 
 export const metadata: Metadata = {
     title: 'Dekobuddy Lux',
@@ -83,22 +84,7 @@ export default function Page() {
                         </Col>
                         <Col className="p-0" xl={4}>
 
-                            <Accordion defaultActiveKey="0">
-                                {[...Array(5)].map((item, index) => (
-                                    <Accordion.Item key={`faq_${index}`} eventKey={index.toString()} className="lux-faq">
-                                        {item}
-                                        <Accordion.Header >Lorem ipsum dolor sit amet consectetur Consequat</Accordion.Header>
-                                        <Accordion.Body>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                            aliquip ex ea commodo consequat.
-                                        </Accordion.Body>
-                                    </Accordion.Item>
-                                ))}
-
-
-                            </Accordion>
+                            <Faq />
 
 
                         </Col>
