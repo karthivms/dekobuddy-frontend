@@ -82,10 +82,7 @@ export default function Page() {
                             <Image src={'/images/dekobuddy-lux-faq.webp'} alt="artisans_1" className="w-100 h-auto" width={526} height={466} />
                         </Col>
                         <Col className="p-0" xl={4}>
-
                             <Faq />
-
-
                         </Col>
                     </Row>
                 </Container>

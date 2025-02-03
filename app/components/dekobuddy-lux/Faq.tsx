@@ -1,4 +1,4 @@
-'uce client';
+'use client';
 import { Accordion } from "react-bootstrap";
 
 
