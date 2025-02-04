@@ -41,6 +41,8 @@ export default function RootLayout({
         as="image"
         type="image/webp"
       />
+      <link rel="preconnect" href="http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002" />
+
       <body className={barlow.className}>
         <ReduxProvider>
           <SessionProvider>

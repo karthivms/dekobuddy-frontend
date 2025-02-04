@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import Banner from "@/app/components/home/banner";
+import Banner from "@/app/components/home/opbanner";
 import CategoryMenu from "@/app/components/home/categorymenu";
 import PromotionMenu from "@/app/components/home/promotionsMenu";
 const Videoplayer = dynamic(() => import("@/app/components/home/videoplayer"), { ssr: false });
