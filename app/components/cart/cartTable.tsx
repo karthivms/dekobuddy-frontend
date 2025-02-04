@@ -116,7 +116,7 @@ export default function CartTable({ userid }: { userid: string }) {
                         </Row></>) : (
                         <div className="d-flex justify-content-center align-items-center py-3">
                             <div className="text-center">
-                                <Image src={'/images/empty-cart.png'} width={485} height={380} className='wp-350 h-auto' alt="empty_cart" />
+                                <Image src={'/images/empty-cart.webp'} width={485} height={380} className='wp-350 h-auto' alt="empty_cart" />
                                 <h1 className="font-h2 fw-5 mb-5">Your cart is empty</h1>
                                 <Link href="/shop" className="bg-theme1 text-white px-4 py-2 br-5">Continue Shopping</Link>
                             </div>

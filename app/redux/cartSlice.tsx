@@ -9,6 +9,7 @@ import { getDomainUrl } from '../utilis/getDomain';
 interface initialState {
     cartItems: cartItem[]
     status: "loading" | "success" | "failure",
+    quantityStatus: "loading" | "success" | "failure",
     error: undefined
     total: number
     url: string
@@ -126,6 +127,7 @@ export const DeleteCartItem = createAsyncThunk<cartItem[], deletebody, { rejectV
 const initialState: initialState = {
     cartItems: [],
     status: "loading",
+    quantityStatus: "success",
     error: undefined,
     total: 0,
     url: ''
@@ -211,7 +213,14 @@ const cartSlice = createSlice({
                 state.cartItems[state.cartItems.length - 1].id = action.payload.cart_data.cart_item_id;
             }
 
-        })
+        });
+        builder.addCase(UpdateQuantity.pending, (state) => {
+            state.quantityStatus = "loading";
+        }).addCase(UpdateQuantity.fulfilled, (state) => {
+            state.quantityStatus = "success";
+        }).addCase(UpdateQuantity.rejected, (state) => {
+            state.quantityStatus = "failure";
+        });
     }
 })
 

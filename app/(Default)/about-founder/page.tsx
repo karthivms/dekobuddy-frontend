@@ -25,7 +25,7 @@ export default function Page() {
 
                 <Row className="align-items-center">
                     <Col lg={{ span: 5, order: 1 }} className="about-image-div" xs={{ order: 2 }} >
-                        <Image src={'/images/About-us.png'} alt="about-us" className="w-100 h-auto" width={725} height={603} />
+                        <Image src={'/images/About-us.webp'} alt="about-us" className="w-100 h-auto" width={725} height={603} />
                         {/* <Image src={'/images/Experience.png'} alt="about-us" className="wp-150 h-auto experience" width={207} height={207} /> */}
                     </Col>
                     <Col className="ps-lg-5" xs={{ order: 1 }}>
@@ -52,7 +52,7 @@ export default function Page() {
                         </p>
                     </Col>
                     <Col lg={5}>
-                        <Image src={'/images/About-us-2.png'} alt="about-us" className="w-100 h-auto" width={861} height={430} />
+                        <Image src={'/images/About-us-2.webp'} alt="about-us" className="w-100 h-auto" width={861} height={430} />
                     </Col>
                 </Row>
             </Container>
@@ -61,7 +61,7 @@ export default function Page() {
             <Container className="mt-5">
                 <Row className="align-items-center gap-20">
                     <Col lg={{ span: 5, order: 1 }} xs={{ order: 2 }}>
-                        <Image src={'/images/About-us-3.png'} alt="about-us" className="w-100 h-auto" width={861} height={430} />
+                        <Image src={'/images/About-us-3.webp'} alt="about-us" className="w-100 h-auto" width={861} height={430} />
                     </Col>
                     <Col lg={{ order: 2 }} xs={{ order: 1 }}>
                         <h3 className="font-h2 text-theme1 fw-4 text-uppercase">Guiding Principles</h3>

@@ -51,7 +51,7 @@ export default function OrderTabs({ All, Delivered, Processing, Cancelled }: { A
                             ))}
                         </>) : (
                             <>
-                                <Image src={'/images/no-orders.png'} width={485} height={380} className='wp-350 mt-3 d-block m-auto h-auto' alt="empty_cart" />
+                                <Image src={'/images/no-orders.webp'} width={485} height={380} className='wp-350 mt-3 d-block m-auto h-auto' alt="empty_cart" />
                                 <p className='mb-5 text-center text-theme1 fw-4'>No Orders Found</p>
                             </>
                         )}

@@ -7,8 +7,6 @@ import CloseIcon from "../icons/closeicon";
 import SwiperCore from "swiper";
 
 
-
-
 interface Video {
     id: number;
     video: string;
@@ -61,11 +59,12 @@ export default function VideoPlayer({ videos }: { videos: Video[] }) {
                 spaceBetween={30}
                 slidesPerView={1}
                 className=" video-slider"
-                centeredSlides={true}
                 onSwiper={(swiper) => {
                     swiperRef.current = swiper; // Store the Swiper instance in the ref
                 }}
                 navigation={true}
+                centeredSlides={true}
+                initialSlide={1}
                 slideToClickedSlide={true}
                 onClick={() => swiperRef.current?.autoplay.stop()}
                 breakpoints={{
@@ -78,13 +77,13 @@ export default function VideoPlayer({ videos }: { videos: Video[] }) {
                 onSlideChange={(swiper) => {
                     setActiveIndex(swiper.realIndex);
                 }}
-                autoplay={{
-                    delay: 4000,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: true,
+                // autoplay={{
+                //     delay: 4000,
+                //     disableOnInteraction: false,
+                //     pauseOnMouseEnter: true,
 
-                }}
-                modules={[Autoplay, Navigation]}
+                // }}
+                modules={[ Autoplay, Navigation]}
             >
                 {videos.map((item, index) => (
                     <SwiperSlide className="py-4" key={`video_player_${item.id}`}>

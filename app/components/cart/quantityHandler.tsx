@@ -10,6 +10,7 @@ export default function QuanityHandler({ page, stock, cartid, userid, count }: {
 
     const dispatch: AppDispatch = useDispatch();
     const coupon = useSelector((state: RootState) => state.checkout.coupon_code)
+    const status = useSelector((state: RootState) => state.cart.quantityStatus)
 
     const handleIncrementQuantity = () => {
         if (count < stock) {
@@ -68,16 +69,20 @@ export default function QuanityHandler({ page, stock, cartid, userid, count }: {
         }
     }
     return (
-        <div className="mt-4 d-flex align-items-center text-theme1 fw-4 gap-1 quanity-handler">
+        <div className={`mt-4 d-flex align-items-center text-theme1 fw-4 gap-1 quanity-handler `}>
             <button
                 className="border-border2-solid wp-35 h-35 text-theme1 lh-1 bg-transparent"
-                onClick={handleDecrementQuantity}>
+                onClick={handleDecrementQuantity}
+                disabled={status === "loading"}
+            >
                 -
             </button>
             <span className="border-border2-solid d-flex align-items-center justify-content-center wp-35 h-35 lh-1 bg-transparent ">{count}</span>
             <button
                 className="border-border2-solid wp-35 h-35 text-theme1 lh-1 bg-transparent"
-                onClick={handleIncrementQuantity}>
+                onClick={handleIncrementQuantity}
+                disabled={status === "loading"}
+            >
                 +
             </button>
         </div>

@@ -1,17 +1,17 @@
 [
     {
       "name": "Unique",
-      "image": "/images/artisan_benefit_1.png",
+      "image": "/images/artisan_benefit_1.webp",
       "content": "Lorem ipsum dolor sit amet consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsumdolor sit amet consectetur."
     },
     {
       "name": "Eco-Friendly",
-      "image": "/images/artisan_benefit_2.png",
+      "image": "/images/artisan_benefit_2.webp",
       "content": "Lorem ipsum dolor sit amet consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsumdolor sit amet consectetur."
     },
     {
       "name": "Authenticity",
-      "image": "/images/artisan_benefit_3.png",
+      "image": "/images/artisan_benefit_3.webp",
       "content": "Lorem ipsum dolor sit amet consectetur. Consequat feugiat lacus nisi malesuada aliquet Lorem ipsumdolor sit amet consectetur."
     }
   ]
