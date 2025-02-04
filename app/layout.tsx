@@ -34,6 +34,18 @@ export default function RootLayout({
         as="image"
         fetchPriority="high"
       />
+      <link
+        rel="preload"
+        href="http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/media/Main_banners/banner_1.webp"
+        as="image"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        href="http://ec2-13-201-230-68.ap-south-1.compute.amazonaws.com:8002/media/Main_banners/banner_6.webp"
+        as="image"
+        fetchPriority="high"
+      />
       <body className={barlow.className}>
         <ReduxProvider>
           <SessionProvider>
