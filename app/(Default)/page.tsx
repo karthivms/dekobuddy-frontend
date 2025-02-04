@@ -2,7 +2,8 @@ import dynamic from "next/dynamic";
 import Banner from "@/app/components/home/banner";
 import CategoryMenu from "@/app/components/home/categorymenu";
 import PromotionMenu from "@/app/components/home/promotionsMenu";
-import Videoplayer from "@/app/components/home/videoplayer";
+const Videoplayer = dynamic(() => import("@/app/components/home/videoplayer"), { ssr: false });
+
 import Whychooseus from "@/app/components/home/whychooseus";
 import ScrollWrapper from "@/app/components/scrollanimation";
 const Testimonials = dynamic(() => import('@/app/components/home/testimonials'), { ssr: false });
