@@ -37,7 +37,7 @@ export default function Banner({ data }: { data: banner[] }) {
                 {data.map((item: banner) => (
                     <SwiperSlide key={`banner_${item.id}`}>
                         <Container fluid className="banner text-center px-0" >
-                            <Image src={item.banner_image} width={1900} height={680} alt="banner_image" className="w-100 h-auto" priority />
+                            <Image src={item.banner_image} fill sizes="100vw" alt="banner_image"  priority />
                             <div className="contentdiv pt-5">
                                 <h1 className="font-2 font-h1 text-white font-sm-h2">&quot;{item.banner_name}&quot;</h1>
                                 <div className="btn-banner mx-auto mt-5 slide">
